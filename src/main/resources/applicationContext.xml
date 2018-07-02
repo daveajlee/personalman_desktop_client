@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- Component scan to find all Spring components -->
+    <context:component-scan base-package="de.davelee.personalman, de.davelee.personalman.service" />
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location" value="classpath:languages/english.properties" />
+    	<!-- <property name="location" value="classpath:languages/deutsch.properties" /> -->
+	</bean>
+    
+    <bean id="userInterfaceMessages" class="de.davelee.personalman.gui.UserInterfaceMessages">
+    	<property name="daysMessage" value="${message.days}"/>
+    	<property name="annualLeaveErrorMessage" value="${message.annualleave.error}"/>
+    	<property name="annualLeaveErrorTitle" value="${title.annualleave.error}"/>
+    	<property name="toTakeMessage" value="${message.totake}"/>
+    </bean>
+
+    <bean id="reasonNames" class="de.davelee.personalman.gui.ReasonNames"/>
+
+</beans>

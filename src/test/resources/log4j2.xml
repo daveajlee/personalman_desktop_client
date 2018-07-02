@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<Appenders>
+		<!-- Display output to the console -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<!-- Spring framework and all other classes with default of info level -->
+		<Logger name="org.springframework" level="info">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Logger name="org.springframework.oxm" level="info">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Logger name="org.springframework.transaction" level="info">
+			<AppenderRef ref="Console" />
+		</Logger>
+		<Root level="info">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</configuration>
