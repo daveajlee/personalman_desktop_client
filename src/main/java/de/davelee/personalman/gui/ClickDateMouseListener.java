@@ -10,7 +10,6 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import de.davelee.personalman.api.AbsenceResponse;
-import org.omg.CORBA.DATA_CONVERSION;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

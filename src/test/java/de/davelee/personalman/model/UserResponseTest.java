@@ -2,13 +2,8 @@ package de.davelee.personalman.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.time.LocalDate;
-
-import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.api.UserResponse;
 import org.junit.Test;
-
-import javax.jws.soap.SOAPBinding;
 
 /**
  * Class to test the User Response object.
