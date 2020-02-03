@@ -3,7 +3,7 @@
 
 	<groupId>de.davelee</groupId>
 	<artifactId>personalman_java_client</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Personalman - Java Client</name>
@@ -17,9 +17,9 @@
 	
 	<!-- Git Connection -->
 	<scm>
-        <connection>scm:git:https://github.com/daveajlee/personalman</connection>
-        <url>https://github.com/daveajlee/personalman</url>
-  	  	<tag>v1.0.2</tag>
+        <connection>scm:git:https://github.com/daveajlee/personalman_java_client</connection>
+        <url>https://github.com/daveajlee/personalman_java_client</url>
+  	  	<tag>HEAD</tag>
   	</scm>
   	
   	<!-- GitHub Packages -->
@@ -27,7 +27,7 @@
    		<repository>
      		<id>github</id>
      		<name>GitHub daveajlee Apache Maven Packages</name>
-     		<url>https://maven.pkg.github.com/daveajlee/personalman</url>
+     		<url>https://maven.pkg.github.com/daveajlee/personalman_java_client</url>
    		</repository>
 	</distributionManagement>
 
