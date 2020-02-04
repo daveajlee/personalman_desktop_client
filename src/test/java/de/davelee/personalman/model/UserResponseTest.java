@@ -1,9 +1,10 @@
 package de.davelee.personalman.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 import de.davelee.personalman.api.UserResponse;
-import org.junit.Test;
 
 /**
  * Class to test the User Response object.
