@@ -4,17 +4,18 @@ import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeServiceMock;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
 /**
  * Test the absence screen to ensure that the GUI functions work as expected.

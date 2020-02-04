@@ -22,11 +22,12 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-#folders
+#folders that are not needed
 /target
 /bin
 
-#settings files (Eclipse)
+#eclipse files
+>>>>>>> development
 .classpath
 .project
 .settings

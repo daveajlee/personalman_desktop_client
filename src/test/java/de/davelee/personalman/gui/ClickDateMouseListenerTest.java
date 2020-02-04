@@ -6,10 +6,12 @@ import java.time.Month;
 import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeServiceMock;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.davelee.personalman.UserInterface;
@@ -17,7 +19,7 @@ import de.davelee.personalman.UserInterfaceMock;
 import de.davelee.personalman.service.AbsenceService;
 import de.davelee.personalman.service.EmployeeService;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
 /**
  * This class tests the functionality of the ClickDateMouseListener using the ClickDateMouseListenerMock object.

@@ -5,19 +5,18 @@ import de.davelee.personalman.service.AbsenceService;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeService;
 import de.davelee.personalman.service.EmployeeServiceMock;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.Assert.*;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
 /**
  * Class to test functionality of the UserInterface class.
