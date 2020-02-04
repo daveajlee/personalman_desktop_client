@@ -17,8 +17,8 @@
 	
 	<!-- Git Connection -->
 	<scm>
-        <connection>scm:git:https://github.com/daveajlee/personalman_java_client</connection>
-        <url>https://github.com/daveajlee/personalman_java_client</url>
+        <connection>scm:git:https://github.com/daveajlee/personalman_desktop_client</connection>
+        <url>https://github.com/daveajlee/personalman_desktop_client</url>
   	  	<tag>HEAD</tag>
   	</scm>
   	
@@ -27,7 +27,7 @@
    		<repository>
      		<id>github</id>
      		<name>GitHub daveajlee Apache Maven Packages</name>
-     		<url>https://maven.pkg.github.com/daveajlee/personalman_java_client</url>
+     		<url>https://maven.pkg.github.com/daveajlee/personalman_desktop_client</url>
    		</repository>
 	</distributionManagement>
 
