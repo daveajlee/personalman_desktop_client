@@ -3,7 +3,7 @@
 
 	<groupId>de.davelee</groupId>
 	<artifactId>personalman_desktop_client</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>Personalman - Desktop Client</name>
@@ -19,7 +19,7 @@
 	<scm>
         <connection>scm:git:https://github.com/daveajlee/personalman_java_client</connection>
         <url>https://github.com/daveajlee/personalman_java_client</url>
-  	  	<tag>HEAD</tag>
+  	  	<tag>v1.0.0</tag>
   	</scm>
   	
   	<!-- GitHub Packages -->
