@@ -4,7 +4,7 @@ This is a Java Client for PersonalMan which provides absence management for empl
 ### How can I use the client? ###
 
 * First of all, you need a running PersonalMan server - this can be done either locally or remote. Please follow the instructions in the personalman repository (https://github.com/daveajlee/personalman).
-* You can run the client by cloning this repository and running the following command: java -jar target/personalman_java_client.jar 
+* You can download the client by clicking on packages and downloading the latest version and then running the following command: java -jar your-path-here/personalman_java_client.jar 
 * This will start the client using localhost as the PersonalMan server on the default port and the english language.
 * To change the language or server url you will need to build the client from source (see below).
 
