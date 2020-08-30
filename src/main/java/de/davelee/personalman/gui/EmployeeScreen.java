@@ -28,30 +28,21 @@ public class EmployeeScreen extends PersonalManBaseScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel employeeLabel;
 	protected JList<String> employeeList;
 	private DefaultListModel<String> employeeModel;
-	private JLabel nameLabel;
 	private JTextField firstNameField;
 	private JTextField lastNameField;
-	private JLabel userNameLabel;
 	private JTextField userNameField;
-    private JLabel companyLabel;
     private JTextField companyField;
-	private JLabel positionLabel;
 	private JTextField positionField;
-	private JLabel startDateLabel;
 	private JDateChooser startDateField;
-	private JLabel annualLeaveLabel;
 	private JSpinner annualLeaveField;
 	private DefaultListModel<String> workingDaysModel;
-	private JLabel workingDaysLabel;
 	private JList<String> workingDaysList;
         
     private JButton addEmployeeButton;
     private JButton removeEmployeeButton;
     private JButton clearButton;
-    private JButton welcomeScreenButton;
 
     private String company;
     
@@ -74,7 +65,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         employeePanel.setBackground(Color.WHITE);
         employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.PAGE_AXIS ) );
         
-        employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesTitleMessage(), SwingConstants.CENTER);
+        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesTitleMessage(), SwingConstants.CENTER);
         employeeLabel.setFont(new Font(FONT_FAMILY, Font.BOLD + Font.ITALIC, 20));
         employeePanel.add(employeeLabel);
         JPanel listPanel = new JPanel();
@@ -104,7 +95,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new name editing panel.
         JPanel nameEditingPanel = new JPanel();
         nameEditingPanel.setBackground(Color.WHITE);
-        nameLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesNameMessage());
+        JLabel nameLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesNameMessage());
         nameLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         firstNameField = new JTextField("");
         firstNameField.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
@@ -120,7 +111,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new userName editing panel.
         JPanel userNameEditingPanel = new JPanel();
         userNameEditingPanel.setBackground(Color.WHITE);
-        userNameLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesUserNameMessage());
+        JLabel userNameLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesUserNameMessage());
         userNameLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         userNameField = new JTextField("");
         userNameField.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
@@ -132,7 +123,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new company editing panel.
         JPanel companyEditingPanel = new JPanel();
         companyEditingPanel.setBackground(Color.WHITE);
-        companyLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesCompanyMessage());
+        JLabel companyLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesCompanyMessage());
         companyLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         companyField = new JTextField("");
         companyField.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
@@ -146,7 +137,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new position editing panel.
         JPanel positionEditingPanel = new JPanel();
         positionEditingPanel.setBackground(Color.WHITE);
-        positionLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesPositionMessage());
+        JLabel positionLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesPositionMessage());
         positionLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         positionField = new JTextField("");
         positionField.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
@@ -158,7 +149,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new start date editing panel.
         JPanel startDateEditingPanel = new JPanel();
         startDateEditingPanel.setBackground(Color.WHITE);
-        startDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesStartDateMessage());
+        JLabel startDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesStartDateMessage());
         startDateLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         startDateField = new JDateChooser();
         startDateEditingPanel.add(startDateLabel);
@@ -168,7 +159,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new annual leave editing panel.
         JPanel leaveEditingPanel = new JPanel();
         leaveEditingPanel.setBackground(Color.WHITE);
-        annualLeaveLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesAnnualLeaveMessage());
+        JLabel annualLeaveLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesAnnualLeaveMessage());
         annualLeaveLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         annualLeaveField = new JSpinner(new SpinnerNumberModel(25,1,100,1));
         leaveEditingPanel.add(annualLeaveLabel);
@@ -180,7 +171,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         //Create a new working days editing panel.
         JPanel workingDaysEditingPanel = new JPanel();
         workingDaysEditingPanel.setBackground(Color.WHITE);
-        workingDaysLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesWorkingDaysMessage());
+        JLabel workingDaysLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesWorkingDaysMessage());
         workingDaysLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         
         workingDaysModel = new DefaultListModel<String>();
@@ -252,7 +243,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         	}
         });
         buttonPanel.add(clearButton);
-        welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
+        JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
         welcomeScreenButton.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent e ) {
                 new WelcomeScreen(userInterface, company);

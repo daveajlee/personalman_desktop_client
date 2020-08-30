@@ -1,6 +1,7 @@
 package de.davelee.personalman.gui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 
@@ -11,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
@@ -39,6 +39,7 @@ public class AddAbsenceScreenTest {
 		userInterfaceMock.setReasonNames(userInterface.getReasonNames());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
 		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany");
+		assertNotNull(screen);
 		screen.displayErrorOrDispose(true);
 	}
 	

@@ -2,7 +2,6 @@ package de.davelee.personalman.gui;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import java.time.LocalDate;
 
 import javax.swing.*;
@@ -21,13 +20,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
 	private static final long serialVersionUID = 1L;
 	
 	private MonthPanel monthPanel;
-	private JLabel employeeLabel;
 	protected JComboBox<String> employeeBox;
-	private JButton viewStatisticsButton;
-    private JButton welcomeScreenButton;
-    
-    private JButton previousMonthButton;
-    private JButton nextMonthButton;
     
     private LocalDate date;
     private String company;
@@ -53,13 +46,13 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         monthJPanel.add(monthPanel);
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
-        previousMonthButton = new JButton("<<");
+        JButton previousMonthButton = new JButton("<<");
         previousMonthButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		processPreviousMonthButton();
         	}
         });
-        nextMonthButton = new JButton(">>");
+        JButton nextMonthButton = new JButton(">>");
         nextMonthButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent event) {
         		processNextMonthButton();
@@ -75,7 +68,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         employeePanel.setBackground(Color.WHITE);
         employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.LINE_AXIS ) );
         
-        employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesTitleMessage(), SwingConstants.CENTER);
+        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesTitleMessage(), SwingConstants.CENTER);
         employeeLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 20));
         employeePanel.add(employeeLabel);
         JPanel comboBoxPanel = new JPanel();
@@ -85,14 +78,14 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         employeePanel.add(comboBoxPanel);
         JPanel bottomButtonPanel = new JPanel(new GridLayout(2,2,5,5));
         bottomButtonPanel.setBackground(Color.WHITE);
-        viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
+        JButton viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
         viewStatisticsButton.addActionListener( new ActionListener() {
         	public void actionPerformed ( ActionEvent e ) {
         		processViewStatisticsButton();
         	}
         });
         bottomButtonPanel.add(viewStatisticsButton);
-        welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
+        JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
         welcomeScreenButton.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent e ) {
                 new WelcomeScreen(userInterface, company);

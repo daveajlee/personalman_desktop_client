@@ -5,8 +5,6 @@ import java.util.List;
 import de.davelee.personalman.api.AbsenceRequest;
 import de.davelee.personalman.api.AbsenceResponse;
 import de.davelee.personalman.api.AbsencesResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

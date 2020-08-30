@@ -12,12 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
-import de.davelee.personalman.service.AbsenceService;
-import de.davelee.personalman.service.EmployeeService;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
@@ -29,12 +28,6 @@ public class ClickDateMouseListenerTest {
 
 	@Autowired
 	private UserInterfaceMessages userInterfaceMessages;
-	
-	@Autowired
-	private AbsenceService absenceService;
-	
-	@Autowired
-	private EmployeeService employeeService;
 	
 	@Autowired
 	private ReasonNames reasonNames;
@@ -51,6 +44,7 @@ public class ClickDateMouseListenerTest {
 		userInterface.setAbsenceService(new AbsenceServiceMock());
 		userInterface.setReasonNames(reasonNames);
 		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 2, 27), "MyCompany", new MonthPanel(Month.APRIL, 2015, "MyCompany", userInterface));
+		assertNotNull(clickDateMouseListener);
 		clickDateMouseListener.mouseClicked(null);
 	}
 	
@@ -73,6 +67,7 @@ public class ClickDateMouseListenerTest {
 		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 4, 3), "MyCompany", new MonthPanel(Month.APRIL, 2015, "MyCompany", userInterface));
 		clickDateMouseListener.mouseClicked(null);
 		UserResponse userResponse = userInterface.getEmployeeByUserName("MyCompany", "mmustermann");
+		assertNotNull(userResponse);
 		userInterface.deleteAbsences("MyCompany", "mmustermann", "03-04-2015", "06-04-2015");
 		userInterface.removeEmployee(userResponse.getCompany(), userResponse.getUsername());
 	}

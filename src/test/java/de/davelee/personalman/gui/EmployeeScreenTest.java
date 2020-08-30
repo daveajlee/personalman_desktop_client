@@ -7,10 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
@@ -34,6 +35,7 @@ public class EmployeeScreenTest {
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
 		EmployeeScreen employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany");
+		assertNotNull(employeeScreen);
 		employeeScreen.removeEmployee();
 		employeeScreen.changeEmployeeValueInList();
 	}
@@ -49,6 +51,7 @@ public class EmployeeScreenTest {
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
 		EmployeeScreenMock employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany");
+		assertNotNull(employeeScreen);
 		employeeScreen.selectList();
 		employeeScreen.removeEmployee();
 		employeeScreen.changeEmployeeValueInList();
