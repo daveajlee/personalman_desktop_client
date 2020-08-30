@@ -1,6 +1,7 @@
 package de.davelee.personalman.gui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 
@@ -38,6 +39,7 @@ public class AddAbsenceScreenTest {
 		userInterfaceMock.setReasonNames(userInterface.getReasonNames());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
 		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany");
+		assertNotNull(screen);
 		screen.displayErrorOrDispose(true);
 	}
 	

@@ -8,6 +8,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import de.davelee.personalman.UserInterface;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
 /**
@@ -28,6 +30,7 @@ public class NextScreenMouseListenerTest {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
 		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.ABSENCE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
 	
@@ -40,6 +43,7 @@ public class NextScreenMouseListenerTest {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
 		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.EMPLOYEE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
 	
@@ -52,6 +56,7 @@ public class NextScreenMouseListenerTest {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
 		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(null, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
 
