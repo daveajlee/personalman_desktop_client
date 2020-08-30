@@ -1,4 +1,7 @@
 # personalman_java_client
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/075ae1f15c93484681188dddbf394b74)](https://app.codacy.com/manual/dave_33/personalman_desktop_client?utm_source=github.com&utm_medium=referral&utm_content=daveajlee/personalman_desktop_client&utm_campaign=Badge_Grade_Dashboard)
+
 This is a Java Client for PersonalMan which provides absence management for employees or volunteers. Please note that you need a running PersonalMan Server to use this client!
 
 ## Using the client
