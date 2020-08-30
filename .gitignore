@@ -27,7 +27,11 @@ hs_err_pid*
 /bin
 
 #eclipse files
+>>>>>>> development
 .classpath
 .project
 .settings
 
+#release files
+pom.xml.releaseBackup
+release.properties
