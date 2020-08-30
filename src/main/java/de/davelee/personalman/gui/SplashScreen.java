@@ -17,9 +17,6 @@ public class SplashScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private JLabel titleLabel;
-    private JLabel loadingLabel;
-    private JLabel copyrightLabel;
     
     private static final String FONT_FAMILY = "Arial";
     
@@ -59,7 +56,7 @@ public class SplashScreen extends JFrame {
         //Construct title panel to add to the centre panel.
         JPanel titlePanel = new JPanel();
         titlePanel.setBackground(Color.WHITE);
-        titleLabel = new JLabel("PersonalMan - Management Software");
+        JLabel titleLabel = new JLabel("PersonalMan - Management Software");
         titleLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 25));
         titlePanel.add(titleLabel);
         centrePanel.add(titlePanel);
@@ -75,7 +72,7 @@ public class SplashScreen extends JFrame {
         //Construct loading panel to add to the centre panel.
         JPanel loadingPanel = new JPanel();
         loadingPanel.setBackground(Color.WHITE);
-        loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
+        JLabel loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
         loadingLabel.setFont(new Font(FONT_FAMILY, Font.ITALIC, 15));
         loadingPanel.add(loadingLabel);
         centrePanel.add(loadingPanel);
@@ -83,7 +80,7 @@ public class SplashScreen extends JFrame {
         //Construct copyright panel to add to the centre panel.
         JPanel copyrightPanel = new JPanel();
         copyrightPanel.setBackground(Color.WHITE);
-        copyrightLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashCopyright());
+        JLabel copyrightLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashCopyright());
         copyrightLabel.setFont(new Font(FONT_FAMILY, Font.PLAIN, 10));
         copyrightPanel.add(copyrightLabel);
         centrePanel.add(copyrightPanel);

@@ -1,6 +1,11 @@
 package de.davelee.personalman;
 
-import de.davelee.personalman.api.*;
+import de.davelee.personalman.api.AbsenceRequest;
+import de.davelee.personalman.api.AbsenceResponse;
+import de.davelee.personalman.api.AbsencesResponse;
+import de.davelee.personalman.api.UserRequest;
+import de.davelee.personalman.api.UserResponse;
+import de.davelee.personalman.api.UsersResponse;
 import de.davelee.personalman.gui.ReasonNames;
 import de.davelee.personalman.gui.SplashScreen;
 import de.davelee.personalman.gui.UserInterfaceMessages;
@@ -15,11 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
-import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -52,12 +53,6 @@ public class UserInterface {
     private static final Logger LOG = LoggerFactory.getLogger(UserInterface.class);
 
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    
-    /**
-     * Create a new user interface - default constructor.
-     */
-    public UserInterface ( ) {  	
-    }
     
     /**
      * Retrieve the employee service to run tasks on employees.
@@ -354,7 +349,7 @@ public class UserInterface {
         }
         ss.dispose();
         String company = JOptionPane.showInputDialog(null, ui.getUserInterfaceMessages().getEmployeesCompanyMessage());
-        if ( company == null || company == "") {
+        if ( company == null || company.isEmpty()) {
         	System.exit(0);
 		}
         new WelcomeScreen(ui, company);

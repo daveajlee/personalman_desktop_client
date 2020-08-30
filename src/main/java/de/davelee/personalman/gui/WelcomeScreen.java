@@ -19,7 +19,6 @@ public class WelcomeScreen extends PersonalManBaseScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    private JLabel welcomeLabel;
 
     private String company;
     
@@ -48,7 +47,7 @@ public class WelcomeScreen extends PersonalManBaseScreen {
         //Construct logo panel to add to the centre panel.
         JPanel welcomePanel = new JPanel();
         welcomePanel.setBackground(Color.WHITE);
-        welcomeLabel = new JLabel(userInterface.getUserInterfaceMessages().getWelcomeMessage(), SwingConstants.CENTER);
+        JLabel welcomeLabel = new JLabel(userInterface.getUserInterfaceMessages().getWelcomeMessage(), SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 40));
         welcomePanel.add(welcomeLabel);
         JPanel logoPanel = new JPanel();

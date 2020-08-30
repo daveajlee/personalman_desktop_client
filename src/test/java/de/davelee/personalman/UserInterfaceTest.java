@@ -1,6 +1,9 @@
 package de.davelee.personalman;
 
-import de.davelee.personalman.api.*;
+import de.davelee.personalman.api.AbsenceResponse;
+import de.davelee.personalman.api.AbsencesResponse;
+import de.davelee.personalman.api.UserResponse;
+import de.davelee.personalman.api.UsersResponse;
 import de.davelee.personalman.service.AbsenceService;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeService;
@@ -8,8 +11,6 @@ import de.davelee.personalman.service.EmployeeServiceMock;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -27,8 +28,6 @@ public class UserInterfaceTest {
 	private static final String EMPLOYEE_USERNAME = "mmustermann";
 	private static final String REASON_DAY_IN_LIEU = "Day in Lieu";
 	private static final String REASON_HOLIDAY = "Holiday";
-	
-	private static final Logger LOG = LoggerFactory.getLogger(UserInterfaceTest.class);
 	
 	@Autowired
 	private UserInterface userInterface;

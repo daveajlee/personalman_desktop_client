@@ -12,12 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
 import de.davelee.personalman.service.AbsenceService;
-import de.davelee.personalman.service.EmployeeService;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
@@ -29,12 +27,6 @@ public class ClickDateMouseListenerTest {
 
 	@Autowired
 	private UserInterfaceMessages userInterfaceMessages;
-	
-	@Autowired
-	private AbsenceService absenceService;
-	
-	@Autowired
-	private EmployeeService employeeService;
 	
 	@Autowired
 	private ReasonNames reasonNames;

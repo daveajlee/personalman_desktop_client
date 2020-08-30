@@ -3,15 +3,9 @@ package de.davelee.personalman.service;
 import de.davelee.personalman.api.UserRequest;
 import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.api.UsersResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to provide service operations for employees in the PersonalMan program.

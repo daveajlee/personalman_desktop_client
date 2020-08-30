@@ -24,22 +24,12 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel employeeLabel;
 	private JComboBox<String> employeeBox;
-	private DefaultComboBoxModel<String> employeeModel;
-	private JLabel startDateLabel;
 	private JDateChooser startDateField;
-	private JLabel endDateLabel;
 	private JDateChooser endDateField;
-	private JLabel reasonLabel;
 	private JComboBox<String> reasonBox;
-        
-    private JButton addAbsenceButton;
-    private JButton closeButton;
     
     private static final String FONT_FAMILY = "Arial";
-
-	private String company;
     
     /**
      * Create a new add absence screen.
@@ -55,32 +45,30 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         JPanel absencePanel = new JPanel();
         absencePanel.setBackground(Color.WHITE);
         absencePanel.setLayout ( new GridLayout ( 4,2,5,5 ) );
-
-		this.company = company;
         
-        employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEmployeeMessage());
+        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEmployeeMessage());
         employeeLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(employeeLabel);
-        employeeModel = new DefaultComboBoxModel<String>();
+        DefaultComboBoxModel<String> employeeModel = new DefaultComboBoxModel<String>();
         for ( String employeeName : userInterface.getUserNames(company) ) {
         	employeeModel.addElement(employeeName);
         }
         employeeBox = new JComboBox<String>(employeeModel);
         absencePanel.add(employeeBox);
         
-        startDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesStartDateMessage());
+        JLabel startDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesStartDateMessage());
         startDateLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(startDateLabel);
         startDateField = new JDateChooser(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         absencePanel.add(startDateField);
         
-        endDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEndDateMessage());
+        JLabel endDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEndDateMessage());
         endDateLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(endDateLabel);
         endDateField = new JDateChooser(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         absencePanel.add(endDateField);
         
-        reasonLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesReasonMessage());
+        JLabel reasonLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesReasonMessage());
         reasonLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(reasonLabel);
         reasonBox = new JComboBox<String>(processReasonsToStringList());
@@ -92,7 +80,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         //Create button panel to display add absence and close buttons.
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
-        addAbsenceButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesAddButton());
+        JButton addAbsenceButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesAddButton());
         addAbsenceButton.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent e ) {
             	LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -103,7 +91,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
             }
         });
         buttonPanel.add(addAbsenceButton);
-        closeButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesCloseButton());
+        JButton closeButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesCloseButton());
         closeButton.addActionListener(new ActionListener() {
         	public void actionPerformed ( ActionEvent e ) {
         		dispose();
