@@ -1,5 +1,6 @@
 package de.davelee.personalman.gui;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 /**
  * This class tests the functionality of the NextScreenMouseListener using some features of the mock object.
  * @author Dave Lee

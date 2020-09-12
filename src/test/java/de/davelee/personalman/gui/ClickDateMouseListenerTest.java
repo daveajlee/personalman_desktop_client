@@ -7,6 +7,7 @@ import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeServiceMock;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 /**
  * This class tests the functionality of the ClickDateMouseListener using the ClickDateMouseListenerMock object.
  * @author Dave Lee

@@ -2,6 +2,7 @@ package de.davelee.personalman.gui;
 
 import de.davelee.personalman.service.EmployeeServiceMock;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 /**
  * Test the employee screen to check that it can be built and displayed successfully.
  * @author Dave Lee

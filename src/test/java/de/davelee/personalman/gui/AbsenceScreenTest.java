@@ -5,6 +5,7 @@ import de.davelee.personalman.UserInterfaceMock;
 import de.davelee.personalman.service.AbsenceServiceMock;
 import de.davelee.personalman.service.EmployeeServiceMock;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 /**
  * Test the absence screen to ensure that the GUI functions work as expected.
  * @author Dave Lee
