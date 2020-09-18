@@ -30,7 +30,7 @@ public class UserResponseTest {
 		assertEquals(userResponse.getLeaveEntitlementPerYear(), 26);
 		assertEquals(userResponse.getPosition(), POSITION);
 		assertEquals(userResponse.getStartDate(), "27-02-2015");
-		assertEquals(userResponse.toString(), "firstName=Max,surname=Mustermann,username=mmustermann,startDate=27-02-2015,position=Tester,workingDays=Saturday, Sunday,leaveEntitlementPerYear=26,company=MyCompany");
+		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015)", userResponse.toString());
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class UserResponseTest {
 		assertEquals(userResponse.getPosition(), POSITION);
 		assertEquals(userResponse.getStartDate(), "27-02-2015");
 		assertEquals(userResponse.getCompany(), "MyCompany");
-		assertEquals(userResponse.toString(), "firstName=Max,surname=Mustermann,username=mmustermann,startDate=27-02-2015,position=Tester,workingDays=Saturday, Sunday,leaveEntitlementPerYear=26,company=MyCompany");
+		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015)", userResponse.toString());
 	}
 
 }

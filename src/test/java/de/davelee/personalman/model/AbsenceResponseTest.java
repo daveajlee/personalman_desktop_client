@@ -25,7 +25,7 @@ public class AbsenceResponseTest {
 		assertEquals(absence.getStartDate(), "03-04-2015");
 		assertEquals(absence.getEndDate(), "06-04-2015");
 		assertEquals(absence.getCategory(), "Federal Holiday");
-		assertEquals(absence.toString(), "username=mmustermann,startDate=03-04-2015,endDate=06-04-2015,category=Federal Holiday,company=MyCompany");
+		assertEquals("AbsenceResponse(company=MyCompany, username=mmustermann, startDate=03-04-2015, endDate=06-04-2015, category=Federal Holiday)", absence.toString());
 	}
 	
 	@Test
@@ -40,7 +40,7 @@ public class AbsenceResponseTest {
 		absence.setEndDate("06-04-2015");
 		absence.setCategory("Federal Holiday");
 		absence.setCompany("MyCompany");
-		assertEquals(absence.toString(), "username=mmustermann,startDate=03-04-2015,endDate=06-04-2015,category=Federal Holiday,company=MyCompany");
+		assertEquals("AbsenceResponse(company=MyCompany, username=mmustermann, startDate=03-04-2015, endDate=06-04-2015, category=Federal Holiday)", absence.toString());
 	}
 
 }

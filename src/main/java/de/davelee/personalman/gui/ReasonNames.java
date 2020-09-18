@@ -1,11 +1,13 @@
 package de.davelee.personalman.gui;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Parameter class for localisation of reason text.
  * @author Dave Lee
  */
+@Component
 public class ReasonNames {
 
 	@Value("${reason.ill}")

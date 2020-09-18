@@ -10,9 +10,9 @@
 	<url>http://maven.apache.org</url>
 
 	<parent>
-		<groupId>de.davelee</groupId>
-		<artifactId>ci-springboot-parent-pom</artifactId>
-		<version>2.2.0</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.3.RELEASE</version>
 	</parent>
 	
 	<!-- Git Connection -->
@@ -33,49 +33,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>5.2.3.RELEASE</spring.version>
 		<java.version>11</java.version>
 	</properties>
 
 	<build>
 		<finalName>personalman_desktop_client</finalName>
-		<plugins>
-			<!-- For copying the libraries to the output directory -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- Create the executable jar -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>de.davelee.personalman.UserInterface</mainClass>
-							<useUniqueVersions>false</useUniqueVersions>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
 	</build>
 
 	<dependencies>
@@ -83,38 +45,27 @@
 		<!-- Use the PersonalMan JSON API -->
 		<dependency>
 			<groupId>de.davelee.personalman</groupId>
-			<artifactId>personalman_rest_api</artifactId>
-			<version>1.1.0</version>
+			<artifactId>personalman-java-api</artifactId>
+			<version>1.2.1-SNAPSHOT</version>
 		</dependency>
 
-		<!-- Spring Dependencies -->
+		<!-- Add dependency to enable context i.e. spring-boot-starter-web -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- As dependency also include the spring boot starter test project since projects must have tests! -->
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>28.2-jre</version>
-		</dependency>
-
+		<!-- Show a fancy calendar -->
 		<dependency>
 			<groupId>com.toedter</groupId>
 			<artifactId>jcalendar</artifactId>
-			<version>1.3.2</version>
+			<version>1.4</version>
 		</dependency>
 
 		<!-- Jackson JSON Dependencies -->

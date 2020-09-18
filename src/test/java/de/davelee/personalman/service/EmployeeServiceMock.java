@@ -23,12 +23,12 @@ public class EmployeeServiceMock extends EmployeeService {
 	 */
 	public UsersResponse findByCompany ( final String company ) {
 		if ( "MyCompany".equalsIgnoreCase(company) ) {
-			UsersResponse usersResponse = new UsersResponse();
 			UserResponse[] employees = new UserResponse[2];
 			employees[0] = employee;
 			employees[1] = new UserResponse("John", "Smith", "jsmith", "MyCompany", 30, "Monday, Tuesday", "Producer", "01-03-2015");
-			usersResponse.setUserResponses(employees);
-			return usersResponse;
+			return UsersResponse.builder()
+					.userResponses(employees)
+					.build();
 		} else {
 			return null;
 		}

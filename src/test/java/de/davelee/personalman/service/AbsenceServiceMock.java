@@ -46,7 +46,6 @@ public class AbsenceServiceMock extends AbsenceService {
 	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year.
 	 */
 	public AbsencesResponse findByNameAndYear(final String company, final String name, final int year) {
-		AbsencesResponse absencesResponse = new AbsencesResponse();
 		List<AbsenceResponse> absences = new ArrayList<>();
 		if ( name.contentEquals(EMPLOYEE_NAME) && year == 2015) {
 			absences.add(new AbsenceResponse("MyCompany", EMPLOYEE_NAME, "03-04-2015", "06-04-2015", "Federal Holiday"));
@@ -69,7 +68,6 @@ public class AbsenceServiceMock extends AbsenceService {
 			AbsenceResponse absenceResponse8 = new AbsenceResponse("MyCompany", EMPLOYEE_NAME, "05-06-2017", "08-06-2017", "Conference");
 			absences.add(absenceResponse8);
 		}
-		absencesResponse.setAbsenceResponseList(absences);
 		HashMap<String, Integer> statisticsMap = new HashMap<>();
 		if ( year == 2015 ) {
 			statisticsMap.put("Day in Lieu", 0);
@@ -93,8 +91,10 @@ public class AbsenceServiceMock extends AbsenceService {
 			statisticsMap.put("Conference", 4);
 			statisticsMap.put("Federal Holiday", 0);
 		}
-		absencesResponse.setStatisticsMap(statisticsMap);
-		return absencesResponse;
+		return AbsencesResponse.builder()
+				.absenceResponseList(absences)
+				.statisticsMap(statisticsMap)
+				.build();
 	}
 
 	/**

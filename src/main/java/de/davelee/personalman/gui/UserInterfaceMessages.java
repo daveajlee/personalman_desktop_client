@@ -1,11 +1,13 @@
 package de.davelee.personalman.gui;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Parameter class for localisation of messages in the user interface.
  * @author Dave Lee
  */
+@Component
 public class UserInterfaceMessages {
 
 	@Value("${message.welcome}")
