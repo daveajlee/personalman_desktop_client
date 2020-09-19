@@ -72,8 +72,6 @@ public class UserInterfaceMessages {
 	private String absencesReasonMessage;
 	@Value("${message.stats.title}")
 	private String statisticsTitleMessage;
-	@Value("${splash.image}")
-	private String splashImage;
 	@Value("${splash.title}")
 	private String splashTitle;
 	@Value("${splash.copyright}")
@@ -581,22 +579,6 @@ public class UserInterfaceMessages {
 	 */
 	public void setStatisticsTitleMessage(final String statisticsTitleMessage) {
 		this.statisticsTitleMessage = statisticsTitleMessage;
-	}
-
-	/**
-	 * Return the localisation path for the image on the splash screen.
-	 * @return a <code>String</code> containing the localisation path for the image on the splash screen.
-	 */
-	public String getSplashImage() {
-		return splashImage;
-	}
-
-	/**
-	 * Set the localisation path for the image on the splash screen.
-	 * @param splashImage a <code>String</code> containing the localisation path for the image on the splash screen.
-	 */
-	public void setSplashImage(final String splashImage) {
-		this.splashImage = splashImage;
 	}
 
 	/**

@@ -17,8 +17,8 @@ public class SplashScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-    
-    private static final String FONT_FAMILY = "Arial";
+
+    private JLabel loadingLabel;
     
     /**
      * Create a new splash screen.
@@ -48,43 +48,28 @@ public class SplashScreen extends JFrame {
         //Construct logo panel to add to the centre panel.
         JPanel logoPanel = new JPanel();
         logoPanel.setBackground(Color.WHITE);
-        ImageIcon logoImage = new ImageIcon(SplashScreen.class.getResource("/images/PersonalManlogo.png"));
-        JLabel logoLabel = new JLabel("", logoImage, JLabel.CENTER);
-        logoPanel.add(logoLabel);
+        ImageDisplay logoDisplay = new ImageDisplay("images/personalmanlogo.png", 0, 0);
+        logoDisplay.setSize(984,493);
+        logoDisplay.setBackground(Color.WHITE);
+        logoPanel.add(logoDisplay);
         centrePanel.add(logoPanel);
-        
-        //Construct title panel to add to the centre panel.
-        JPanel titlePanel = new JPanel();
-        titlePanel.setBackground(Color.WHITE);
-        JLabel titleLabel = new JLabel("PersonalMan - Management Software");
-        titleLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 25));
-        titlePanel.add(titleLabel);
-        centrePanel.add(titlePanel);
-        
-        //Construct graphics panel to add to the centre panel.
-        JPanel personPanel = new JPanel();
-        personPanel.setBackground(Color.WHITE);
-        ImageIcon personImage = new ImageIcon(SplashScreen.class.getResource(userInterface.getUserInterfaceMessages().getSplashImage()));
-        JLabel personLabel = new JLabel("", personImage, JLabel.CENTER);
-        personPanel.add(personLabel);
-        centrePanel.add(personPanel);
-        
+
         //Construct loading panel to add to the centre panel.
         JPanel loadingPanel = new JPanel();
         loadingPanel.setBackground(Color.WHITE);
-        JLabel loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
-        loadingLabel.setFont(new Font(FONT_FAMILY, Font.ITALIC, 15));
+        loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
+        loadingLabel.setFont(new Font("Arial", Font.ITALIC, 15));
         loadingPanel.add(loadingLabel);
         centrePanel.add(loadingPanel);
-        
+
         //Construct copyright panel to add to the centre panel.
         JPanel copyrightPanel = new JPanel();
         copyrightPanel.setBackground(Color.WHITE);
         JLabel copyrightLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashCopyright());
-        copyrightLabel.setFont(new Font(FONT_FAMILY, Font.PLAIN, 10));
+        copyrightLabel.setFont(new Font("Arial", Font.PLAIN, 10));
         copyrightPanel.add(copyrightLabel);
         centrePanel.add(copyrightPanel);
-        
+
         c.add(centrePanel, BorderLayout.CENTER);
         
         //Position the screen at the center of the screen.
