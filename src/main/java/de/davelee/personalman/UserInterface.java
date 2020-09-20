@@ -317,42 +317,14 @@ public class UserInterface {
      * Confirm and exit the PersonalMan program.
      */
     public void exit ( ) {
+		ImageIcon imageIcon = new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png"));
         //Confirm user did wish to exit.
         int result = JOptionPane.showOptionDialog(currentFrame, getUserInterfaceMessages().getExitMessage(), 
         		getUserInterfaceMessages().getExitTitleMessage(), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, 
-        		null, new String[] { getUserInterfaceMessages().getYesMessage(), getUserInterfaceMessages().getNoMessage() }, getUserInterfaceMessages().getNoMessage());
+        		imageIcon, new String[] { getUserInterfaceMessages().getYesMessage(), getUserInterfaceMessages().getNoMessage() }, getUserInterfaceMessages().getNoMessage());
         if ( result == JOptionPane.YES_OPTION ) {
             System.exit(0);
         }
-    }
-    
-    /**
-     * Main method to run the PersonalMan program.
-     * @param args a <code>String</code> array which is not presently being used.
-     */
-    public static void main ( String[] args ) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        } catch ( Exception e ) {
-        	LOG.warn("Unable to set look and feel in Java", e);
-        }
-        // Load the application context
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext( "classpath:applicationContext.xml" );
-        UserInterface ui = (UserInterface) applicationContext.getBean(UserInterface.class);
-        ui.determineLocale(ui.getLocaleLanguage());
-        //Display splash screen to the user.
-        SplashScreen ss = new SplashScreen(ui);
-        try {
-        	Thread.sleep(2000);
-        } catch ( InterruptedException ie ) { 
-        	LOG.warn("Thread interrupted - continuing program without display", ie);
-        }
-        ss.dispose();
-        String company = JOptionPane.showInputDialog(null, ui.getUserInterfaceMessages().getEmployeesCompanyMessage());
-        if ( company == null || company.isEmpty()) {
-        	System.exit(0);
-		}
-        new WelcomeScreen(ui, company);
     }
     
 }

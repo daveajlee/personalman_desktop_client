@@ -52,9 +52,10 @@ public class WelcomeScreen extends PersonalManBaseScreen {
         welcomePanel.add(welcomeLabel);
         JPanel logoPanel = new JPanel();
         logoPanel.setBackground(Color.WHITE);
-        ImageIcon logoImage = new ImageIcon(SplashScreen.class.getResource("/images/PersonalManlogo.png"));
-        JLabel logoLabel = new JLabel("", logoImage, JLabel.CENTER);
-        logoPanel.add(logoLabel);
+        ImageDisplay logoDisplay = new ImageDisplay("images/personalmanlogo-small.png", 0, 0);
+        logoDisplay.setSize(162,81);
+        logoDisplay.setBackground(Color.WHITE);
+        logoPanel.add(logoDisplay);
         welcomePanel.add(logoPanel);
         topPanel.add(welcomePanel);
         
