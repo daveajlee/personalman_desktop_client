@@ -60,17 +60,5 @@ public class ImageDisplay extends Canvas {
         g.fillRect(-1000,-1000,2000,2000);
         paint ( g );
     }
-    
-    /**
-     * Move the image on the screen.
-     * @param leftBorder a <code>int</code> with the left part of the border.
-     * @param topBorder a <code>int</code> with the top part of the border.
-     */
-    public void moveImage ( int leftBorder, int topBorder ) {
-        this.leftBorder = leftBorder;
-        this.topBorder = topBorder;
-        repaint();
-    }
-    
-    
+
 }
