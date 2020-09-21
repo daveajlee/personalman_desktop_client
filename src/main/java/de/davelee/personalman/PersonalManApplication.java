@@ -1,7 +1,7 @@
 package de.davelee.personalman;
 
+import de.davelee.personalman.gui.LoginScreen;
 import de.davelee.personalman.gui.SplashScreen;
-import de.davelee.personalman.gui.WelcomeScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -44,11 +44,8 @@ public class PersonalManApplication {
             LOG.warn("Thread interrupted - continuing program without display", ie);
         }
         ss.dispose();
-        String company = JOptionPane.showInputDialog(null, ui.getUserInterfaceMessages().getEmployeesCompanyMessage());
-        if ( company == null || company.isEmpty()) {
-            System.exit(0);
-        }
-        new WelcomeScreen(ui, company);
+
+        new LoginScreen(ui);
     }
 
 }

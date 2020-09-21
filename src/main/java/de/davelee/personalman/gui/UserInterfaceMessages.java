@@ -3,6 +3,8 @@ package de.davelee.personalman.gui;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Parameter class for localisation of messages in the user interface.
  * @author Dave Lee
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserInterfaceMessages {
 
+	@Value("#{'${supported.companies}'.split(',')}")
+	private List<String> supportedCompaniesList;
 	@Value("${message.welcome}")
 	private String welcomeMessage;
 	@Value("${image.employees}")
@@ -676,5 +680,20 @@ public class UserInterfaceMessages {
 	public void setToTakeMessage(final String toTakeMessage) {
 		this.toTakeMessage = toTakeMessage;
 	}
-	
+
+	/**
+	 * Return the list of supported companies in the user interface.
+	 * @return a <code>List</code> of <code>String</code> objects containing the names of the supported companies.
+	 */
+	public List<String> getSupportedCompaniesList() {
+		return supportedCompaniesList;
+	}
+
+	/**
+	 * Set the list of supported companies in the user interface.
+	 * @param supportedCompaniesList a <code>List</code> of <code>String</code> objects containing the names of the supported companies.
+	 */
+	public void setSupportedCompaniesList(final List<String> supportedCompaniesList) {
+		this.supportedCompaniesList = supportedCompaniesList;
+	}
 }
