@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * Class to display the login screen to the PersonalMan program.
  * @author Dave Lee
  */
-public class LoginScreen extends PersonalManBaseScreen {
+public class RegisterScreen extends PersonalManBaseScreen {
 
     /**
      *
@@ -19,65 +19,65 @@ public class LoginScreen extends PersonalManBaseScreen {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Create a new login screen.
+     * Create a new register screen.
      * @param userInterface a <code>UserInterface</code> object with the current user interface.
      */
-    public LoginScreen (final UserInterface userInterface ) {
+    public RegisterScreen(final UserInterface userInterface ) {
 
         super(userInterface);
 
         //Create top, centre and bottom panels to add things to.
         JPanel topPanel = new JPanel();
-        JPanel centrePanel = new JPanel(new GridLayout(3,1,5,5));
+        JPanel centrePanel = new JPanel(new GridLayout(6,2,5,5));
         JPanel bottomPanel = new JPanel();
         topPanel.setBackground(Color.WHITE);
         centrePanel.setBackground(Color.WHITE);
         bottomPanel.setBackground(Color.WHITE);
 
         //Construct logo panel to add to the top panel.
-        JPanel welcomePanel = new JPanel();
-        welcomePanel.setBackground(Color.WHITE);
-        JLabel welcomeLabel = new JLabel(userInterface.getUserInterfaceMessages().getWelcomeMessage(), SwingConstants.CENTER);
-        welcomeLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 40));
-        welcomePanel.add(welcomeLabel);
+        JPanel headingPanel = new JPanel();
+        headingPanel.setBackground(Color.WHITE);
+        JLabel headingLabel = new JLabel(userInterface.getUserInterfaceMessages().getRegisterMessage(), SwingConstants.CENTER);
+        headingLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 40));
+        headingPanel.add(headingLabel);
         JPanel logoPanel = new JPanel();
         logoPanel.setBackground(Color.WHITE);
         ImageDisplay logoDisplay = new ImageDisplay("images/personalmanlogo-small.png", 0, 0);
         logoDisplay.setSize(162,81);
         logoDisplay.setBackground(Color.WHITE);
         logoPanel.add(logoDisplay);
-        welcomePanel.add(logoPanel);
-        topPanel.add(welcomePanel);
+        headingPanel.add(logoPanel);
+        topPanel.add(headingPanel);
 
-        //Construct company panel to add to the centre panel.
-        JPanel companyPanel = new JPanel();
-        companyPanel.setLayout ( new BoxLayout ( companyPanel, BoxLayout.LINE_AXIS ) );
-        companyPanel.setBackground(Color.WHITE);
-        JLabel companyLabel = new JLabel("Company:", JLabel.CENTER);
-        companyPanel.add(companyLabel);
+        //Add first name.
+        centrePanel.add(new JLabel("First Name:", JLabel.CENTER));
+        JTextField firstNameField = new JTextField();
+        centrePanel.add(firstNameField);
+
+        //Add surname.
+        centrePanel.add(new JLabel("Surname:", JLabel.CENTER));
+        JTextField surnameField = new JTextField();
+        centrePanel.add(surnameField);
+
+        //Add company.
+        centrePanel.add(new JLabel("Company:", JLabel.CENTER));
         JComboBox<String> companyBox = new JComboBox(userInterface.getUserInterfaceMessages().getSupportedCompaniesList().toArray());
-        companyPanel.add(companyBox);
-        centrePanel.add(companyPanel);
+        centrePanel.add(companyBox);
 
-        //Construct username panel to add to the centre panel.
-        JPanel usernamePanel = new JPanel();
-        usernamePanel.setLayout ( new BoxLayout ( usernamePanel, BoxLayout.LINE_AXIS ) );
-        usernamePanel.setBackground(Color.WHITE);
-        JLabel usernameLabel = new JLabel("Username:", JLabel.CENTER);
-        usernamePanel.add(usernameLabel);
+        //Add username.
+        centrePanel.add(new JLabel("Username:", JLabel.CENTER));
         JTextField usernameField = new JTextField();
-        usernamePanel.add(usernameField);
-        centrePanel.add(usernamePanel);
+        centrePanel.add(usernameField);
 
-        //Construct password panel to add to the centre panel.
-        JPanel passwordPanel = new JPanel();
-        passwordPanel.setLayout ( new BoxLayout ( passwordPanel, BoxLayout.LINE_AXIS ) );
-        passwordPanel.setBackground(Color.WHITE);
-        JLabel passwordLabel = new JLabel("Password:", JLabel.CENTER);
-        passwordPanel.add(passwordLabel);
+        //Add password.
+        centrePanel.add(new JLabel("Password:", JLabel.CENTER));
         JTextField passwordField = new JPasswordField();
-        passwordPanel.add(passwordField);
-        centrePanel.add(passwordPanel);
+        centrePanel.add(passwordField);
+
+        //Add confirm password.
+        centrePanel.add(new JLabel("Confirm Password:", JLabel.CENTER));
+        JTextField confirmPasswordField = new JPasswordField();
+        centrePanel.add(confirmPasswordField);
 
         //Create footer panel with button panel and register panel.
         JPanel footerPanel = new JPanel();
@@ -87,12 +87,29 @@ public class LoginScreen extends PersonalManBaseScreen {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
         buttonPanel.setBackground(Color.WHITE);
-        JButton loginButton = new JButton("Login");
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //First confirm that the passwords are equal.
+                if ( !passwordField.getText().contentEquals(confirmPasswordField.getText())) {
+                    ImageIcon imageIcon = new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png"));
+                    JOptionPane.showMessageDialog(RegisterScreen.this, "The passwords entered do not match. Please verify and submit your registration request again.",
+                            "Passwords do not match", JOptionPane.ERROR_MESSAGE, imageIcon);
+                }
+                else {
+                    dispose();
+                    new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString());
+                }
+            }
+        });
+        buttonPanel.add(registerButton);
+        JButton loginButton = new JButton("Back to login screen");
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString());
+                new LoginScreen(userInterface);
             }
         });
         buttonPanel.add(loginButton);
@@ -105,21 +122,6 @@ public class LoginScreen extends PersonalManBaseScreen {
         });
         buttonPanel.add(exitButton);
         footerPanel.add(buttonPanel);
-        //Create register panel with message and button.
-        JPanel registerPanel = new JPanel();
-        registerPanel.setLayout(new BoxLayout(registerPanel, BoxLayout.LINE_AXIS));
-        registerPanel.setBackground(Color.WHITE);
-        registerPanel.add(new JLabel("Not yet registered for PersonalMan?"));
-        JButton registerButton = new JButton(("Register"));
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new RegisterScreen(userInterface);
-            }
-        });
-        registerPanel.add(registerButton);
-        footerPanel.add(registerPanel);
         bottomPanel.add(footerPanel);
 
         //Add centre and bottom panels to container.
