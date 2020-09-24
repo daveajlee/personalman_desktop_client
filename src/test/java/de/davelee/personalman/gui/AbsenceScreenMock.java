@@ -26,9 +26,10 @@ public class AbsenceScreenMock extends AbsenceScreen {
 	 * @param ui a <code>UserInterface</code> object with the current user interface.
 	 * @param date a <code>LocalDate</code> object with the date to display absences for.
 	 * @param company a <code>String</code> with the company that the user is associated with.
+	 * @param username a <code>String</code> containing the username to display absences for.
 	 */
-	public AbsenceScreenMock ( final UserInterface ui, final LocalDate date, final String company ) {
-		super(ui, date, company);
+	public AbsenceScreenMock ( final UserInterface ui, final LocalDate date, final String company, final String username ) {
+		super(ui, date, company, username);
 	}
 
 	/**

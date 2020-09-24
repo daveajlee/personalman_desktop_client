@@ -31,7 +31,7 @@ public class NextScreenMouseListenerTest {
 	public void testAbsenceScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
-		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.ABSENCE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.ABSENCE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany", "testadmin"), "MyCompany", "testadmin");
 		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
@@ -44,7 +44,7 @@ public class NextScreenMouseListenerTest {
 	public void testEmployeeScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
-		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.EMPLOYEE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(ScreenType.EMPLOYEE_SCREEN, userInterface, new WelcomeScreen(userInterface, "MyCompany", "testadmin"), "MyCompany", "testadmin");
 		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
@@ -57,7 +57,7 @@ public class NextScreenMouseListenerTest {
 	public void testNullScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
-		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(null, userInterface, new WelcomeScreen(userInterface, "MyCompany"), "MyCompany");
+		NextScreenMouseListener nextScreenMouseListener = new NextScreenMouseListenerMock(null, userInterface, new WelcomeScreen(userInterface, "MyCompany", "testadmin"), "MyCompany", "testadmin");
 		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}

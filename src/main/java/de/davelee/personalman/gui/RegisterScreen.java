@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 /**
  * Class to display the login screen to the PersonalMan program.
@@ -28,7 +29,7 @@ public class RegisterScreen extends PersonalManBaseScreen {
 
         //Create top, centre and bottom panels to add things to.
         JPanel topPanel = new JPanel();
-        JPanel centrePanel = new JPanel(new GridLayout(6,2,5,5));
+        JPanel centrePanel = new JPanel(new GridLayout(7,2,5,5));
         JPanel bottomPanel = new JPanel();
         topPanel.setBackground(Color.WHITE);
         centrePanel.setBackground(Color.WHITE);
@@ -79,6 +80,11 @@ public class RegisterScreen extends PersonalManBaseScreen {
         JTextField confirmPasswordField = new JPasswordField();
         centrePanel.add(confirmPasswordField);
 
+        //Add role.
+        centrePanel.add(new JLabel("Role:", JLabel.CENTER));
+        JComboBox<String> roleBox = new JComboBox<String>(java.util.List.of("Employee", "Admin").toArray(new String[2]));
+        centrePanel.add(roleBox);
+
         //Create footer panel with button panel and register panel.
         JPanel footerPanel = new JPanel();
         footerPanel.setLayout(new BoxLayout(footerPanel, BoxLayout.PAGE_AXIS));
@@ -93,13 +99,14 @@ public class RegisterScreen extends PersonalManBaseScreen {
             public void actionPerformed(ActionEvent e) {
                 //First confirm that the passwords are equal.
                 if ( !passwordField.getText().contentEquals(confirmPasswordField.getText())) {
-                    ImageIcon imageIcon = new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png"));
                     JOptionPane.showMessageDialog(RegisterScreen.this, "The passwords entered do not match. Please verify and submit your registration request again.",
-                            "Passwords do not match", JOptionPane.ERROR_MESSAGE, imageIcon);
+                            "Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png")));
                 }
                 else {
                     dispose();
-                    new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString());
+                    JOptionPane.showMessageDialog(RegisterScreen.this, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
+                            "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png")));
+                    new LoginScreen(userInterface);
                 }
             }
         });

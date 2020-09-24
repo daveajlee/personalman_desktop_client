@@ -1,5 +1,6 @@
 package de.davelee.personalman.service;
 
+import java.net.ConnectException;
 import java.util.List;
 
 import de.davelee.personalman.api.AbsenceRequest;
@@ -43,11 +44,16 @@ public class AbsenceService {
 	 * Find absences taking place on the specified date.
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param date a <code>String</code> with the specified date in format dd-MM-yyyy.
-	 * @return a <code>List</code> of <code>AbsenceResponse</code> objects containing all absences for the specified date.
+	 * @return a <code>List</code> of <code>AbsenceResponse</code> objects containing all absences for the specified date which is null if server
+	 * is not reachable.
 	 */
 	public List<AbsenceResponse> findByDate ( final String company, final String date ) {
-		return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date,
-				AbsencesResponse.class).getAbsenceResponseList();
+		try {
+			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date,
+					AbsencesResponse.class).getAbsenceResponseList();
+		} catch ( Exception exception ) {
+			return null;
+		}
 	}
 	
 	/**
@@ -55,11 +61,15 @@ public class AbsenceService {
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param userName a <code>String</code> with the name of the user to find absences for.
 	 * @param year a <code>int</code> with the desired year.
-	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year.
+	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year which is null if server is not reachable.
 	 */
 	public AbsencesResponse findByNameAndYear ( final String company, final String userName, final int year ) {
-		return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year,
-				AbsencesResponse.class);
+		try {
+			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year,
+					AbsencesResponse.class);
+		} catch ( Exception exception ) {
+			return null;
+		}
 	}
 	
 	/**

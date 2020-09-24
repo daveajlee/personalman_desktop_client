@@ -36,7 +36,7 @@ public class EmployeeScreenTest {
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
-		EmployeeScreen employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany");
+		EmployeeScreen employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany", "testadmin");
 		assertNotNull(employeeScreen);
 		employeeScreen.removeEmployee();
 		employeeScreen.changeEmployeeValueInList();
@@ -52,7 +52,7 @@ public class EmployeeScreenTest {
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
-		EmployeeScreenMock employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany");
+		EmployeeScreenMock employeeScreen = new EmployeeScreenMock(userInterfaceMock, "MyCompany", "testadmin");
 		assertNotNull(employeeScreen);
 		employeeScreen.selectList();
 		employeeScreen.removeEmployee();

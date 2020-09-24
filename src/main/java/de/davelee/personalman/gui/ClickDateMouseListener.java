@@ -6,8 +6,7 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.List;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import de.davelee.personalman.api.AbsenceResponse;
 import org.slf4j.Logger;
@@ -24,6 +23,7 @@ public class ClickDateMouseListener implements MouseListener {
 	private UserInterface userInterface;
 	private LocalDate localDate;
 	private String company;
+	private String username;
 	private MonthPanel monthPanel;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ClickDateMouseListener.class);
@@ -33,12 +33,14 @@ public class ClickDateMouseListener implements MouseListener {
 	 * @param userInterface a <code>UserInterface</code> object which currently manages the user interface.
 	 * @param localDate a <code>LocalDate</code> object representing the clickable date.
 	 * @param company a <code>String</code> with the company that the user is associated with.
+	 * @param username a <code>String</code> with the username which should be used when viewing or adding absences.
 	 * @param monthPanel a <code>MonthPanel</code> object representing the displayed month panel.
 	 */
-	public ClickDateMouseListener ( final UserInterface userInterface, final LocalDate localDate, final String company, final MonthPanel monthPanel ) {
+	public ClickDateMouseListener ( final UserInterface userInterface, final LocalDate localDate, final String company, final String username, final MonthPanel monthPanel ) {
 		this.userInterface = userInterface;
 		this.localDate = localDate;
 		this.company = company;
+		this.username = username;
 		this.monthPanel = monthPanel;
 	}
 	
@@ -48,19 +50,24 @@ public class ClickDateMouseListener implements MouseListener {
 	 */
 	public void mouseClicked(final MouseEvent event) {
 		List<AbsenceResponse> absenceResponses = userInterface.getAbsences(company, localDate.format(UserInterface.DATE_TIME_FORMATTER));
-		String text = "";
-		for ( AbsenceResponse absenceResponse : absenceResponses ) {
-			text += absenceResponse.getUsername() +
-					" " + absenceResponse.getCategory() + "\n";
-		}
-		if ( text.contentEquals("") ) {
-			text = userInterface.getUserInterfaceMessages().getAbsencesNoneMessage();
-		}
-		int result = showOptionDialog(text);
-		if ( result == JOptionPane.YES_OPTION || result == JOptionPane.OK_OPTION) {
-			createAddAbsenceScreen();
-		} else if ( result == JOptionPane.NO_OPTION ) {
-			userInterface.deleteAbsences(company, "", localDate.format(UserInterface.DATE_TIME_FORMATTER), localDate.format(UserInterface.DATE_TIME_FORMATTER));
+		if ( absenceResponses == null ) {
+			JOptionPane.showMessageDialog(null, "Could not reach PersonalMan server so no data can be displayed for this date!",
+					"Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png")));
+		} else {
+			String text = "";
+			for (AbsenceResponse absenceResponse : absenceResponses) {
+				text += absenceResponse.getUsername() +
+						" " + absenceResponse.getCategory() + "\n";
+			}
+			if (text.contentEquals("")) {
+				text = userInterface.getUserInterfaceMessages().getAbsencesNoneMessage();
+			}
+			int result = showOptionDialog(text);
+			if (result == JOptionPane.YES_OPTION || result == JOptionPane.OK_OPTION) {
+				createAddAbsenceScreen();
+			} else if (result == JOptionPane.NO_OPTION) {
+				userInterface.deleteAbsences(company, "", localDate.format(UserInterface.DATE_TIME_FORMATTER), localDate.format(UserInterface.DATE_TIME_FORMATTER));
+			}
 		}
 	}
 	
@@ -88,7 +95,7 @@ public class ClickDateMouseListener implements MouseListener {
 	 * Create a new add absence screen as a dialog.
 	 */
 	public void createAddAbsenceScreen ( ) {
-		new JDialog(new AddAbsenceScreen(userInterface, localDate, company), true);
+		new JDialog(new AddAbsenceScreen(userInterface, localDate, company, username), true);
 	}
 	
 	/**
@@ -96,7 +103,7 @@ public class ClickDateMouseListener implements MouseListener {
 	 * @param event a <code>MouseEvent</code> representing the mouse event.
 	 */
 	public void mouseExited(final MouseEvent event) {
-		LOG.info("mouseExited method for monthPanel is not implemented!");
+		// mouseExited method for monthPanel is not implemented!
 	}
 	
 	/**
@@ -104,7 +111,7 @@ public class ClickDateMouseListener implements MouseListener {
 	 * @param event a <code>MouseEvent</code> representing the mouse event.
 	 */
 	public void mouseEntered(final MouseEvent event) {
-		LOG.info("mouseEntered method for monthPanel is not implemented!");
+		// mouseEntered method for monthPanel is not implemented!
 	}
 	
 	/**
@@ -112,7 +119,7 @@ public class ClickDateMouseListener implements MouseListener {
 	 * @param event a <code>MouseEvent</code> representing the mouse event.
 	 */
 	public void mouseReleased(final MouseEvent event) {
-		LOG.info("mouseReleased method for monthPanel is not implemented!");
+		// mouseReleased method for monthPanel is not implemented!
 	}
 	
 	/**
@@ -120,7 +127,7 @@ public class ClickDateMouseListener implements MouseListener {
 	 * @param event a <code>MouseEvent</code> representing the mouse event.
 	 */
 	public void mousePressed(final MouseEvent event) {
-		LOG.info("mousePressed method for monthPanel is not implemented!");
+		// mousePressed method for monthPanel is not implemented!
 	}
 
 }

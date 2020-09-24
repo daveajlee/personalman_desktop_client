@@ -45,6 +45,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
     private JButton clearButton;
 
     private String company;
+    private String username;
     
     private static final String FONT_FAMILY = "Arial";
     
@@ -52,39 +53,46 @@ public class EmployeeScreen extends PersonalManBaseScreen {
      * Create a new employee screen.
      * @param ui a <code>UserInterface</code> object with the current user interface.
      * @param company a <code>String</code> with the company that the user is associated with.
+     * @param username a <code>String</code> with the username of the currently logged in admin user.
      */
-    public EmployeeScreen ( final UserInterface ui, final String company ) {
+    public EmployeeScreen ( final UserInterface ui, final String company, final String username ) {
         
         super(ui);
 
-        //Set the company to be used.
+        //Set the company and username to be used.
         this.company = company;
+        this.username = username;
 
         //Create employee panel.
         JPanel employeePanel = new JPanel();
         employeePanel.setBackground(Color.WHITE);
         employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.PAGE_AXIS ) );
-        
-        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesTitleMessage(), SwingConstants.CENTER);
-        employeeLabel.setFont(new Font(FONT_FAMILY, Font.BOLD + Font.ITALIC, 20));
-        employeePanel.add(employeeLabel);
-        JPanel listPanel = new JPanel();
-        listPanel.setBackground(Color.WHITE);
-        employeeModel = new DefaultListModel<String>();
-        for ( String userName : userInterface.getUserNames(company) ) {
-        	employeeModel.addElement(userName);
+
+        try {
+            JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesTitleMessage(), SwingConstants.CENTER);
+            employeeLabel.setFont(new Font(FONT_FAMILY, Font.BOLD + Font.ITALIC, 20));
+            employeePanel.add(employeeLabel);
+            JPanel listPanel = new JPanel();
+            listPanel.setBackground(Color.WHITE);
+            employeeModel = new DefaultListModel<String>();
+            for (String userName : userInterface.getUserNames(company)) {
+                employeeModel.addElement(userName);
+            }
+            employeeList = new JList<String>(employeeModel);
+            JScrollPane employeePane = new JScrollPane(employeeList,
+                    JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            employeeList.setVisibleRowCount(20);
+            employeeList.addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    changeEmployeeValueInList();
+                }
+            });
+
+            employeePanel.add(employeePane);
+        } catch ( Exception connectException ) {
+            employeePanel.add(new JLabel("Sorry! No server = no data!"));
         }
-        employeeList = new JList<String>(employeeModel);
-        JScrollPane employeePane = new JScrollPane(employeeList,
-        		JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        employeeList.setVisibleRowCount(20);
-        employeeList.addListSelectionListener(new ListSelectionListener() {
-        	public void valueChanged(ListSelectionEvent e) {
-        		changeEmployeeValueInList();
-        	}
-        });
-        
-        employeePanel.add(employeePane);
+
         screenPanel.add(employeePanel, BorderLayout.WEST);
         
         //Create a new editing panel.
@@ -246,7 +254,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
         welcomeScreenButton.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent e ) {
-                new WelcomeScreen(userInterface, company);
+                new WelcomeScreen(userInterface, company, username);
                 dispose();
             }
         });

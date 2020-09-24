@@ -24,24 +24,32 @@ public class AbsenceScreen extends PersonalManBaseScreen {
     
     private LocalDate date;
     private String company;
+    private String username;
     
     /**
      * Create a new absence screen.
      * @param ui a <code>UserInterface</code> object with the current user interface.
      * @param date a <code>LocalDate</code> object with the date to display absences for.
      * @param company a <code>String</code> with the company that the user is associated with.
+     * @param username a <code>String</code> containing the username to display absences for.
      */
-    public AbsenceScreen ( final UserInterface ui, final LocalDate date, final String company ) {
+    public AbsenceScreen ( final UserInterface ui, final LocalDate date, final String company, final String username ) {
         
         super(ui);
         this.date = date;
         this.company = company;
+
+        //Create label for heading.
+        JLabel headingLabel = new JLabel("Absences for user: " + username, JLabel.CENTER);
+        headingLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 20));
+        screenPanel.setBackground(Color.WHITE);
+        screenPanel.add(headingLabel, BorderLayout.NORTH);
         
         //Create month Panel.
         JPanel monthJPanel = new JPanel();
         monthJPanel.setBackground(Color.WHITE);
         monthJPanel.setLayout( new BoxLayout ( monthJPanel, BoxLayout.PAGE_AXIS ) );
-        monthPanel = new MonthPanel(date.getMonth(), date.getYear(), company, userInterface);
+        monthPanel = new MonthPanel(date.getMonth(), date.getYear(), company, username, userInterface);
         monthJPanel.setBackground(Color.WHITE);
         monthJPanel.add(monthPanel);
         JPanel buttonPanel = new JPanel();
@@ -64,7 +72,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         screenPanel.add(monthJPanel);
         
         //Create employee panel.
-        JPanel employeePanel = new JPanel();
+        /*JPanel employeePanel = new JPanel();
         employeePanel.setBackground(Color.WHITE);
         employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.LINE_AXIS ) );
         
@@ -73,9 +81,13 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         employeePanel.add(employeeLabel);
         JPanel comboBoxPanel = new JPanel();
         comboBoxPanel.setBackground(Color.WHITE);
-        employeeBox = new JComboBox<String>(userInterface.getUserNames(company));
-        comboBoxPanel.add(employeeBox);
-        employeePanel.add(comboBoxPanel);
+        try {
+            employeeBox = new JComboBox<String>(userInterface.getUserNames(company));
+            comboBoxPanel.add(employeeBox);
+            employeePanel.add(comboBoxPanel);
+        } catch ( ConnectException connectionException ) {
+            employeePanel.add(new JLabel("Sorry! Server is not currently reachable so no data can be displayed."));
+        }*/
         JPanel bottomButtonPanel = new JPanel(new GridLayout(2,2,5,5));
         bottomButtonPanel.setBackground(Color.WHITE);
         JButton viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
@@ -85,16 +97,16 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         	}
         });
         bottomButtonPanel.add(viewStatisticsButton);
-        JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
-        welcomeScreenButton.addActionListener ( new ActionListener() {
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener ( new ActionListener() {
             public void actionPerformed ( ActionEvent e ) {
-                new WelcomeScreen(userInterface, company);
+                new LoginScreen(userInterface);
                 dispose();
             }
         });
-        bottomButtonPanel.add(welcomeScreenButton);
-        employeePanel.add(bottomButtonPanel);
-        screenPanel.add(employeePanel, BorderLayout.SOUTH);
+        bottomButtonPanel.add(logoutButton);
+        //employeePanel.add(bottomButtonPanel);
+        screenPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
         
         container.add(screenPanel, BorderLayout.CENTER);
         
@@ -132,23 +144,14 @@ public class AbsenceScreen extends PersonalManBaseScreen {
     }
     
     /**
-     * Process the view statistics button ensuring that at least one employee is selected.
-     */
-    public void processViewStatisticsButton ( ) {
-    	if ( employeeBox.getSelectedItem() != null ) {
-    		showStatisticsDialog();
-		}
-    }
-    
-    /**
      * Display a JOptionPane Dialog with the statistics information. This is implemented in a separate
      * method to allow overwrite by JUnit tests.
      */
-    public void showStatisticsDialog ( ) {
+    public void processViewStatisticsButton ( ) {
     	JOptionPane.showMessageDialog(AbsenceScreen.this, 
-				userInterface.getStatistics(company, employeeBox.getSelectedItem().toString(), monthPanel.getYear()),
-				userInterface.getUserInterfaceMessages().getStatisticsTitleMessage() + employeeBox.getSelectedItem().toString() + " - " + monthPanel.getYear() 
-				, JOptionPane.INFORMATION_MESSAGE );
+				userInterface.getStatistics(company, username, monthPanel.getYear()),
+				userInterface.getUserInterfaceMessages().getStatisticsTitleMessage() + username + " - " + monthPanel.getYear()
+				, JOptionPane.INFORMATION_MESSAGE, new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png")) );
     }
     
 }

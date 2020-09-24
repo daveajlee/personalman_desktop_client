@@ -17,9 +17,11 @@ public class EmployeeScreenMock extends EmployeeScreen {
 	 * Create a new employee screen mock.
 	 * @param ui a <code>UserInterface</code> object with the current user interface.
 	 * @param company a <code>String</code> with the company that the user is associated with.
+	 * @param username a <code>String</code> with the username of the currently logged in admin user.
+	 *
 	 */
-	public EmployeeScreenMock ( final UserInterface ui, final String company ) {
-		super(ui, company);
+	public EmployeeScreenMock ( final UserInterface ui, final String company, final String username ) {
+		super(ui, company, username);
 	}
 
 	/**

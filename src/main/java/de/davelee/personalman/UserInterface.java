@@ -20,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import java.net.ConnectException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -167,7 +168,7 @@ public class UserInterface {
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>String</code> array with all usernames for this company.
 	 */
-	public String[] getUserNames(final String company) {
+	public String[] getUserNames(final String company) throws ConnectException {
 		UsersResponse usersResponse = employeeService.findByCompany(company);
 		if ( usersResponse == null ) {
 			return new String[0];
@@ -280,10 +281,14 @@ public class UserInterface {
 	 * @param company a <code>String</code> with the company that the user is associated with.
      * @param userName a <code>String</code> with the user name.
      * @param year a <code>int</code> with the year to find absences for.
-     * @return a formatted <code>String</code> with a reason-by-reason calculation of all absences for this employee for the supplied year.
+     * @return a formatted <code>String</code> with a reason-by-reason calculation of all absences for this employee for the supplied year
+	 * or a text if the server is not reachable.
      */
     public String getStatistics ( final String company, final String userName, final int year ) {
     	AbsencesResponse absencesResponse = absenceService.findByNameAndYear(company, userName, year);
+    	if ( absencesResponse == null ) {
+    		return "Could not reach PersonalMan server so no statistics can be displayed!";
+		}
     	StringBuilder returnTextBuilder = new StringBuilder();
     	returnTextBuilder.append("Illness: " + absencesResponse.getStatisticsMap().get("Illness") + " " + userInterfaceMessages.getDaysMessage() + "\n");
     	UserResponse userResponse = employeeService.findByUserName(company, userName);

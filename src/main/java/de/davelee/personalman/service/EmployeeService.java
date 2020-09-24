@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.ConnectException;
+
 /**
  * Class to provide service operations for employees in the PersonalMan program.
  * @author Dave Lee
@@ -50,7 +52,7 @@ public class EmployeeService {
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>UsersResponse</code> object representing all users associated with the particular company.
 	 */
-	public UsersResponse findByCompany ( final String company ) {
+	public UsersResponse findByCompany ( final String company ) throws ConnectException {
 		return restTemplate.getForObject(userServiceUrl + "s?company=" + company, UsersResponse.class);
 	}
 	

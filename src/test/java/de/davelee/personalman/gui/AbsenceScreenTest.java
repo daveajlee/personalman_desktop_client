@@ -42,7 +42,7 @@ public class AbsenceScreenTest {
 		userInterface.setEmployeeService(new EmployeeServiceMock());
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
 		userInterface.determineLocale("English");
-		AbsenceScreen screen = new AbsenceScreenMock(userInterface, LocalDate.of(2015, 2, 28), "MyCompany" );
+		AbsenceScreen screen = new AbsenceScreenMock(userInterface, LocalDate.of(2015, 2, 28), "MyCompany", "testuser" );
 		LocalDate date = screen.processPreviousMonthButton();
 		assertEquals(date.getMonthValue(), 1);
 		LocalDate date2 = screen.processNextMonthButton();
@@ -54,7 +54,7 @@ public class AbsenceScreenTest {
 		userInterfaceMock.setAbsenceService(new AbsenceServiceMock());
 		userInterfaceMock.setReasonNames(reasonNames);
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
-		AbsenceScreenMock screen2 = new AbsenceScreenMock(userInterfaceMock, LocalDate.of(2015, 2, 28), "MyCompany" );
+		AbsenceScreenMock screen2 = new AbsenceScreenMock(userInterfaceMock, LocalDate.of(2015, 2, 28), "MyCompany", "testuser" );
 		screen2.setSelectedEmployee();
 		screen2.processViewStatisticsButton();
 	}

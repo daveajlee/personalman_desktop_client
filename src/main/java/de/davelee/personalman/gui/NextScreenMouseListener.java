@@ -19,6 +19,7 @@ public class NextScreenMouseListener implements MouseListener {
 	private UserInterface userInterface;
 	private WelcomeScreen welcomeScreen;
 	private String company;
+	private String username;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(NextScreenMouseListener.class);
 	
@@ -28,13 +29,15 @@ public class NextScreenMouseListener implements MouseListener {
 	 * @param userInterface a <code>UserInterface</code> object representing the current user interface.
 	 * @param welcomeScreen a <code>WelcomeScreen</code> object representing the welcome screen to display to the user (if clicked).
 	 * @param company a <code>String</code> with the company that should be used in the client.
+	 * @param username a <code>String</code> with the username which may be null if no specific user info should be displayed.
 	 */
 	public NextScreenMouseListener ( final ScreenType screenType, final UserInterface userInterface, final WelcomeScreen welcomeScreen,
-									 final String company ) {
+									 final String company, final String username ) {
 		this.screenType = screenType;
 		this.userInterface = userInterface;
 		this.welcomeScreen = welcomeScreen;
 		this.company = company;
+		this.username = username;
 	}
 	
 	/**
@@ -58,14 +61,14 @@ public class NextScreenMouseListener implements MouseListener {
 	 * Create a new absence screen based on the user interface and the current date.
 	 */
 	public void createAbsenceScreen() {
-		new AbsenceScreen(userInterface, LocalDate.now(), company);
+		new AbsenceScreen(userInterface, LocalDate.now(), company, username);
 	}
 	
 	/**
 	 * Create a new employee screen based on the user interface.
 	 */
 	public void createEmployeeScreen() {
-		new EmployeeScreen(userInterface, company);
+		new EmployeeScreen(userInterface, company, username);
 	}
 	
 	/**

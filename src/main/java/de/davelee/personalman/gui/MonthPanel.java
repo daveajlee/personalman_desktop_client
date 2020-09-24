@@ -29,6 +29,7 @@ public class MonthPanel extends JPanel {
 	protected Month month;
 	protected int year;
 	private String company;
+	private String username;
 	private UserInterface userInterface;
 	
 	/**
@@ -36,11 +37,13 @@ public class MonthPanel extends JPanel {
 	 * @param month a <code>Month</code> with the month to be displayed.
 	 * @param year a <code>int</code> with the year to be displayed.
 	 * @param company a <code>String</code> with the company that the user is associated with.
+	 * @param username a <code>String</code> containing the username to display absences for.
 	 * @param userInterface a <code>UserInterface</code> object representing the current user interface.
 	 */
-	public MonthPanel(final Month month, final int year, final String company, final UserInterface userInterface) {
+	public MonthPanel(final Month month, final int year, final String company, final String username, final UserInterface userInterface) {
 		this.userInterface = userInterface;
 		this.company = company;
+		this.username = username;
 		this.add(createMonthComponent(month, year));
 	}
 	
@@ -113,7 +116,7 @@ public class MonthPanel extends JPanel {
 			
 			if (calendar.getMonth() == month && calendar.getYear() == year) {
 				dayLabel.setText(Integer.toString(calendar.getDayOfMonth()));
-				dayLabel.addMouseListener(new ClickDateMouseListener(userInterface, LocalDate.of(year, month, Integer.parseInt(dayLabel.getText())), company, this));
+				dayLabel.addMouseListener(new ClickDateMouseListener(userInterface, LocalDate.of(year, month, Integer.parseInt(dayLabel.getText())), company, username,this));
 				if ( calendar.isEqual(today) ) {
 					dPanel.setBackground(Color.ORANGE);
 				} else {

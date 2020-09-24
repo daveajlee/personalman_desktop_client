@@ -45,7 +45,7 @@ public class ClickDateMouseListenerTest {
 		userInterface.determineLocale("English");
 		userInterface.setAbsenceService(new AbsenceServiceMock());
 		userInterface.setReasonNames(reasonNames);
-		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 2, 27), "MyCompany", new MonthPanel(Month.APRIL, 2015, "MyCompany", userInterface));
+		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 2, 27), "MyCompany", "testuser", new MonthPanel(Month.APRIL, 2015, "MyCompany", "testuser", userInterface));
 		assertNotNull(clickDateMouseListener);
 		clickDateMouseListener.mouseClicked(null);
 	}
@@ -66,7 +66,7 @@ public class ClickDateMouseListenerTest {
 		userInterface.addEmployee("Max", "Mustermann", "mmustermann", "MyCompany", 4, "Saturday,Sunday", "Tester", "01-04-2015");
 		userInterface.deleteAbsences("MyCompany", "mmustermann", "03-04-2015", "06-04-2015");
 		userInterface.addAbsence("MyCompany", "mmustermann", "03-04-2015", "06-04-2015", "FEDERAL_HOLIDAY");
-		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 4, 3), "MyCompany", new MonthPanel(Month.APRIL, 2015, "MyCompany", userInterface));
+		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 4, 3), "MyCompany", "testuser", new MonthPanel(Month.APRIL, 2015, "MyCompany", "testuser", userInterface));
 		clickDateMouseListener.mouseClicked(null);
 		UserResponse userResponse = userInterface.getEmployeeByUserName("MyCompany", "mmustermann");
 		assertNotNull(userResponse);

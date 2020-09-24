@@ -40,7 +40,7 @@ public class AddAbsenceScreenTest {
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());
 		userInterfaceMock.setReasonNames(userInterface.getReasonNames());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
-		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany");
+		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany", "testuser");
 		assertNotNull(screen);
 		screen.displayErrorOrDispose(true);
 	}
@@ -56,7 +56,7 @@ public class AddAbsenceScreenTest {
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
 		userInterfaceMock.setReasonNames(userInterface.getReasonNames());
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
-		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany");
+		AddAbsenceScreen screen = new AddAbsenceScreen(userInterfaceMock, LocalDate.of(2015, 2, 27), "MyCompany", "testuser");
 		assertEquals(screen.processReasonsToStringList().length, 6);
 	}
 

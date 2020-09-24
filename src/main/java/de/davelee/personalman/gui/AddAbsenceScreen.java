@@ -24,7 +24,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JComboBox<String> employeeBox;
+	//private JComboBox<String> employeeBox;
 	private JDateChooser startDateField;
 	private JDateChooser endDateField;
 	private JComboBox<String> reasonBox;
@@ -36,8 +36,9 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
      * @param ui a <code>UserInterface</code> object with the current user interface.
      * @param date a <code>LocalDate</code> object with the date to add an absence for.
 	 * @param company a <code>String</code> with the company that the user is associated with.
+     * @param username a <code>String</code> containing the username to display absences for.
      */
-    public AddAbsenceScreen ( final UserInterface ui, final LocalDate date, final String company ) {
+    public AddAbsenceScreen ( final UserInterface ui, final LocalDate date, final String company, final String username ) {
         
         super(ui);
         
@@ -46,7 +47,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         absencePanel.setBackground(Color.WHITE);
         absencePanel.setLayout ( new GridLayout ( 4,2,5,5 ) );
         
-        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEmployeeMessage());
+        /*JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesEmployeeMessage());
         employeeLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(employeeLabel);
         DefaultComboBoxModel<String> employeeModel = new DefaultComboBoxModel<String>();
@@ -54,7 +55,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         	employeeModel.addElement(employeeName);
         }
         employeeBox = new JComboBox<String>(employeeModel);
-        absencePanel.add(employeeBox);
+        absencePanel.add(employeeBox);*/
         
         JLabel startDateLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesStartDateMessage());
         startDateLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
@@ -85,7 +86,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
             public void actionPerformed ( ActionEvent e ) {
             	LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             	LocalDate endDate = endDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            	boolean result = userInterface.addAbsence(company, employeeBox.getSelectedItem().toString(), startDate.format(UserInterface.DATE_TIME_FORMATTER),
+            	boolean result = userInterface.addAbsence(company, username, startDate.format(UserInterface.DATE_TIME_FORMATTER),
 						endDate.format(UserInterface.DATE_TIME_FORMATTER), reasonBox.getSelectedItem().toString());
             	displayErrorOrDispose(result);
             }

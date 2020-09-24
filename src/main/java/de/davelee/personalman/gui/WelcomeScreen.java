@@ -21,6 +21,7 @@ public class WelcomeScreen extends PersonalManBaseScreen {
 	private static final long serialVersionUID = 1L;
 
     private String company;
+    private String username;
     
     private static final Logger LOG = LoggerFactory.getLogger(WelcomeScreen.class);
     
@@ -28,13 +29,15 @@ public class WelcomeScreen extends PersonalManBaseScreen {
      * Create a new welcome screen.
      * @param userInterface a <code>UserInterface</code> object with the current user interface.
      * @param company a <code>String</code> with the company that should be used in the client.
+     * @param username a <code>String</code> containing the username of the admin currently logged in.
      */
-    public WelcomeScreen ( final UserInterface userInterface, final String company ) {
+    public WelcomeScreen ( final UserInterface userInterface, final String company, final String username ) {
         
         super(userInterface);
 
-        //Set the company to be used.
+        //Set the company and username to be used.
         this.company = company;
+        this.username = username;
         
         //Create top, centre and bottom panels to add things to.
         JPanel topPanel = new JPanel();
@@ -124,7 +127,7 @@ public class WelcomeScreen extends PersonalManBaseScreen {
      */
     public void initialiseEmployeePanel ( final JPanel panel ) {
         panel.setBackground(Color.WHITE);
-        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.EMPLOYEE_SCREEN, userInterface, this, company) );
+        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.EMPLOYEE_SCREEN, userInterface, this, company, null) );
     }
     
     /**
@@ -133,7 +136,7 @@ public class WelcomeScreen extends PersonalManBaseScreen {
      */
     public void initialiseAbsencePanel ( final JPanel panel ) {
         panel.setBackground(Color.WHITE);
-        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.ABSENCE_SCREEN, userInterface, this, company) );
+        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.ABSENCE_SCREEN, userInterface, this, company, username) );
     }
     
     /**

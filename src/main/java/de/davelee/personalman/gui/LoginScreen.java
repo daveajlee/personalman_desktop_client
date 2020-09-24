@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 /**
  * Class to display the login screen to the PersonalMan program.
@@ -92,7 +93,12 @@ public class LoginScreen extends PersonalManBaseScreen {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString());
+                //TODO: remove test detection between admin and employee.
+                if ( usernameField.getText().contentEquals("testadmin")) {
+                    new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
+                } else {
+                    new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
+                }
             }
         });
         buttonPanel.add(loginButton);
