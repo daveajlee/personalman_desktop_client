@@ -1,6 +1,5 @@
 package de.davelee.personalman.service;
 
-import java.net.ConnectException;
 import java.util.List;
 
 import de.davelee.personalman.api.AbsenceRequest;
@@ -19,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AbsenceService {
 
-	private RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate = new RestTemplate();
 
 	@Value("${server.absenceservice.url}")
 	private String absenceServiceUrl;

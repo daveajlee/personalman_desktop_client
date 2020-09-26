@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EmployeeServiceMock extends EmployeeService {
 	
-	private UserResponse employee = new UserResponse("Max", "Mustermann", "mmustermann", "MyCompany", 4, "Monday,Tuesday,Wednesday,Thursday,Friday", "Tester", "28-02-2015");
+	private final UserResponse employee = new UserResponse("Max", "Mustermann", "mmustermann", "MyCompany", 4, "Monday,Tuesday,Wednesday,Thursday,Friday", "Tester", "28-02-2015");
 
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceMock.class);
 

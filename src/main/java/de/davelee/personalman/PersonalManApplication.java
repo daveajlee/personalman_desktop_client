@@ -12,8 +12,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import javax.swing.*;
-
 @SpringBootApplication
 @Configuration
 @ComponentScan
@@ -24,10 +22,6 @@ public class PersonalManApplication {
     private static final Logger LOG = LoggerFactory.getLogger(PersonalManApplication.class);
 
     public static void main ( String[] args ) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-        }
-        catch ( Exception e ) { }
         //Display splash screen to the user.
         SpringApplicationBuilder builder = new SpringApplicationBuilder(PersonalManApplication.class);
 

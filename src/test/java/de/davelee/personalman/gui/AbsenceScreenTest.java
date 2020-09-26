@@ -16,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
-@Disabled
 /**
  * Test the absence screen to ensure that the GUI functions work as expected.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 public class AbsenceScreenTest {
 
 	@Autowired
@@ -30,12 +30,12 @@ public class AbsenceScreenTest {
 
 	@Autowired
 	private ReasonNames reasonNames;
-	
-	@Test
+
 	/**
 	 * Test Case: build and display the absence screen.
 	 * Expected result: the absence screen can be built successfully without any errors.
 	 */
+	@Test
 	public void testAbsenceScreen() {
 		UserInterface userInterface = new UserInterfaceMock();
 		userInterface.setAbsenceService(new AbsenceServiceMock());
@@ -55,7 +55,6 @@ public class AbsenceScreenTest {
 		userInterfaceMock.setReasonNames(reasonNames);
 		userInterfaceMock.setEmployeeService(new EmployeeServiceMock());
 		AbsenceScreenMock screen2 = new AbsenceScreenMock(userInterfaceMock, LocalDate.of(2015, 2, 28), "MyCompany", "testuser" );
-		screen2.setSelectedEmployee();
 		screen2.processViewStatisticsButton();
 	}
 	

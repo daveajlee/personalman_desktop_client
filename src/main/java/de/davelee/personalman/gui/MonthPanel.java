@@ -28,9 +28,9 @@ public class MonthPanel extends JPanel {
 	private static final long serialVersionUID = 5114040713758979186L;
 	protected Month month;
 	protected int year;
-	private String company;
-	private String username;
-	private UserInterface userInterface;
+	private final String company;
+	private final String username;
+	private final UserInterface userInterface;
 	
 	/**
 	 * Create a new month panel.

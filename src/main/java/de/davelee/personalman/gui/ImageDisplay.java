@@ -12,9 +12,9 @@ public class ImageDisplay extends Canvas {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Image image;
-    private int leftBorder;
-    private int topBorder;
+	private final Image image;
+    private final int leftBorder;
+    private final int topBorder;
     
     /**
      * Create a new image display.
@@ -22,7 +22,7 @@ public class ImageDisplay extends Canvas {
      * @param leftBorder a <code>int</code> with the position of left border.
      * @param topBorder a <code>int</code> with the position of top border.
      */
-    public ImageDisplay(String fileName, int leftBorder, int topBorder ) {
+    public ImageDisplay(final String fileName, final int leftBorder, final int topBorder ) {
         //Initialise variables.
         this.leftBorder = leftBorder;
         this.topBorder = topBorder;
@@ -32,13 +32,11 @@ public class ImageDisplay extends Canvas {
         //theImage = toolkit.getImage(fileName);
         MediaTracker mediaTracker = new MediaTracker(this);
         mediaTracker.addImage(image, 0);
-        try
-	{
+        try {
             mediaTracker.waitForID(0);
         }
-	catch (InterruptedException ie)
-	{
-            System.err.println(ie);
+	    catch (InterruptedException ie)
+	    {
             System.exit(1);
         }
     }

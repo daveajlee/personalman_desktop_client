@@ -21,12 +21,12 @@ public class UserInterfaceMock extends UserInterface {
 	 */
 	public List<AbsenceResponse> getAbsences ( final String company, final String date ) {
 		if ( LocalDate.parse(date, UserInterface.DATE_TIME_FORMATTER).isEqual(LocalDate.of(2015, 4, 3))) {
-			List<AbsenceResponse> absences = new ArrayList<AbsenceResponse>();
+			List<AbsenceResponse> absences = new ArrayList<>();
 			AbsenceResponse absence = new AbsenceResponse("MyCompany", "mmustermann", "03-04-2015", "06-04-2015", "Federal Holiday");
 			absences.add(absence);
 			return absences;
 		}
-		return new ArrayList<AbsenceResponse>();
+		return new ArrayList<>();
 	}
 
 	/**

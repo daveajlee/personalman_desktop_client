@@ -17,23 +17,23 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.UserInterfaceMock;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
-@Disabled
 /**
  * Test the add absence screen to ensure that the GUI functions work as expected.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 public class AddAbsenceScreenTest {
 	
 	@Autowired
 	private UserInterface userInterface;
-	
-	@Test
+
 	/**
 	 * Test Case: build the add absence screen with some employee names.
 	 * Expected result: the absence can be added successfully.
 	 */
+	@Test
 	public void testWithEmployeeNames ( ) {
 		UserInterface userInterfaceMock = new UserInterfaceMock();
 		userInterfaceMock.determineLocale(userInterface.getLocaleLanguage());
@@ -44,12 +44,12 @@ public class AddAbsenceScreenTest {
 		assertNotNull(screen);
 		screen.displayErrorOrDispose(true);
 	}
-	
-	@Test
+
 	/**
 	 * Test case: check that the correct reason options for absences are displayed.
 	 * Expected result: the reason options list has the correct size (6).
 	 */
+	@Test
 	public void testReasonCompare ( ) {
 		UserInterface userInterfaceMock = new UserInterfaceMock();
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());

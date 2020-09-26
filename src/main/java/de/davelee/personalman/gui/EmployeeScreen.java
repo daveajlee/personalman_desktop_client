@@ -1,7 +1,6 @@
 package de.davelee.personalman.gui;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.time.DayOfWeek;
@@ -10,8 +9,6 @@ import java.time.format.TextStyle;
 import java.util.Date;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -30,22 +27,21 @@ public class EmployeeScreen extends PersonalManBaseScreen {
 	private static final long serialVersionUID = 1L;
 	protected JList<String> employeeList;
 	private DefaultListModel<String> employeeModel;
-	private JTextField firstNameField;
-	private JTextField lastNameField;
-	private JTextField userNameField;
-    private JTextField companyField;
-	private JTextField positionField;
-	private JDateChooser startDateField;
-	private JSpinner annualLeaveField;
-	private DefaultListModel<String> workingDaysModel;
-	private JList<String> workingDaysList;
+	private final JTextField firstNameField;
+	private final JTextField lastNameField;
+	private final JTextField userNameField;
+    private final JTextField companyField;
+	private final JTextField positionField;
+	private final JDateChooser startDateField;
+	private final JSpinner annualLeaveField;
+	private final DefaultListModel<String> workingDaysModel;
+	private final JList<String> workingDaysList;
         
-    private JButton addEmployeeButton;
-    private JButton removeEmployeeButton;
-    private JButton clearButton;
+    private final JButton addEmployeeButton;
+    private final JButton removeEmployeeButton;
+    private final JButton clearButton;
 
-    private String company;
-    private String username;
+    private final String company;
     
     private static final String FONT_FAMILY = "Arial";
     
@@ -61,7 +57,6 @@ public class EmployeeScreen extends PersonalManBaseScreen {
 
         //Set the company and username to be used.
         this.company = company;
-        this.username = username;
 
         //Create employee panel.
         JPanel employeePanel = new JPanel();
@@ -74,19 +69,15 @@ public class EmployeeScreen extends PersonalManBaseScreen {
             employeePanel.add(employeeLabel);
             JPanel listPanel = new JPanel();
             listPanel.setBackground(Color.WHITE);
-            employeeModel = new DefaultListModel<String>();
+            employeeModel = new DefaultListModel<>();
             for (String userName : userInterface.getUserNames(company)) {
                 employeeModel.addElement(userName);
             }
-            employeeList = new JList<String>(employeeModel);
+            employeeList = new JList<>(employeeModel);
             JScrollPane employeePane = new JScrollPane(employeeList,
                     JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
             employeeList.setVisibleRowCount(20);
-            employeeList.addListSelectionListener(new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent e) {
-                    changeEmployeeValueInList();
-                }
-            });
+            employeeList.addListSelectionListener(e -> changeEmployeeValueInList());
 
             employeePanel.add(employeePane);
         } catch ( Exception connectException ) {
@@ -182,7 +173,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         JLabel workingDaysLabel = new JLabel(userInterface.getUserInterfaceMessages().getEmployeesWorkingDaysMessage());
         workingDaysLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         
-        workingDaysModel = new DefaultListModel<String>();
+        workingDaysModel = new DefaultListModel<>();
         workingDaysModel.addElement(DayOfWeek.MONDAY.getDisplayName(TextStyle.FULL, userInterface.getMyLocale()));
         workingDaysModel.addElement(DayOfWeek.TUESDAY.getDisplayName(TextStyle.FULL, userInterface.getMyLocale()));
         workingDaysModel.addElement(DayOfWeek.WEDNESDAY.getDisplayName(TextStyle.FULL, userInterface.getMyLocale()));
@@ -191,7 +182,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         workingDaysModel.addElement(DayOfWeek.SATURDAY.getDisplayName(TextStyle.FULL, userInterface.getMyLocale()));
         workingDaysModel.addElement(DayOfWeek.SUNDAY.getDisplayName(TextStyle.FULL, userInterface.getMyLocale()));
         
-        workingDaysList = new JList<String>(workingDaysModel);
+        workingDaysList = new JList<>(workingDaysModel);
         workingDaysList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         workingDaysList.setFont(new Font(FONT_FAMILY, Font.PLAIN, 14));
         workingDaysEditingPanel.add(workingDaysLabel);
@@ -208,55 +199,45 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         JPanel buttonPanel = new JPanel(new GridLayout(2,4,5,5));
         buttonPanel.setBackground(Color.WHITE);
         addEmployeeButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesAddButton());
-        addEmployeeButton.addActionListener ( new ActionListener() {
-            public void actionPerformed ( ActionEvent e ) {
-            	userInterface.addEmployee(firstNameField.getText(), 
-            			lastNameField.getText(), userNameField.getText(), companyField.getText(), (Integer) annualLeaveField.getValue(),
-            			getWorkingDays(), positionField.getText(),
-            			startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(UserInterface.DATE_TIME_FORMATTER));
-            	employeeModel.addElement(userNameField.getText());
-            	firstNameField.setText("");
-            	lastNameField.setText("");
-            	userNameField.setText("");
-            	annualLeaveField.setValue(25);
-            	workingDaysList.clearSelection();
-            	positionField.setText("");
-            	startDateField.setDate(new Date());
-            }
+        addEmployeeButton.addActionListener ( e -> {
+            userInterface.addEmployee(firstNameField.getText(),
+                lastNameField.getText(), userNameField.getText(), companyField.getText(), (Integer) annualLeaveField.getValue(),
+            	getWorkingDays(), positionField.getText(),
+            	startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().format(UserInterface.DATE_TIME_FORMATTER));
+            employeeModel.addElement(userNameField.getText());
+            firstNameField.setText("");
+            lastNameField.setText("");
+            userNameField.setText("");
+            annualLeaveField.setValue(25);
+            workingDaysList.clearSelection();
+            positionField.setText("");
+            startDateField.setDate(new Date());
         });
         buttonPanel.add(addEmployeeButton);
         removeEmployeeButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesRemoveButton());
         removeEmployeeButton.setEnabled(false);
-        removeEmployeeButton.addActionListener(new ActionListener() {
-        	public void actionPerformed ( ActionEvent e ) {
-        		removeEmployee();
-        	}
-        });
+        removeEmployeeButton.addActionListener(e -> removeEmployee());
         buttonPanel.add(removeEmployeeButton);
         clearButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesResetButton());
         clearButton.setEnabled(false);
-        clearButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		addEmployeeButton.setEnabled(true);
-        		clearButton.setEnabled(false);
-        		removeEmployeeButton.setEnabled(false);
-        		employeeList.clearSelection();
-        		firstNameField.setText("");
-        		lastNameField.setText("");
-        		userNameField.setText("");
-        		annualLeaveField.setValue(25);
-        		workingDaysList.clearSelection();
-        		positionField.setText("");
-        		startDateField.setDate(new Date());       		
-        	}
+        clearButton.addActionListener(e -> {
+        	addEmployeeButton.setEnabled(true);
+        	clearButton.setEnabled(false);
+        	removeEmployeeButton.setEnabled(false);
+        	employeeList.clearSelection();
+        	firstNameField.setText("");
+        	lastNameField.setText("");
+        	userNameField.setText("");
+        	annualLeaveField.setValue(25);
+        	workingDaysList.clearSelection();
+        	positionField.setText("");
+        	startDateField.setDate(new Date());
         });
         buttonPanel.add(clearButton);
         JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
-        welcomeScreenButton.addActionListener ( new ActionListener() {
-            public void actionPerformed ( ActionEvent e ) {
-                new WelcomeScreen(userInterface, company, username);
-                dispose();
-            }
+        welcomeScreenButton.addActionListener ( e -> {
+            new WelcomeScreen(userInterface, company, username);
+            dispose();
         });
         buttonPanel.add(welcomeScreenButton);
         //Blank or spacer.
@@ -270,7 +251,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = new Dimension(650,500);
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
         
         //Display the front screen to the user.
         this.pack ();

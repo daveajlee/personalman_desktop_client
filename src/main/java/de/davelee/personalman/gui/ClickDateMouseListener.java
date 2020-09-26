@@ -20,11 +20,11 @@ import de.davelee.personalman.UserInterface;
  */
 public class ClickDateMouseListener implements MouseListener {
 	
-	private UserInterface userInterface;
-	private LocalDate localDate;
-	private String company;
-	private String username;
-	private MonthPanel monthPanel;
+	private final UserInterface userInterface;
+	private final LocalDate localDate;
+	private final String company;
+	private final String username;
+	private final MonthPanel monthPanel;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ClickDateMouseListener.class);
 	
@@ -63,7 +63,7 @@ public class ClickDateMouseListener implements MouseListener {
 				text = userInterface.getUserInterfaceMessages().getAbsencesNoneMessage();
 			}
 			int result = showOptionDialog(text);
-			if (result == JOptionPane.YES_OPTION || result == JOptionPane.OK_OPTION) {
+			if (result == JOptionPane.YES_OPTION) {
 				createAddAbsenceScreen();
 			} else if (result == JOptionPane.NO_OPTION) {
 				userInterface.deleteAbsences(company, "", localDate.format(UserInterface.DATE_TIME_FORMATTER), localDate.format(UserInterface.DATE_TIME_FORMATTER));

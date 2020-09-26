@@ -14,23 +14,23 @@ import de.davelee.personalman.UserInterfaceMock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
-@Disabled
 /**
  * Test the employee screen to check that it can be built and displayed successfully.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 public class EmployeeScreenTest {
 	
 	@Autowired
 	private UserInterface userInterface;
 
-	@Test
 	/**
 	 * Test case: test the employee screen with no employees selected.
 	 * Expected result: screen is displayed successfully.
 	 */
+	@Test
 	public void testWithNoEmployees ( ) {
 		UserInterface userInterfaceMock = new UserInterfaceMock();
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());
@@ -41,12 +41,12 @@ public class EmployeeScreenTest {
 		employeeScreen.removeEmployee();
 		employeeScreen.changeEmployeeValueInList();
 	}
-	
-	@Test
+
 	/**
 	 * Test case: test the employee screen with employees selected.
 	 * Expected result: screen is displayed successfully.
 	 */
+	@Test
 	public void testWithEmployees ( ) {
 		UserInterface userInterfaceMock = new UserInterfaceMock();
 		userInterfaceMock.setUserInterfaceMessages(userInterface.getUserInterfaceMessages());

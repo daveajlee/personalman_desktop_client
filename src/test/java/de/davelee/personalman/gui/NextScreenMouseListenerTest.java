@@ -11,23 +11,23 @@ import de.davelee.personalman.UserInterface;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
-@Disabled
 /**
  * This class tests the functionality of the NextScreenMouseListener using some features of the mock object.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 public class NextScreenMouseListenerTest {
 	
 	@Autowired
 	private UserInterfaceMessages userInterfaceMessages;
-	
-	@Test
+
 	/**
 	 * Test case: test that the NextScreenMouseListener can be created with type Absence Screen.
 	 * Expected result: the Listener is built successfully.
 	 */
+	@Test
 	public void testAbsenceScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
@@ -35,12 +35,12 @@ public class NextScreenMouseListenerTest {
 		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
-	
-	@Test
+
 	/**
 	 * Test case: test that the NextScreenMouseListener can be created with type Employee Screen.
 	 * Expected result: the Listener is built successfully.
 	 */
+	@Test
 	public void testEmployeeScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
@@ -48,12 +48,12 @@ public class NextScreenMouseListenerTest {
 		assertNotNull(nextScreenMouseListener);
 		nextScreenMouseListener.mouseClicked(null);
 	}
-	
-	@Test
+
 	/**
 	 * Test case: create the NextScreenMouseListener with type null.
 	 * Expected result: Listener is built but has no functionality.
 	 */
+	@Test
 	public void testNullScreenType() {
 		UserInterface userInterface = new UserInterface();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);

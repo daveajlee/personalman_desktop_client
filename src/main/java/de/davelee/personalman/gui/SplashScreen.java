@@ -17,8 +17,6 @@ public class SplashScreen extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-    private JLabel loadingLabel;
     
     /**
      * Create a new splash screen.
@@ -57,7 +55,7 @@ public class SplashScreen extends JFrame {
         //Construct loading panel to add to the centre panel.
         JPanel loadingPanel = new JPanel();
         loadingPanel.setBackground(Color.WHITE);
-        loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
+        JLabel loadingLabel = new JLabel(userInterface.getUserInterfaceMessages().getSplashTitle());
         loadingLabel.setFont(new Font("Arial", Font.ITALIC, 15));
         loadingPanel.add(loadingLabel);
         centrePanel.add(loadingPanel);
@@ -76,7 +74,7 @@ public class SplashScreen extends JFrame {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = getPreferredSize();
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
         
         //Display the front screen to the user.
         this.pack ();

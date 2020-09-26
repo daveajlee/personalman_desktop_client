@@ -20,8 +20,8 @@ public class WelcomeScreen extends PersonalManBaseScreen {
 	 */
 	private static final long serialVersionUID = 1L;
 
-    private String company;
-    private String username;
+    private final String company;
+    private final String username;
     
     private static final Logger LOG = LoggerFactory.getLogger(WelcomeScreen.class);
     
@@ -112,7 +112,7 @@ public class WelcomeScreen extends PersonalManBaseScreen {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = new Dimension(750,600);
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
         
         //Display the front screen to the user.
         this.pack ();

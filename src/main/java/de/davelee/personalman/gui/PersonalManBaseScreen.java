@@ -28,9 +28,9 @@ public class PersonalManBaseScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = -4474714835323725521L;
 	
-	protected UserInterface userInterface;
-	protected JPanel screenPanel;
-	protected Container container;
+	protected final UserInterface userInterface;
+	protected final JPanel screenPanel;
+	protected final Container container;
 
 	/**
 	 * Create a new PersonalManBaseScreen based on the supplied user interface.

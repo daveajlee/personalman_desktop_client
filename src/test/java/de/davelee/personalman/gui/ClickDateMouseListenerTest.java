@@ -19,13 +19,13 @@ import de.davelee.personalman.UserInterfaceMock;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
-@Disabled
 /**
  * This class tests the functionality of the ClickDateMouseListener using the ClickDateMouseListenerMock object.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
+@Disabled
 public class ClickDateMouseListenerTest {
 
 	@Autowired
@@ -33,12 +33,12 @@ public class ClickDateMouseListenerTest {
 	
 	@Autowired
 	private ReasonNames reasonNames;
-	
-	@Test
+
 	/**
 	 * Test case: check that the click mouse listener works when there are no absences.
 	 * Expected result: null since no absences can be clicked on if they do not exist.
 	 */
+	@Test
 	public void testWithoutAbsences ( ) {
 		UserInterface userInterface = new UserInterfaceMock();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);
@@ -49,12 +49,12 @@ public class ClickDateMouseListenerTest {
 		assertNotNull(clickDateMouseListener);
 		clickDateMouseListener.mouseClicked(null);
 	}
-	
-	@Test
+
 	/**
 	 * Test case: check that the click mouse listener works when there are absences which can be clicked on.
 	 * Expected result: the clicked on absence is removed successfully.
 	 */
+	@Test
 	public void testAbsences ( ) {
 		UserInterface userInterface = new UserInterfaceMock();
 		userInterface.setUserInterfaceMessages(userInterfaceMessages);

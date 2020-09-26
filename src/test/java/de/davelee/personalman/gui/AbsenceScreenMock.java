@@ -40,13 +40,6 @@ public class AbsenceScreenMock extends AbsenceScreen {
 	}
 
 	/**
-	 * Set the selected employee always to Max Mustermann.
-	 */
-	public void setSelectedEmployee ( ) {
-		employeeBox.setSelectedItem("Max Mustermann(mmustermann)");
-	}
-
-	/**
 	 * Instead of showing the statistics dialog - show a log message instead.
 	 */
 	public void showStatisticsDialog ( ) {

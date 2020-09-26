@@ -15,11 +15,11 @@ import de.davelee.personalman.UserInterface;
  */
 public class NextScreenMouseListener implements MouseListener {
 	
-	private ScreenType screenType;
-	private UserInterface userInterface;
-	private WelcomeScreen welcomeScreen;
-	private String company;
-	private String username;
+	private final ScreenType screenType;
+	private final UserInterface userInterface;
+	private final WelcomeScreen welcomeScreen;
+	private final String company;
+	private final String username;
 	
 	private static final Logger LOG = LoggerFactory.getLogger(NextScreenMouseListener.class);
 	

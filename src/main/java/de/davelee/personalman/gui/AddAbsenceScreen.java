@@ -1,7 +1,6 @@
 package de.davelee.personalman.gui;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -25,9 +24,9 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
 	 */
 	private static final long serialVersionUID = 1L;
 	//private JComboBox<String> employeeBox;
-	private JDateChooser startDateField;
-	private JDateChooser endDateField;
-	private JComboBox<String> reasonBox;
+	private final JDateChooser startDateField;
+	private final JDateChooser endDateField;
+	private final JComboBox<String> reasonBox;
     
     private static final String FONT_FAMILY = "Arial";
     
@@ -72,7 +71,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         JLabel reasonLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesReasonMessage());
         reasonLabel.setFont(new Font(FONT_FAMILY, Font.BOLD, 14));
         absencePanel.add(reasonLabel);
-        reasonBox = new JComboBox<String>(processReasonsToStringList());
+        reasonBox = new JComboBox<>(processReasonsToStringList());
         absencePanel.add(reasonBox);
         
         //Add absencePanel to screenPanel.
@@ -82,22 +81,16 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         JButton addAbsenceButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesAddButton());
-        addAbsenceButton.addActionListener ( new ActionListener() {
-            public void actionPerformed ( ActionEvent e ) {
-            	LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            	LocalDate endDate = endDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            	boolean result = userInterface.addAbsence(company, username, startDate.format(UserInterface.DATE_TIME_FORMATTER),
-						endDate.format(UserInterface.DATE_TIME_FORMATTER), reasonBox.getSelectedItem().toString());
-            	displayErrorOrDispose(result);
-            }
+        addAbsenceButton.addActionListener ( e -> {
+            LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate endDate = endDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            boolean result = userInterface.addAbsence(company, username, startDate.format(UserInterface.DATE_TIME_FORMATTER),
+					endDate.format(UserInterface.DATE_TIME_FORMATTER), reasonBox.getSelectedItem().toString());
+            displayErrorOrDispose(result);
         });
         buttonPanel.add(addAbsenceButton);
         JButton closeButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesCloseButton());
-        closeButton.addActionListener(new ActionListener() {
-        	public void actionPerformed ( ActionEvent e ) {
-        		dispose();
-        	}
-        });
+        closeButton.addActionListener(e -> dispose());
         buttonPanel.add(closeButton);
         //Add buttonPanel to screenPanel.
         screenPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -108,7 +101,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = new Dimension(650,200);
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
         
         //Display the front screen to the user.
         this.pack ();
@@ -134,7 +127,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
 	 * @return a <code>Array</code> of <code>String</code> objects.
 	 */
 	public String[] processReasonsToStringList ( ) {
-		List<String> myStringReasons = new ArrayList<String>(6);
+		List<String> myStringReasons = new ArrayList<>(6);
 		myStringReasons.add(userInterface.getReasonNames().getIllness());
 		myStringReasons.add(userInterface.getReasonNames().getHoliday());
 		myStringReasons.add(userInterface.getReasonNames().getConference());

@@ -1,7 +1,6 @@
 package de.davelee.personalman.gui;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.time.LocalDate;
 
 import javax.swing.*;
@@ -19,12 +18,11 @@ public class AbsenceScreen extends PersonalManBaseScreen {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private MonthPanel monthPanel;
-	protected JComboBox<String> employeeBox;
+	private final MonthPanel monthPanel;
     
     private LocalDate date;
-    private String company;
-    private String username;
+    private final String company;
+    private final String username;
     
     /**
      * Create a new absence screen.
@@ -38,6 +36,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         super(ui);
         this.date = date;
         this.company = company;
+        this.username = username;
 
         //Create label for heading.
         JLabel headingLabel = new JLabel("Absences for user: " + username, JLabel.CENTER);
@@ -55,54 +54,23 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.WHITE);
         JButton previousMonthButton = new JButton("<<");
-        previousMonthButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent event) {
-        		processPreviousMonthButton();
-        	}
-        });
+        previousMonthButton.addActionListener(e -> processPreviousMonthButton());
         JButton nextMonthButton = new JButton(">>");
-        nextMonthButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent event) {
-        		processNextMonthButton();
-        	}
-        });
+        nextMonthButton.addActionListener(e -> processNextMonthButton());
         buttonPanel.add(previousMonthButton);
         buttonPanel.add(nextMonthButton);
         monthJPanel.add(buttonPanel);
         screenPanel.add(monthJPanel);
-        
-        //Create employee panel.
-        /*JPanel employeePanel = new JPanel();
-        employeePanel.setBackground(Color.WHITE);
-        employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.LINE_AXIS ) );
-        
-        JLabel employeeLabel = new JLabel(userInterface.getUserInterfaceMessages().getAbsencesTitleMessage(), SwingConstants.CENTER);
-        employeeLabel.setFont(new Font("Arial", Font.BOLD + Font.ITALIC, 20));
-        employeePanel.add(employeeLabel);
-        JPanel comboBoxPanel = new JPanel();
-        comboBoxPanel.setBackground(Color.WHITE);
-        try {
-            employeeBox = new JComboBox<String>(userInterface.getUserNames(company));
-            comboBoxPanel.add(employeeBox);
-            employeePanel.add(comboBoxPanel);
-        } catch ( ConnectException connectionException ) {
-            employeePanel.add(new JLabel("Sorry! Server is not currently reachable so no data can be displayed."));
-        }*/
+
         JPanel bottomButtonPanel = new JPanel(new GridLayout(2,2,5,5));
         bottomButtonPanel.setBackground(Color.WHITE);
         JButton viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
-        viewStatisticsButton.addActionListener( new ActionListener() {
-        	public void actionPerformed ( ActionEvent e ) {
-        		processViewStatisticsButton();
-        	}
-        });
+        viewStatisticsButton.addActionListener( e -> processViewStatisticsButton());
         bottomButtonPanel.add(viewStatisticsButton);
         JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener ( new ActionListener() {
-            public void actionPerformed ( ActionEvent e ) {
-                new LoginScreen(userInterface);
-                dispose();
-            }
+        logoutButton.addActionListener ( e -> {
+            new LoginScreen(userInterface);
+            dispose();
         });
         bottomButtonPanel.add(logoutButton);
         //employeePanel.add(bottomButtonPanel);
@@ -114,7 +82,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = new Dimension(650,450);
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
         
         //Display the front screen to the user.
         this.pack ();
