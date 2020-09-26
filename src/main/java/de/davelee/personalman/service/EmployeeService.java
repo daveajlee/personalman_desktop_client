@@ -3,39 +3,25 @@ package de.davelee.personalman.service;
 import de.davelee.personalman.api.UserRequest;
 import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.api.UsersResponse;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.ConnectException;
 
 /**
  * Class to provide service operations for employees in the PersonalMan program.
  * @author Dave Lee
  */
 @Service
+@Getter
+@Setter
 public class EmployeeService {
 
-	private RestTemplate restTemplate = new RestTemplate();
+	private final RestTemplate restTemplate = new RestTemplate();
 
 	@Value("${server.userservice.url}")
 	private String userServiceUrl;
-
-	/**
-	 * Retrieve the server url for communicating with the user server.
-	 * @return a <code>String</code> with the server url for communicating with the user server.
-	 */
-	public String getUserServiceUrl() {
-		return userServiceUrl;
-	}
-
-	/**
-	 * Set the server url for communicating with the user server.
-	 * @param userServiceUrl a <code>String</code> with the new server url for communicating with the user server.
-	 */
-	public void setUserServiceUrl(final String userServiceUrl) {
-		this.userServiceUrl = userServiceUrl;
-	}
 	
 	/**
 	 * Find a user according to their company and user name.
@@ -51,8 +37,9 @@ public class EmployeeService {
 	 * Find all users who are associated with a particular company.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>UsersResponse</code> object representing all users associated with the particular company.
+	 *
 	 */
-	public UsersResponse findByCompany ( final String company ) throws ConnectException {
+	public UsersResponse findByCompany ( final String company )  {
 		return restTemplate.getForObject(userServiceUrl + "s?company=" + company, UsersResponse.class);
 	}
 	

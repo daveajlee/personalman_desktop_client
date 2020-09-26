@@ -4,8 +4,6 @@ import de.davelee.personalman.UserInterface;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 /**
@@ -56,7 +54,7 @@ public class LoginScreen extends PersonalManBaseScreen {
         companyPanel.setBackground(Color.WHITE);
         JLabel companyLabel = new JLabel("Company:", JLabel.CENTER);
         companyPanel.add(companyLabel);
-        JComboBox<String> companyBox = new JComboBox(userInterface.getUserInterfaceMessages().getSupportedCompaniesList().toArray());
+        JComboBox<String> companyBox = new JComboBox<>(userInterface.getUserInterfaceMessages().getSupportedCompaniesList().toArray(new String[userInterface.getUserInterfaceMessages().getSupportedCompaniesList().size()]));
         companyPanel.add(companyBox);
         centrePanel.add(companyPanel);
 
@@ -89,9 +87,7 @@ public class LoginScreen extends PersonalManBaseScreen {
         buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
         buttonPanel.setBackground(Color.WHITE);
         JButton loginButton = new JButton("Login");
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        loginButton.addActionListener(e -> {
                 dispose();
                 //TODO: remove test detection between admin and employee.
                 if ( usernameField.getText().contentEquals("testadmin")) {
@@ -99,16 +95,10 @@ public class LoginScreen extends PersonalManBaseScreen {
                 } else {
                     new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
                 }
-            }
         });
         buttonPanel.add(loginButton);
         JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                userInterface.exit();
-            }
-        });
+        exitButton.addActionListener(e -> userInterface.exit() );
         buttonPanel.add(exitButton);
         footerPanel.add(buttonPanel);
         //Create register panel with message and button.
@@ -117,12 +107,9 @@ public class LoginScreen extends PersonalManBaseScreen {
         registerPanel.setBackground(Color.WHITE);
         registerPanel.add(new JLabel("Not yet registered for PersonalMan?"));
         JButton registerButton = new JButton(("Register"));
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        registerButton.addActionListener(e -> {
                 dispose();
-                new RegisterScreen(userInterface);
-            }
+                new RegisterScreen(userInterface, userInterface.getRegisterScreenConfig());
         });
         registerPanel.add(registerButton);
         footerPanel.add(registerPanel);
@@ -137,7 +124,7 @@ public class LoginScreen extends PersonalManBaseScreen {
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
         Dimension displayDim = new Dimension(750,300);
-        this.setLocation ( (int) (screenDim.width/2)-(displayDim.width/2), (int) (screenDim.height/2)-(displayDim.height/2));
+        this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
 
         //Display the front screen to the user.
         this.pack ();

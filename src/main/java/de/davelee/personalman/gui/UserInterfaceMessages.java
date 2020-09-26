@@ -88,8 +88,6 @@ public class UserInterfaceMessages {
 	private String annualLeaveErrorTitle;
 	@Value("${message.totake}")
 	private String toTakeMessage;
-	@Value("${message.register}")
-	private String registerMessage;
 	
 	/**
 	 * Return the localisation text for the message on the welcome screen.
@@ -699,19 +697,4 @@ public class UserInterfaceMessages {
 		this.supportedCompaniesList = supportedCompaniesList;
 	}
 
-	/**
-	 * Return the localisation text for registration.
-	 * @return a <code>String</code> containing the localisation text for registration.
-	 */
-	public String getRegisterMessage() {
-		return registerMessage;
-	}
-
-	/**
-	 * Set the localisation text for registration.
-	 * @param registerMessage a <code>String</code> containing the localisation text for registration.
-	 */
-	public void setRegisterMessage(String registerMessage) {
-		this.registerMessage = registerMessage;
-	}
 }

@@ -15,16 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.net.ConnectException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration("classpath:testApplicationContext.xml")
 /**
  * Class to test functionality of the UserInterface class.
  * @author Dave Lee
  */
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration("classpath:testApplicationContext.xml")
 public class UserInterfaceTest {
 	
 	private static final String EMPLOYEE_USERNAME = "mmustermann";
@@ -33,28 +31,24 @@ public class UserInterfaceTest {
 	
 	@Autowired
 	private UserInterface userInterface;
-	
-	@Test
+
 	/**
 	 * Test case: build the user interface using mock services.
 	 * Expected result: the user interface is built successfully.
 	 */
+	@Test
 	public void testUserInterface ( ) {
 		EmployeeService employeeService = new EmployeeServiceMock();
 		userInterface.setEmployeeService(employeeService);
 		AbsenceService absenceService = new AbsenceServiceMock();
 		userInterface.setAbsenceService(absenceService);
-		try {
-			UsersResponse employees = employeeService.findByCompany("MyCompany");
-			if ( employees != null ) {
-				for (UserResponse employee : employees.getUserResponses()) {
-					employeeService.delete("MyCompany", employee.getUsername());
-				}
+		UsersResponse employees = employeeService.findByCompany("MyCompany");
+		if ( employees != null ) {
+			for (UserResponse employee : employees.getUserResponses()) {
+				employeeService.delete("MyCompany", employee.getUsername());
 			}
-			assertEquals(userInterface.getUserNames("MyCompany").length, 2);
-		} catch ( ConnectException connectException ) {
-			System.out.println("Server was not reachable");
 		}
+		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
 		userInterface.addEmployee("Max", "Mustermann", "mmustermann", "MyCompany", 26, "Saturday, Sunday", "Tester", "28-02-2015");
 		AbsencesResponse absences = userInterface.getAbsenceService().findByNameAndYear("MyCompany", "mmustermann", 2015);
 		if ( !absences.getAbsenceResponseList().isEmpty() ) {
@@ -62,12 +56,8 @@ public class UserInterfaceTest {
 				userInterface.getAbsenceService().delete(absence.getCompany(), absence.getUsername(), absence.getStartDate(), absence.getEndDate());
 			}
 		}
-		try {
-			assertEquals(userInterface.getUserNames("MyCompany").length, 2);
-			assertEquals(userInterface.getUserNames("MyCompany")[0], EMPLOYEE_USERNAME);
-		} catch ( ConnectException connectException ) {
-			System.out.println("Server was not reachable");
-		}
+		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
+		assertEquals(userInterface.getUserNames("MyCompany")[0], EMPLOYEE_USERNAME);
 		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2015), "Illness: 0 days\nHoliday: 0 days (Remaining: 4 days)\nTrip: 0 days\nConference: 0 days\nDay in Lieu: 0 days (Remaining: 0 days)\nFederal Holiday: 4 days\n");
 		userInterface.determineLocale("English");
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "03-04-2016", "06-04-2016", "Federal Holiday");

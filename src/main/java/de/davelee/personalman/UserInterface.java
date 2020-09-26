@@ -7,20 +7,17 @@ import de.davelee.personalman.api.UserRequest;
 import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.api.UsersResponse;
 import de.davelee.personalman.gui.ReasonNames;
-import de.davelee.personalman.gui.SplashScreen;
 import de.davelee.personalman.gui.UserInterfaceMessages;
-import de.davelee.personalman.gui.WelcomeScreen;
+import de.davelee.personalman.gui.config.RegisterScreenConfig;
 import de.davelee.personalman.service.AbsenceService;
 import de.davelee.personalman.service.EmployeeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
-import java.net.ConnectException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +27,8 @@ import java.util.Locale;
  * @author Dave Lee.
  */
 @Component
+@Getter
+@Setter
 public class UserInterface {
     
     private JFrame currentFrame;
@@ -45,96 +44,17 @@ public class UserInterface {
     
     @Autowired
     private ReasonNames reasonNames;
+
+    @Autowired
+	private RegisterScreenConfig registerScreenConfig;
     
     @Value("${locale.language}")
     private String localeLanguage;
     
     private Locale myLocale;
-    
-    private static final Logger LOG = LoggerFactory.getLogger(UserInterface.class);
 
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    
-    /**
-     * Retrieve the employee service to run tasks on employees.
-     * @return a <code>EmployeeService</code> object representing an employee service to run tasks on.
-     */
-    public EmployeeService getEmployeeService() {
-		return employeeService;
-	}
-    
-    /**
-     * Set the employee service to run tasks on employees.
-     * @param employeeService a <code>EmployeeService</code> object representing an employee service to run tasks on.
-     */
-	public void setEmployeeService(final EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
-	
-	/**
-     * Retrieve the absence service to run tasks on absences.
-     * @return a <code>AbsenceService</code> object representing an absence service to run tasks on.
-     */
-	public AbsenceService getAbsenceService() {
-		return absenceService;
-	}
-	
-	/**
-     * Set the absence service to run tasks on absences.
-     * @param absenceService a <code>AbsenceService</code> object representing an absence service to run tasks on.
-     */
-	public void setAbsenceService(final AbsenceService absenceService) {
-		this.absenceService = absenceService;
-	}
 
-	/**
-	 * Retrieve the user interface messages to allow localisation of user interface prompts.
-	 * @return a <code>UserInterfaceMessages</code> object representing the current localisation.
-	 */
-	public UserInterfaceMessages getUserInterfaceMessages ( ) {
-    	return userInterfaceMessages;
-    }
-    
-	/**
-	 * Set the user interface messages to allow a new localisation of user interface prompts.
-	 * @param userInterfaceMessages a <code>UserInterfaceMessages</code> object representing the new localisation.
-	 */
-    public void setUserInterfaceMessages ( final UserInterfaceMessages userInterfaceMessages ) {
-    	this.userInterfaceMessages = userInterfaceMessages;
-    }
-    
-    /**
-     * Retrieve the reason names to allow localisation of absence reasons.
-     * @return a <code>ReasonNames</code> object representing the current localisation.
-     */
-    public ReasonNames getReasonNames ( ) {
-    	return reasonNames;
-    }
-    
-    /**
-     * Set the reason names to allow a new localisation of absence reasons.
-     * @param reasonNames a <code>ReasonNames</code> object representing the new localisation.
-     */
-    public void setReasonNames ( final ReasonNames reasonNames ) {
-    	this.reasonNames = reasonNames;
-    }
-    
-    /**
-     * Retrieve the language to control localisation.
-     * @return a <code>String</code> with the current localisation language.
-     */
-    public String getLocaleLanguage() {
-		return localeLanguage;
-	}
-
-    /**
-     * Set the language to control localisation
-     * @param localeLanguage a <code>String</code> with the new localisation language.
-     */
-	public void setLocaleLanguage(final String localeLanguage) {
-		this.localeLanguage = localeLanguage;
-	}
-	
 	/**
 	 * Determine the Java Locale based on the localisation language.
 	 * @param localeLanguage a <code>String</code> with the localisation language. Currently only German supported. Default is English.
@@ -168,7 +88,7 @@ public class UserInterface {
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>String</code> array with all usernames for this company.
 	 */
-	public String[] getUserNames(final String company) throws ConnectException {
+	public String[] getUserNames(final String company) {
 		UsersResponse usersResponse = employeeService.findByCompany(company);
 		if ( usersResponse == null ) {
 			return new String[0];
@@ -290,33 +210,47 @@ public class UserInterface {
     		return "Could not reach PersonalMan server so no statistics can be displayed!";
 		}
     	StringBuilder returnTextBuilder = new StringBuilder();
-    	returnTextBuilder.append("Illness: " + absencesResponse.getStatisticsMap().get("Illness") + " " + userInterfaceMessages.getDaysMessage() + "\n");
+    	returnTextBuilder.append(getStatisticsForCategory("Illness", absencesResponse));
     	UserResponse userResponse = employeeService.findByUserName(company, userName);
     	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday");
-    	returnTextBuilder.append("Holiday: " + absencesResponse.getStatisticsMap().get("Holiday") + " " + userInterfaceMessages.getDaysMessage() + " (" + userInterfaceMessages.getToTakeMessage() + " " + numAnnualLeaveRemaining + " " + userInterfaceMessages.getDaysMessage() + ")\n");
-    	returnTextBuilder.append("Trip: " + absencesResponse.getStatisticsMap().get("Trip") + " " + userInterfaceMessages.getDaysMessage() + "\n");
-    	returnTextBuilder.append("Conference: " + absencesResponse.getStatisticsMap().get("Conference") + " " + userInterfaceMessages.getDaysMessage() + "\n");
+    	returnTextBuilder.append("Holiday: ");
+    	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Holiday"));
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+    	returnTextBuilder.append(" (");
+    	returnTextBuilder.append(userInterfaceMessages.getToTakeMessage());
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(numAnnualLeaveRemaining);
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+    	returnTextBuilder.append(")\n");
+    	returnTextBuilder.append(getStatisticsForCategory("Trip", absencesResponse));
+    	returnTextBuilder.append(getStatisticsForCategory("Conference", absencesResponse));
     	long numDaysInLieuRemaining = absenceService.countByNameAndYearAndReason(company, userName, year, "Day in Lieu Request") - absencesResponse.getStatisticsMap().get("Day in Lieu");
-    	returnTextBuilder.append("Day in Lieu: " + absencesResponse.getStatisticsMap().get("Day in Lieu") + " " + userInterfaceMessages.getDaysMessage() + " (" + userInterfaceMessages.getToTakeMessage() + " " + numDaysInLieuRemaining + " " + userInterfaceMessages.getDaysMessage() + ")\n");
-    	returnTextBuilder.append("Federal Holiday: " + absencesResponse.getStatisticsMap().get("Federal Holiday") + " " + userInterfaceMessages.getDaysMessage() + "\n");
+    	returnTextBuilder.append("Day in Lieu: ");
+    	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Day in Lieu"));
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+    	returnTextBuilder.append(" (");
+    	returnTextBuilder.append(userInterfaceMessages.getToTakeMessage());
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(numDaysInLieuRemaining);
+    	returnTextBuilder.append(" ");
+    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+    	returnTextBuilder.append(")\n");
+    	returnTextBuilder.append(getStatisticsForCategory("Federal Holiday", absencesResponse));
     	return returnTextBuilder.toString();
     }
-    
-    /**
-     * Set the current frame displayed to the user.
-     * @param currentFrame a <code>JFrame</code> with the current frame.
-     */
-    public void setCurrentFrame ( final JFrame currentFrame ) {
-        this.currentFrame = currentFrame;
-    }
-    
-    /**
-     * Get the current frame displayed to the user.
-     * @return a <code>JFrame</code> with the current frame.
-     */
-    public JFrame getCurrentFrame ( ) {
-        return currentFrame;
-    }
+
+	/**
+	 * Private Helper Method to display statistics for the supplied category based on the supplied AbsencesResponse object.
+	 * @param category a <code>String</code> containing the name of the category to retrieve data for (without any special formatting)
+	 * @param absencesResponse a <code>AbsencesResponse</code> object containing the data to display.
+	 * @return a <code>String</code> in the format category: x days.
+	 */
+	private String getStatisticsForCategory ( final String category, final AbsencesResponse absencesResponse ) {
+		return category + ": " + absencesResponse.getStatisticsMap().get(category) + " " + userInterfaceMessages.getDaysMessage() + "\n";
+	}
     
     /**
      * Confirm and exit the PersonalMan program.
