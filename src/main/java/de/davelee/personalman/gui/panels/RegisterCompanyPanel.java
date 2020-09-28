@@ -1,5 +1,8 @@
 package de.davelee.personalman.gui.panels;
 
+import de.davelee.personalman.gui.LoginScreen;
+import de.davelee.personalman.gui.RegisterScreen;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,24 +15,57 @@ public class RegisterCompanyPanel extends JPanel {
     /**
      * Create a new panel and add all necessary components to this panel.
      */
-    public RegisterCompanyPanel ( ) {
-        this.setLayout(new GridLayout(3,2,5,5));
+    public RegisterCompanyPanel ( final RegisterScreen registerScreen ) {
+
+        //create a new box layout for the grid panel and button panel.
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setBackground(Color.WHITE);
 
+        //create a grid panel to show the required data in a table format
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(3,2,5,5));
+        gridPanel.setBackground(Color.WHITE);
+
         //add company name
-        add(new JLabel("Company Name:", JLabel.CENTER));
+        gridPanel.add(new JLabel("Company Name:", JLabel.CENTER));
         JTextField firstNameField = new JTextField();
-        add(firstNameField);
+        gridPanel.add(firstNameField);
 
         //add default amount of annual leave
-        add(new JLabel("Default Annual Leave", JLabel.CENTER));
+        gridPanel.add(new JLabel("Default Annual Leave", JLabel.CENTER));
         JSpinner annualLeaveSpinner = new JSpinner(new SpinnerNumberModel(25,1,365,1));
-        add(annualLeaveSpinner);
+        gridPanel.add(annualLeaveSpinner);
 
         //add base country (for holidays etc.)
-        add(new JLabel("Base Country", JLabel.CENTER));
+        gridPanel.add(new JLabel("Base Country", JLabel.CENTER));
         JComboBox<String> baseCountryBox = new JComboBox<>(java.util.List.of("Germany", "Scotland", "England").toArray(new String[3]));
-        add(baseCountryBox);
+        gridPanel.add(baseCountryBox);
+
+        //add grid panel to box layout
+        add(gridPanel);
+
+        //Create button panel with three buttons.
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
+        buttonPanel.setBackground(Color.WHITE);
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(e -> {
+            //TODO: register company with server.
+        });
+        buttonPanel.add(registerButton);
+        JButton loginButton = new JButton("Back to login screen");
+        loginButton.addActionListener(e -> {
+            registerScreen.dispose();
+            new LoginScreen(registerScreen.getUserInterface());
+        });
+        buttonPanel.add(loginButton);
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> registerScreen.getUserInterface().exit());
+        buttonPanel.add(exitButton);
+
+        //add button panel to box layout
+        add(buttonPanel);
+
     }
 
 }

@@ -1,6 +1,7 @@
 package de.davelee.personalman.gui.panels;
 
-import de.davelee.personalman.UserInterface;
+import de.davelee.personalman.gui.LoginScreen;
+import de.davelee.personalman.gui.RegisterScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,43 +15,84 @@ public class RegisterPersonPanel extends JPanel {
     private final JTextField passwordField = new JTextField();
     private final JTextField confirmPasswordField = new JTextField();
 
-    public RegisterPersonPanel (final UserInterface userInterface ) {
+    public RegisterPersonPanel (final RegisterScreen registerScreen ) {
 
-        this.setLayout(new GridLayout(7,2,5,5));
+        //create a new box layout for the grid panel and button panel.
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setBackground(Color.WHITE);
 
+        //create a grid panel to show the required data in a table format
+        JPanel gridPanel = new JPanel();
+        gridPanel.setLayout(new GridLayout(7,2,5,5));
+        gridPanel.setBackground(Color.WHITE);
+
         //Add first name.
-        add(new JLabel("First Name:", JLabel.CENTER));
+        gridPanel.add(new JLabel("First Name:", JLabel.CENTER));
         JTextField firstNameField = new JTextField();
-        add(firstNameField);
+        gridPanel.add(firstNameField);
 
         //Add surname.
-        add(new JLabel("Surname:", JLabel.CENTER));
+        gridPanel.add(new JLabel("Surname:", JLabel.CENTER));
         JTextField surnameField = new JTextField();
-        add(surnameField);
+        gridPanel.add(surnameField);
 
         //Add company.
-        add(new JLabel("Company:", JLabel.CENTER));
-        JComboBox<String> companyBox = new JComboBox<>(userInterface.getUserInterfaceMessages().getSupportedCompaniesList().toArray(new String[userInterface.getUserInterfaceMessages().getSupportedCompaniesList().size()]));
-        add(companyBox);
+        gridPanel.add(new JLabel("Company:", JLabel.CENTER));
+        JComboBox<String> companyBox = new JComboBox<>(registerScreen.getUserInterface().getUserInterfaceMessages().getSupportedCompaniesList().toArray(new String[registerScreen.getUserInterface().getUserInterfaceMessages().getSupportedCompaniesList().size()]));
+        gridPanel.add(companyBox);
 
         //Add username.
-        add(new JLabel("Username:", JLabel.CENTER));
+        gridPanel.add(new JLabel("Username:", JLabel.CENTER));
         JTextField usernameField = new JTextField();
-        add(usernameField);
+        gridPanel.add(usernameField);
 
         //Add password.
-        add(new JLabel("Password:", JLabel.CENTER));
-        add(passwordField);
+        gridPanel.add(new JLabel("Password:", JLabel.CENTER));
+        gridPanel.add(passwordField);
 
         //Add confirm password.
-        add(new JLabel("Confirm Password:", JLabel.CENTER));
-        add(confirmPasswordField);
+        gridPanel.add(new JLabel("Confirm Password:", JLabel.CENTER));
+        gridPanel.add(confirmPasswordField);
 
         //Add role.
-        add(new JLabel("Role:", JLabel.CENTER));
+        gridPanel.add(new JLabel("Role:", JLabel.CENTER));
         JComboBox<String> roleBox = new JComboBox<>(java.util.List.of("Employee", "Admin").toArray(new String[2]));
-        add(roleBox);
+        gridPanel.add(roleBox);
+
+        //add grid panel to box layout
+        add(gridPanel);
+
+        //Create button panel with three buttons.
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
+        buttonPanel.setBackground(Color.WHITE);
+        JButton registerButton = new JButton("Register");
+        registerButton.addActionListener(e -> {
+            //First confirm that the passwords are equal.
+            if ( !passwordsSame() ) {
+                JOptionPane.showMessageDialog(registerScreen, "The passwords entered do not match. Please verify and submit your registration request again.",
+                        "Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+            }
+            else {
+                registerScreen.dispose();
+                JOptionPane.showMessageDialog(registerScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
+                        "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                new LoginScreen(registerScreen.getUserInterface());
+            }
+        });
+        buttonPanel.add(registerButton);
+        JButton loginButton = new JButton("Back to login screen");
+        loginButton.addActionListener(e -> {
+            registerScreen.dispose();
+            new LoginScreen(registerScreen.getUserInterface());
+        });
+        buttonPanel.add(loginButton);
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> registerScreen.getUserInterface().exit());
+        buttonPanel.add(exitButton);
+
+        //add button panel to box layout
+        add(buttonPanel);
     }
 
     /**
