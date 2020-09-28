@@ -56,7 +56,7 @@ public class RegisterCompanyPanel extends JPanel {
                     .defaultAnnualLeaveInDays(Integer.parseInt(annualLeaveSpinner.getValue().toString()))
                     .country(baseCountryBox.getSelectedItem().toString())
                     .build()) ) {
-                JOptionPane.showMessageDialog(registerScreen, "Thank you for registering " + nameField + " for PersonalMan. Please start to register new users by clicking on the person tab.",
+                JOptionPane.showMessageDialog(registerScreen, "Thank you for registering " + nameField.getText() + " for PersonalMan. Please start to register new users by clicking on the person tab.",
                         "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             } else {
                 JOptionPane.showMessageDialog(registerScreen, "The company could not be registered either because the server is not available or the company already exists. Please verify and submit your registration request again.",
