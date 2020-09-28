@@ -1,15 +1,11 @@
 package de.davelee.personalman;
 
-import de.davelee.personalman.api.AbsenceRequest;
-import de.davelee.personalman.api.AbsenceResponse;
-import de.davelee.personalman.api.AbsencesResponse;
-import de.davelee.personalman.api.UserRequest;
-import de.davelee.personalman.api.UserResponse;
-import de.davelee.personalman.api.UsersResponse;
+import de.davelee.personalman.api.*;
 import de.davelee.personalman.gui.ReasonNames;
 import de.davelee.personalman.gui.UserInterfaceMessages;
 import de.davelee.personalman.gui.config.RegisterScreenConfig;
 import de.davelee.personalman.service.AbsenceService;
+import de.davelee.personalman.service.CompanyService;
 import de.davelee.personalman.service.EmployeeService;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,11 +29,14 @@ public class UserInterface {
     
     private JFrame currentFrame;
 
+	@Autowired
+	private AbsenceService absenceService;
+
+	@Autowired
+	private CompanyService companyService;
+
     @Autowired
     private EmployeeService employeeService;
-    
-    @Autowired
-    private AbsenceService absenceService;
     
     @Autowired
     private UserInterfaceMessages userInterfaceMessages;
@@ -68,20 +67,19 @@ public class UserInterface {
 	}
 
 	/**
-	 * Return the current Java Locale.
-	 * @return a <code>Locale</code> object representing the current Java Locale.
+	 * Register a company by saving the request to the server. The company is successfully registered if true is returned.
+	 * @param registerCompanyRequest a <code>RegisterCompanyRequest</code> object containing all of the data needed to store the company.
+	 * @return a <code>boolean</code> whoch is true iff the company is registered i.e. saved successfully.
 	 */
-	public Locale getMyLocale() {
-		return myLocale;
+	public boolean registerCompany (final RegisterCompanyRequest registerCompanyRequest ) {
+		try {
+			return companyService.registerCompany(registerCompanyRequest);
+		} catch ( Exception exception ) {
+			//If the server is not available, return false as company could not be added.
+			return false;
+		}
 	}
 
-	/**
-	 * Set a new Java Locale.
-	 * @param myLocale a <code>Locale</code> object representing the new Java Locale.
-	 */
-	public void setMyLocale(final Locale myLocale) {
-		this.myLocale = myLocale;
-	}
 
 	/**
 	 * Get all user names for a particular company as a String array.

@@ -1,5 +1,6 @@
 package de.davelee.personalman.gui.panels;
 
+import de.davelee.personalman.api.RegisterCompanyRequest;
 import de.davelee.personalman.gui.LoginScreen;
 import de.davelee.personalman.gui.RegisterScreen;
 
@@ -28,8 +29,8 @@ public class RegisterCompanyPanel extends JPanel {
 
         //add company name
         gridPanel.add(new JLabel("Company Name:", JLabel.CENTER));
-        JTextField firstNameField = new JTextField();
-        gridPanel.add(firstNameField);
+        JTextField nameField = new JTextField();
+        gridPanel.add(nameField);
 
         //add default amount of annual leave
         gridPanel.add(new JLabel("Default Annual Leave", JLabel.CENTER));
@@ -50,6 +51,17 @@ public class RegisterCompanyPanel extends JPanel {
         buttonPanel.setBackground(Color.WHITE);
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
+            if ( registerScreen.getUserInterface().registerCompany(RegisterCompanyRequest.builder()
+                    .name(nameField.getText())
+                    .defaultAnnualLeaveInDays(Integer.parseInt(annualLeaveSpinner.getValue().toString()))
+                    .country(baseCountryBox.getSelectedItem().toString())
+                    .build()) ) {
+                JOptionPane.showMessageDialog(registerScreen, "Thank you for registering " + nameField + " for PersonalMan. Please start to register new users by clicking on the person tab.",
+                        "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+            } else {
+                JOptionPane.showMessageDialog(registerScreen, "The company could not be registered either because the server is not available or the company already exists. Please verify and submit your registration request again.",
+                        "Could not register company", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+            }
             //TODO: register company with server.
         });
         buttonPanel.add(registerButton);
