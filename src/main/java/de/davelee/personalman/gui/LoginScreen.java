@@ -54,7 +54,7 @@ public class LoginScreen extends PersonalManBaseScreen {
         companyPanel.setBackground(Color.WHITE);
         JLabel companyLabel = new JLabel("Company:", JLabel.CENTER);
         companyPanel.add(companyLabel);
-        JComboBox<String> companyBox = new JComboBox<>(userInterface.getUserInterfaceMessages().getSupportedCompaniesList().toArray(new String[userInterface.getUserInterfaceMessages().getSupportedCompaniesList().size()]));
+        JComboBox<String> companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[userInterface.getCompanies().size()]));
         companyPanel.add(companyBox);
         centrePanel.add(companyPanel);
 
@@ -87,6 +87,10 @@ public class LoginScreen extends PersonalManBaseScreen {
         buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
         buttonPanel.setBackground(Color.WHITE);
         JButton loginButton = new JButton("Login");
+        //If no companies available then do not allow login.
+        if ( companyBox.getModel().getSize() == 0 ) {
+            loginButton.setEnabled(false);
+        }
         loginButton.addActionListener(e -> {
                 dispose();
                 //TODO: remove test detection between admin and employee.

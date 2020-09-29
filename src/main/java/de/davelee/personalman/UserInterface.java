@@ -80,6 +80,22 @@ public class UserInterface {
 		}
 	}
 
+	/**
+	 * Retrieve all companies from the server. If no companies are available or the server is not available then an empty list will be returned.
+	 * @return a <code>List</code> of <code>String</code> objects with the name of companies stored on the server.
+	 */
+	public List<String> getCompanies ( ) {
+		try {
+			List<String> companyNames = companyService.getCompanies();
+			if ( companyNames != null ) {
+				return companyService.getCompanies();
+			} else {
+				return List.of();
+			}
+		} catch ( Exception exception ) {
+			return List.of();
+		}
+	}
 
 	/**
 	 * Get all user names for a particular company as a String array.

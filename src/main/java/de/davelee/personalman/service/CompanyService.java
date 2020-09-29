@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 /**
  * Class to provide service operations for companies in the PersonalMan program.
  * @author Dave Lee
@@ -37,6 +39,14 @@ public class CompanyService {
     public boolean registerCompany (final RegisterCompanyRequest registerCompanyRequest ) {
         ResponseEntity<RegisterCompanyRequest> response = restTemplate.postForEntity(companyServiceUrl, registerCompanyRequest, RegisterCompanyRequest.class);
         return response.getStatusCode() == HttpStatus.CREATED;
+    }
+
+    /**
+     * Retrieve all companies from the server.
+     * @return a <code>List</code> of <code>String</code> objects with the name of companies stored on the server.
+     */
+    public List<String> getCompanies ( ) {
+        return (List<String>) restTemplate.getForObject(companyServiceUrl.replace("company", "companies"), List.class);
     }
 
 }

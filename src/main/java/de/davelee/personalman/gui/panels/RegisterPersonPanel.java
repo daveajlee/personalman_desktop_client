@@ -38,7 +38,7 @@ public class RegisterPersonPanel extends JPanel {
 
         //Add company.
         gridPanel.add(new JLabel("Company:", JLabel.CENTER));
-        JComboBox<String> companyBox = new JComboBox<>(registerScreen.getUserInterface().getUserInterfaceMessages().getSupportedCompaniesList().toArray(new String[registerScreen.getUserInterface().getUserInterfaceMessages().getSupportedCompaniesList().size()]));
+        JComboBox<String> companyBox = new JComboBox<>(registerScreen.getUserInterface().getCompanies().toArray(new String[registerScreen.getUserInterface().getCompanies().size()]));
         gridPanel.add(companyBox);
 
         //Add username.

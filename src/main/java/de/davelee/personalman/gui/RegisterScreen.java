@@ -25,6 +25,8 @@ public class RegisterScreen extends PersonalManBaseScreen {
 
     private UserInterface userInterface;
 
+    private JTabbedPane tabbedPane;
+
     /**
      * Create a new register screen.
      * @param userInterface a <code>UserInterface</code> object with the current user interface.
@@ -63,10 +65,14 @@ public class RegisterScreen extends PersonalManBaseScreen {
         RegisterCompanyPanel registerCompanyPanel = new RegisterCompanyPanel(this);
         RegisterPersonPanel registerPersonPanel = new RegisterPersonPanel(this);
 
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
         tabbedPane.setBackground(Color.WHITE);
         tabbedPane.add("Company", registerCompanyPanel);
         tabbedPane.add("Person", registerPersonPanel);
+        //If no companies available then disable person tab.
+        if ( userInterface.getCompanies().size() == 0 ) {
+            tabbedPane.setEnabledAt(1, false);
+        }
         centrePanel.add(tabbedPane);
 
         //Add centre and bottom panels to container.
@@ -84,6 +90,10 @@ public class RegisterScreen extends PersonalManBaseScreen {
         this.setVisible (true);
         this.setSize ( new Dimension(750,500) );
 
+    }
+
+    public void enablePersonTab ( ) {
+        tabbedPane.setEnabledAt(1, true);
     }
 
 }

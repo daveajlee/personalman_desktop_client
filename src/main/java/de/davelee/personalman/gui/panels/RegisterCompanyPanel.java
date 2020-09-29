@@ -62,7 +62,7 @@ public class RegisterCompanyPanel extends JPanel {
                 JOptionPane.showMessageDialog(registerScreen, "The company could not be registered either because the server is not available or the company already exists. Please verify and submit your registration request again.",
                         "Could not register company", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             }
-            //TODO: register company with server.
+            registerScreen.enablePersonTab();
         });
         buttonPanel.add(registerButton);
         JButton loginButton = new JButton("Back to login screen");
