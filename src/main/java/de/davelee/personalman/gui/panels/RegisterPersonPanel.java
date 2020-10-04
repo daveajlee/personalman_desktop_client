@@ -1,5 +1,6 @@
 package de.davelee.personalman.gui.panels;
 
+import de.davelee.personalman.api.RegisterUserRequest;
 import de.davelee.personalman.gui.LoginScreen;
 import de.davelee.personalman.gui.RegisterScreen;
 
@@ -15,6 +16,8 @@ public class RegisterPersonPanel extends JPanel {
     private final JTextField passwordField = new JTextField();
     private final JTextField confirmPasswordField = new JTextField();
 
+    private JCheckBox[] daysOfWeekCheckBoxes;
+
     public RegisterPersonPanel (final RegisterScreen registerScreen ) {
 
         //create a new box layout for the grid panel and button panel.
@@ -23,7 +26,7 @@ public class RegisterPersonPanel extends JPanel {
 
         //create a grid panel to show the required data in a table format
         JPanel gridPanel = new JPanel();
-        gridPanel.setLayout(new GridLayout(7,2,5,5));
+        gridPanel.setLayout(new GridLayout(9,2,5,5));
         gridPanel.setBackground(Color.WHITE);
 
         //Add first name.
@@ -40,6 +43,25 @@ public class RegisterPersonPanel extends JPanel {
         gridPanel.add(new JLabel("Company:", JLabel.CENTER));
         JComboBox<String> companyBox = new JComboBox<>(registerScreen.getUserInterface().getCompanies().toArray(new String[registerScreen.getUserInterface().getCompanies().size()]));
         gridPanel.add(companyBox);
+
+        //Add position.
+        gridPanel.add(new JLabel("Position: ", JLabel.CENTER));
+        JTextField positionField = new JTextField();
+        gridPanel.add(positionField);
+
+        //Add working days.
+        gridPanel.add(new JLabel("Working Days: ", JLabel.CENTER));
+        JPanel workingDaysPanel = new JPanel(new GridLayout(1,7,5,5));
+        workingDaysPanel.setBackground(Color.WHITE);
+        String[] daysOfWeek = new String[] { "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
+        daysOfWeekCheckBoxes = new JCheckBox[daysOfWeek.length];
+        for ( int i = 0; i < 7; i++ ) {
+            daysOfWeekCheckBoxes [i] = new JCheckBox(daysOfWeek[i]);
+            //Normal working week is Monday to Friday.
+            if ( i < 5 ) { daysOfWeekCheckBoxes[i].setSelected(true); }
+            workingDaysPanel.add(daysOfWeekCheckBoxes[i]);
+        }
+        gridPanel.add(workingDaysPanel);
 
         //Add username.
         gridPanel.add(new JLabel("Username:", JLabel.CENTER));
@@ -74,6 +96,18 @@ public class RegisterPersonPanel extends JPanel {
                         "Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             }
             else {
+                RegisterUserRequest registerUserRequest = RegisterUserRequest.builder()
+                        .company(companyBox.getSelectedItem().toString())
+                        .position(positionField.getText())
+                        .firstName(firstNameField.getText())
+                        .surname(surnameField.getText())
+                        .workingDays(getWorkingDays())
+                        .role(roleBox.getSelectedItem().toString())
+                        .username(usernameField.getText())
+                        //TODO: encrypt password
+                        .password(passwordField.getText())
+                        .build();
+                registerScreen.getUserInterface().registerUser(registerUserRequest);
                 registerScreen.dispose();
                 JOptionPane.showMessageDialog(registerScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
                         "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
@@ -103,6 +137,30 @@ public class RegisterPersonPanel extends JPanel {
         return passwordField.getText().contentEquals(confirmPasswordField.getText());
     }
 
-
+    public String getWorkingDays ( ) {
+        String workingDays = "";
+        if ( daysOfWeekCheckBoxes[0].isSelected() ) {
+            workingDays += "Monday,";
+        }
+        if ( daysOfWeekCheckBoxes[1].isSelected() ) {
+            workingDays += "Tuesday,";
+        }
+        if ( daysOfWeekCheckBoxes[2].isSelected() ) {
+            workingDays += "Wednesday,";
+        }
+        if ( daysOfWeekCheckBoxes[3].isSelected() ) {
+            workingDays += "Thursday,";
+        }
+        if ( daysOfWeekCheckBoxes[4].isSelected() ) {
+            workingDays += "Friday,";
+        }
+        if ( daysOfWeekCheckBoxes[5].isSelected() ) {
+            workingDays += "Saturday,";
+        }
+        if ( daysOfWeekCheckBoxes[6].isSelected() ) {
+            workingDays += "Sunday,";
+        }
+        return workingDays.substring(0,workingDays.length()-1);
+    }
 
 }

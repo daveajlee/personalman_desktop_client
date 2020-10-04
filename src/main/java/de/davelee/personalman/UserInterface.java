@@ -98,6 +98,16 @@ public class UserInterface {
 	}
 
 	/**
+	 * Register a new user based on the supplied request.
+	 * Retrieve the default annual leave days for the company and forward to employee service to register.
+	 * @param registerUserRequest a <code>RegisterUserRequest</code> object containing the data about this user.
+	 */
+	public void registerUser ( final RegisterUserRequest registerUserRequest ) {
+		int defaultAnnualLeave = companyService.getCompany(registerUserRequest.getCompany()).getDefaultAnnualLeaveInDays();
+		employeeService.register(registerUserRequest, defaultAnnualLeave);
+	}
+
+	/**
 	 * Get all user names for a particular company as a String array.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>String</code> array with all usernames for this company.

@@ -1,5 +1,6 @@
 package de.davelee.personalman.service;
 
+import de.davelee.personalman.api.RegisterUserRequest;
 import de.davelee.personalman.api.UserRequest;
 import de.davelee.personalman.api.UserResponse;
 import de.davelee.personalman.api.UsersResponse;
@@ -8,6 +9,9 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Class to provide service operations for employees in the PersonalMan program.
@@ -49,6 +53,21 @@ public class EmployeeService {
 	 */
 	public void save ( final UserRequest userRequest ) {
 		restTemplate.postForObject(userServiceUrl, userRequest, UserRequest.class);
+	}
+
+	public void register (final RegisterUserRequest registerUserRequest, final int leaveEntitlementPerYear ) {
+		UserRequest userRequest = UserRequest.builder()
+				.firstName(registerUserRequest.getFirstName())
+				.surname(registerUserRequest.getSurname())
+				.company(registerUserRequest.getCompany())
+				.username(registerUserRequest.getUsername())
+				.password(registerUserRequest.getPassword())
+				.workingDays(registerUserRequest.getWorkingDays())
+				.startDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+				.position(registerUserRequest.getPosition())
+				.leaveEntitlementPerYear(leaveEntitlementPerYear)
+				.build();
+		save(userRequest);
 	}
 	
 	/**

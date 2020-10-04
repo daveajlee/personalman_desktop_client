@@ -1,5 +1,6 @@
 package de.davelee.personalman.service;
 
+import de.davelee.personalman.api.CompanyResponse;
 import de.davelee.personalman.api.RegisterCompanyRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +48,14 @@ public class CompanyService {
      */
     public List<String> getCompanies ( ) {
         return (List<String>) restTemplate.getForObject(companyServiceUrl.replace("company", "companies"), List.class);
+    }
+
+    /**
+     * Retrieve the company information from the server for a particular company based on its name.
+     * @param name a <code>String</code> containing the name of the company.
+     */
+    public CompanyResponse getCompany (final String name ) {
+        return restTemplate.getForObject(companyServiceUrl + "?name=" + name, CompanyResponse.class );
     }
 
 }

@@ -82,13 +82,13 @@ public class RegisterScreen extends PersonalManBaseScreen {
         //Position the screen at the center of the screen.
         Toolkit tools = Toolkit.getDefaultToolkit();
         Dimension screenDim = tools.getScreenSize();
-        Dimension displayDim = new Dimension(750,500);
+        Dimension displayDim = new Dimension(850,500);
         this.setLocation ( (screenDim.width/2)-(displayDim.width/2), (screenDim.height/2)-(displayDim.height/2));
 
         //Display the front screen to the user.
         this.pack ();
         this.setVisible (true);
-        this.setSize ( new Dimension(750,500) );
+        this.setSize ( new Dimension(850,500) );
 
     }
 
