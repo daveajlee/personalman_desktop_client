@@ -1,6 +1,8 @@
 package de.davelee.personalman.gui;
 
 import de.davelee.personalman.UserInterface;
+import de.davelee.personalman.api.LoginRequest;
+import de.davelee.personalman.api.LoginResponse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,6 +94,16 @@ public class LoginScreen extends PersonalManBaseScreen {
             loginButton.setEnabled(false);
         }
         loginButton.addActionListener(e -> {
+            LoginRequest loginRequest = LoginRequest.builder()
+                    .company(companyBox.getSelectedItem().toString())
+                    .username(usernameField.getText())
+                    .password(passwordField.getText())
+                    .build();
+            LoginResponse loginResponse = userInterface.login(loginRequest);
+            if ( loginResponse.getErrorMessage() != null ) {
+                JOptionPane.showMessageDialog(this, loginResponse.getErrorMessage(),
+                        "Failure with Login", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+            } else {
                 dispose();
                 //TODO: remove test detection between admin and employee.
                 if ( usernameField.getText().contentEquals("testadmin")) {
@@ -99,6 +111,7 @@ public class LoginScreen extends PersonalManBaseScreen {
                 } else {
                     new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
                 }
+            }
         });
         buttonPanel.add(loginButton);
         JButton exitButton = new JButton("Exit");

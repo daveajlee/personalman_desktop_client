@@ -1,13 +1,11 @@
 package de.davelee.personalman.service;
 
-import de.davelee.personalman.api.RegisterUserRequest;
-import de.davelee.personalman.api.UserRequest;
-import de.davelee.personalman.api.UserResponse;
-import de.davelee.personalman.api.UsersResponse;
+import de.davelee.personalman.api.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -26,6 +24,9 @@ public class EmployeeService {
 
 	@Value("${server.userservice.url}")
 	private String userServiceUrl;
+
+	@Value("${server.login.url}")
+	private String loginUrl;
 	
 	/**
 	 * Find a user according to their company and user name.
@@ -68,6 +69,21 @@ public class EmployeeService {
 				.leaveEntitlementPerYear(leaveEntitlementPerYear)
 				.build();
 		save(userRequest);
+	}
+
+	/**
+	 * Attempt to log the user in based on the supplied request.
+	 * @param loginRequest a <code>LoginRequest</code> object containing the company, username and password to use this for this login attempt.
+	 * @return a <code>LoginResponse</code> object containing the response to this login from the server.
+	 */
+	public LoginResponse login ( final LoginRequest loginRequest ) {
+		try {
+			return restTemplate.postForObject(loginUrl, loginRequest, LoginResponse.class);
+		} catch ( HttpClientErrorException exception ) {
+			return LoginResponse.builder()
+					.errorMessage(exception.getMessage().split(":")[2].split(",")[0].replace("\"", ""))
+					.build();
+		}
 	}
 	
 	/**

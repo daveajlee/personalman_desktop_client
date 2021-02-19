@@ -108,6 +108,15 @@ public class UserInterface {
 	}
 
 	/**
+	 * Attempt to log the user in based on the supplied request.
+	 * @param loginRequest a <code>LoginRequest</code> object containing the company, username and password to use this for this login attempt.
+	 * @return a <code>LoginResponse</code> object containing the response to this login from the server.
+	 */
+	public LoginResponse login ( final LoginRequest loginRequest ) {
+		return employeeService.login(loginRequest);
+	}
+
+	/**
 	 * Get all user names for a particular company as a String array.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>String</code> array with all usernames for this company.

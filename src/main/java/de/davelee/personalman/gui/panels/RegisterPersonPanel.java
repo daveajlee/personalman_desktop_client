@@ -13,8 +13,8 @@ import java.awt.*;
  */
 public class RegisterPersonPanel extends JPanel {
 
-    private final JTextField passwordField = new JTextField();
-    private final JTextField confirmPasswordField = new JTextField();
+    private final JPasswordField passwordField = new JPasswordField();
+    private final JPasswordField confirmPasswordField = new JPasswordField();
 
     private JCheckBox[] daysOfWeekCheckBoxes;
 
