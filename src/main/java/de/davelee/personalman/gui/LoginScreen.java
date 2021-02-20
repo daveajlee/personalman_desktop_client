@@ -3,6 +3,7 @@ package de.davelee.personalman.gui;
 import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.api.LoginRequest;
 import de.davelee.personalman.api.LoginResponse;
+import de.davelee.personalman.api.UserResponse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -105,8 +106,8 @@ public class LoginScreen extends PersonalManBaseScreen {
                         "Failure with Login", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             } else {
                 dispose();
-                //TODO: remove test detection between admin and employee.
-                if ( usernameField.getText().contentEquals("testadmin")) {
+                UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText());
+                if ( userResponse.getRole().contentEquals("Admin")) {
                     new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
                 } else {
                     new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());

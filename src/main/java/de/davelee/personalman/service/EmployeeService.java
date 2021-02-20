@@ -67,6 +67,7 @@ public class EmployeeService {
 				.startDate(LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
 				.position(registerUserRequest.getPosition())
 				.leaveEntitlementPerYear(leaveEntitlementPerYear)
+				.role(registerUserRequest.getRole())
 				.build();
 		save(userRequest);
 	}
