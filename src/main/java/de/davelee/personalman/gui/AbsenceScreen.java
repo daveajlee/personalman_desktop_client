@@ -62,7 +62,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         monthJPanel.add(buttonPanel);
         screenPanel.add(monthJPanel);
 
-        JPanel bottomButtonPanel = new JPanel(new GridLayout(2,2,5,5));
+        JPanel bottomButtonPanel = new JPanel(new GridLayout(3,2,5,5));
         bottomButtonPanel.setBackground(Color.WHITE);
         JButton viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
         viewStatisticsButton.addActionListener( e -> processViewStatisticsButton());
@@ -73,7 +73,13 @@ public class AbsenceScreen extends PersonalManBaseScreen {
             dispose();
         });
         bottomButtonPanel.add(logoutButton);
-        //employeePanel.add(bottomButtonPanel);
+        //Add button to return to welcome / admin screen if user has admin role.
+        JButton adminButton = new JButton("Admin Screen");
+        adminButton.addActionListener( e -> {
+            new WelcomeScreen(userInterface, company, username);
+        });
+        adminButton.setVisible(userInterface.getEmployeeByUserName(company, username).getRole().contentEquals("Admin"));
+        bottomButtonPanel.add(adminButton);
         screenPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
         
         container.add(screenPanel, BorderLayout.CENTER);
