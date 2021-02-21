@@ -17,7 +17,7 @@ public class NextScreenMouseListener implements MouseListener {
 	
 	private final ScreenType screenType;
 	private final UserInterface userInterface;
-	private final WelcomeScreen welcomeScreen;
+	private final AdminScreen adminScreen;
 	private final String company;
 	private final String username;
 	
@@ -27,15 +27,15 @@ public class NextScreenMouseListener implements MouseListener {
 	 * Create a new mouse listener for the next screen.
 	 * @param screenType a <code>ScreenType</code> object representing the screen type.
 	 * @param userInterface a <code>UserInterface</code> object representing the current user interface.
-	 * @param welcomeScreen a <code>WelcomeScreen</code> object representing the welcome screen to display to the user (if clicked).
+	 * @param adminScreen a <code>WelcomeScreen</code> object representing the welcome screen to display to the user (if clicked).
 	 * @param company a <code>String</code> with the company that should be used in the client.
 	 * @param username a <code>String</code> with the username which may be null if no specific user info should be displayed.
 	 */
-	public NextScreenMouseListener ( final ScreenType screenType, final UserInterface userInterface, final WelcomeScreen welcomeScreen,
+	public NextScreenMouseListener ( final ScreenType screenType, final UserInterface userInterface, final AdminScreen adminScreen,
 									 final String company, final String username ) {
 		this.screenType = screenType;
 		this.userInterface = userInterface;
-		this.welcomeScreen = welcomeScreen;
+		this.adminScreen = adminScreen;
 		this.company = company;
 		this.username = username;
 	}
@@ -47,10 +47,10 @@ public class NextScreenMouseListener implements MouseListener {
 	public void mouseClicked(final MouseEvent mouseEvent) {
     	if ( screenType == ScreenType.ABSENCE_SCREEN) {
     		createAbsenceScreen();
-    		welcomeScreen.dispose();
+    		adminScreen.dispose();
     	} else if ( screenType == ScreenType.EMPLOYEE_SCREEN) {
     		createEmployeeScreen();
-    		welcomeScreen.dispose();
+    		adminScreen.dispose();
     	} else {
     		LOG.warn("Screen type not defined - cannot move to next screen!");
     	}

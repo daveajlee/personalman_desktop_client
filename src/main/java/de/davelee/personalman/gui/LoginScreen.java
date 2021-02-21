@@ -108,7 +108,7 @@ public class LoginScreen extends PersonalManBaseScreen {
                 dispose();
                 UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText());
                 if ( userResponse.getRole().contentEquals("Admin")) {
-                    new WelcomeScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
+                    new AdminScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
                 } else {
                     new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
                 }

@@ -76,7 +76,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         //Add button to return to welcome / admin screen if user has admin role.
         JButton adminButton = new JButton("Admin Screen");
         adminButton.addActionListener( e -> {
-            new WelcomeScreen(userInterface, company, username);
+            new AdminScreen(userInterface, company, username);
         });
         adminButton.setVisible(userInterface.getEmployeeByUserName(company, username).getRole().contentEquals("Admin"));
         bottomButtonPanel.add(adminButton);

@@ -17,13 +17,13 @@ public class NextScreenMouseListenerMock extends NextScreenMouseListener {
 	 * Create a new mouse listener mock for the next screen.
 	 * @param screenType a <code>ScreenType</code> object representing the screen type.
 	 * @param userInterface a <code>UserInterface</code> object representing the current user interface.
-	 * @param welcomeScreen a <code>WelcomeScreen</code> object representing the welcome screen to display to the user (if clicked).
+	 * @param adminScreen a <code>WelcomeScreen</code> object representing the welcome screen to display to the user (if clicked).
 	 * @param company a <code>String</code> with the company that should be used in the client.
 	 * @param username a <code>String</code> with the username which may be null if no specific user info should be displayed.
 	 */
-	public NextScreenMouseListenerMock ( final ScreenType screenType, final UserInterface userInterface, final WelcomeScreen welcomeScreen,
+	public NextScreenMouseListenerMock ( final ScreenType screenType, final UserInterface userInterface, final AdminScreen adminScreen,
 										 final String company, final String username ) {
-		super(screenType, userInterface, welcomeScreen, company, username);
+		super(screenType, userInterface, adminScreen, company, username);
 	}
 
 	/**

@@ -22,3 +22,8 @@ This is a Java Client for PersonalMan which provides absence management for empl
 
 *   If you want to change the company, then you must restart the client.
 *   I cannot accept any warranty for loss of data through using this client or server.
+
+## Copyright information
+This repository contains images provided by other authors under the terms of the Creative Commons licence 3.0: https://creativecommons.org/licenses/by/3.0/
+* The add & remove user icons are provided by: https://www.iconfinder.com/hanggoro
+* The reset user icon is provided by: Christian F. Burprich

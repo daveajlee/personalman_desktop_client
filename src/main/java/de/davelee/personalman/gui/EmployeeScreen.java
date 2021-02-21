@@ -236,7 +236,7 @@ public class EmployeeScreen extends PersonalManBaseScreen {
         buttonPanel.add(clearButton);
         JButton welcomeScreenButton = new JButton(userInterface.getUserInterfaceMessages().getEmployeesWelcomeButton());
         welcomeScreenButton.addActionListener ( e -> {
-            new WelcomeScreen(userInterface, company, username);
+            new AdminScreen(userInterface, company, username);
             dispose();
         });
         buttonPanel.add(welcomeScreenButton);
