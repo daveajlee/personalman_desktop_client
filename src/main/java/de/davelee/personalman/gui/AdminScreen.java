@@ -2,6 +2,7 @@ package de.davelee.personalman.gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 
 import javax.swing.*;
 
@@ -120,10 +121,12 @@ public class AdminScreen extends PersonalManBaseScreen {
         ImageDisplay absenceOverviewIconDisplay = new ImageDisplay("images/iconfinder_travel_bag_4677535.png", 0, 0);
         absenceOverviewIconDisplay.setSize(81,81);
         absenceOverviewIconDisplay.setBackground(Color.WHITE);
+        absenceOverviewIconPanel.addMouseListener(absenceScreenMouseListener());
         absenceOverviewIconPanel.add(absenceOverviewIconDisplay);
         absenceOverviewPanel.add(absenceOverviewIconPanel);
         JLabel absenceOverviewLabel = new JLabel("Absence Overview", SwingConstants.CENTER);
         absenceOverviewLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        absenceOverviewLabel.addMouseListener(absenceScreenMouseListener());
         absenceOverviewPanel.add(absenceOverviewLabel);
         centrePanel.add(absenceOverviewPanel);
         
@@ -206,12 +209,50 @@ public class AdminScreen extends PersonalManBaseScreen {
         panel.addMouseListener ( new NextScreenMouseListener(ScreenType.ABSENCE_SCREEN, userInterface, this, company, username) );
     }
 
+    /**
+     * Make the Add New User Icon and Text clickable and go to th AddUserScreen.
+     * @return a <code>MouseListener</code> object which can be added to Swing Components.
+     */
     public MouseListener addNewUserMouseListener() {
         return new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 dispose();
                 new AddUserScreen(userInterface, company, username);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+    /**
+     * Make the Absence Screen Icon and Text clickable and go to the AbsenceScreen.
+     * @return a <code>MouseListener</code> object which can be added to Swing Components.
+     */
+    public MouseListener absenceScreenMouseListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new AbsenceScreen(userInterface, LocalDate.now(), company, username);
             }
 
             @Override

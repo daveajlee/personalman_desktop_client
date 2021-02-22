@@ -6,8 +6,18 @@ import de.davelee.personalman.gui.panels.RegisterPersonPanel;
 
 import java.awt.*;
 
+/**
+ * Class to display the add new user screen for Adninistrators in the PersonalMan program.
+ * @author Dave Lee
+ */
 public class AddUserScreen extends PersonalManBaseScreen {
 
+    /**
+     * Create a new add user screen with the following information.
+     * @param ui a <code>UserInterface</code> object which contains the User Interfact information.
+     * @param company a <code>String</code> containing the name of the company that the admin belongs to.
+     * @param adminUserName a <code>String</code> containing the user name of the administration.
+     */
     public AddUserScreen (final UserInterface ui, final String company, final String adminUserName ) {
         super(ui);
 
