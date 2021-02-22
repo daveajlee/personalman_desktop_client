@@ -1,7 +1,10 @@
 package de.davelee.personalman.gui.panels;
 
+import de.davelee.personalman.UserInterface;
 import de.davelee.personalman.api.RegisterUserRequest;
+import de.davelee.personalman.gui.AdminScreen;
 import de.davelee.personalman.gui.LoginScreen;
+import de.davelee.personalman.gui.PersonalManBaseScreen;
 import de.davelee.personalman.gui.RegisterScreen;
 
 import javax.swing.*;
@@ -18,7 +21,7 @@ public class RegisterPersonPanel extends JPanel {
 
     private JCheckBox[] daysOfWeekCheckBoxes;
 
-    public RegisterPersonPanel (final RegisterScreen registerScreen ) {
+    public RegisterPersonPanel (final UserInterface userInterface, final String company, final String adminUsername, final PersonalManBaseScreen personalManBaseScreen) {
 
         //create a new box layout for the grid panel and button panel.
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -41,7 +44,12 @@ public class RegisterPersonPanel extends JPanel {
 
         //Add company.
         gridPanel.add(new JLabel("Company:", JLabel.CENTER));
-        JComboBox<String> companyBox = new JComboBox<>(registerScreen.getUserInterface().getCompanies().toArray(new String[registerScreen.getUserInterface().getCompanies().size()]));
+        JComboBox<String> companyBox;
+        if ( company == null ) {
+            companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[userInterface.getCompanies().size()]));
+        } else {
+            companyBox = new JComboBox<>(new String[] { company });
+        }
         gridPanel.add(companyBox);
 
         //Add position.
@@ -92,7 +100,7 @@ public class RegisterPersonPanel extends JPanel {
         registerButton.addActionListener(e -> {
             //First confirm that the passwords are equal.
             if ( !passwordsSame() ) {
-                JOptionPane.showMessageDialog(registerScreen, "The passwords entered do not match. Please verify and submit your registration request again.",
+                JOptionPane.showMessageDialog(personalManBaseScreen, "The passwords entered do not match. Please verify and submit your registration request again.",
                         "Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             }
             else {
@@ -107,23 +115,45 @@ public class RegisterPersonPanel extends JPanel {
                         //TODO: encrypt password
                         .password(passwordField.getText())
                         .build();
-                registerScreen.getUserInterface().registerUser(registerUserRequest);
-                registerScreen.dispose();
-                JOptionPane.showMessageDialog(registerScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
-                        "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
-                new LoginScreen(registerScreen.getUserInterface());
+                userInterface.registerUser(registerUserRequest);
+                personalManBaseScreen.dispose();
+                if ( company == null ) {
+                    JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
+                            "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                    new LoginScreen(userInterface);
+                } else {
+                    JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering " + registerUserRequest.getFirstName() + " " + registerUserRequest.getSurname() + " for PersonalMan. The account was created successfully.",
+                            "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                    new AdminScreen(userInterface, company, adminUsername);
+                }
             }
         });
         buttonPanel.add(registerButton);
-        JButton loginButton = new JButton("Back to login screen");
-        loginButton.addActionListener(e -> {
-            registerScreen.dispose();
-            new LoginScreen(registerScreen.getUserInterface());
-        });
-        buttonPanel.add(loginButton);
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(e -> registerScreen.getUserInterface().exit());
-        buttonPanel.add(exitButton);
+        if ( company == null ) {
+            JButton loginButton = new JButton("Back to login screen");
+            loginButton.addActionListener(e -> {
+                personalManBaseScreen.dispose();
+                new LoginScreen(userInterface);
+            });
+            buttonPanel.add(loginButton);
+            JButton exitButton = new JButton("Exit");
+            exitButton.addActionListener(e -> userInterface.exit());
+            buttonPanel.add(exitButton);
+        } else {
+            JButton backToAdminScreenButton = new JButton("Back to admin screen");
+            backToAdminScreenButton.addActionListener(e -> {
+                personalManBaseScreen.dispose();
+                new AdminScreen(userInterface, company, adminUsername);
+            });
+            buttonPanel.add(backToAdminScreenButton);
+            JButton logoutButton = new JButton("Logout");
+            logoutButton.addActionListener(e -> {
+                personalManBaseScreen.dispose();
+                new LoginScreen(userInterface);
+            });
+            buttonPanel.add(logoutButton);
+        }
+
 
         //add button panel to box layout
         add(buttonPanel);

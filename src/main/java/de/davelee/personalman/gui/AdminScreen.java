@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import de.davelee.personalman.gui.admin.AddUserScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,12 +71,14 @@ public class AdminScreen extends PersonalManBaseScreen {
         JPanel newUserIconPanel = new JPanel();
         newUserIconPanel.setBackground(Color.WHITE);
         ImageDisplay newUserIconDisplay = new ImageDisplay("images/iconfinder_SEO-09_2588770.png", 0, 0);
+        newUserIconDisplay.addMouseListener(addNewUserMouseListener());
         newUserIconDisplay.setSize(81,81);
         newUserIconDisplay.setBackground(Color.WHITE);
         newUserIconPanel.add(newUserIconDisplay);
         newUserPanel.add(newUserIconPanel);
         JLabel newUserLabel = new JLabel("Add New User", SwingConstants.CENTER);
         newUserLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        newUserLabel.addMouseListener(addNewUserMouseListener());
         newUserPanel.add(newUserLabel);
         centrePanel.add(newUserPanel);
 
@@ -201,6 +204,36 @@ public class AdminScreen extends PersonalManBaseScreen {
     public void initialiseAbsencePanel ( final JPanel panel ) {
         panel.setBackground(Color.WHITE);
         panel.addMouseListener ( new NextScreenMouseListener(ScreenType.ABSENCE_SCREEN, userInterface, this, company, username) );
+    }
+
+    public MouseListener addNewUserMouseListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new AddUserScreen(userInterface, company, username);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
     }
 
 }

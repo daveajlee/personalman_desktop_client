@@ -63,7 +63,7 @@ public class RegisterScreen extends PersonalManBaseScreen {
 
         //Use a tabbed pane to use between registering for companies and registering for people.
         RegisterCompanyPanel registerCompanyPanel = new RegisterCompanyPanel(this);
-        RegisterPersonPanel registerPersonPanel = new RegisterPersonPanel(this);
+        RegisterPersonPanel registerPersonPanel = new RegisterPersonPanel(userInterface, null, null,this);
 
         tabbedPane = new JTabbedPane();
         tabbedPane.setBackground(Color.WHITE);
