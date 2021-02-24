@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import javax.swing.*;
 
 import de.davelee.personalman.gui.admin.AddUserScreen;
+import de.davelee.personalman.gui.admin.DeleteUserScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,10 +92,12 @@ public class AdminScreen extends PersonalManBaseScreen {
         ImageDisplay removeUserIconDisplay = new ImageDisplay("images/iconfinder_SEO-07_2588768.png", 0, 0);
         removeUserIconDisplay.setSize(81,81);
         removeUserIconDisplay.setBackground(Color.WHITE);
+        removeUserIconDisplay.addMouseListener(removeUserMouseListener());
         removeUserIconPanel.add(removeUserIconDisplay);
         removeUserPanel.add(removeUserIconPanel);
         JLabel removeUserLabel = new JLabel("Remove User", SwingConstants.CENTER);
         removeUserLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        removeUserLabel.addMouseListener(removeUserMouseListener());
         removeUserPanel.add(removeUserLabel);
         centrePanel.add(removeUserPanel);
 
@@ -121,7 +124,7 @@ public class AdminScreen extends PersonalManBaseScreen {
         ImageDisplay absenceOverviewIconDisplay = new ImageDisplay("images/iconfinder_travel_bag_4677535.png", 0, 0);
         absenceOverviewIconDisplay.setSize(81,81);
         absenceOverviewIconDisplay.setBackground(Color.WHITE);
-        absenceOverviewIconPanel.addMouseListener(absenceScreenMouseListener());
+        absenceOverviewIconDisplay.addMouseListener(absenceScreenMouseListener());
         absenceOverviewIconPanel.add(absenceOverviewIconDisplay);
         absenceOverviewPanel.add(absenceOverviewIconPanel);
         JLabel absenceOverviewLabel = new JLabel("Absence Overview", SwingConstants.CENTER);
@@ -190,27 +193,9 @@ public class AdminScreen extends PersonalManBaseScreen {
         this.setSize ( new Dimension(750,600) );
         
     }
-    
-    /**
-     * Initialise the panel to create a new game.
-     * @param panel a <code>JPanel</code> to diplay the new game panel.
-     */
-    public void initialiseEmployeePanel ( final JPanel panel ) {
-        panel.setBackground(Color.WHITE);
-        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.EMPLOYEE_SCREEN, userInterface, this, company, null) );
-    }
-    
-    /**
-     * Initialise the panel for absences.
-     * @param panel a <code>JPanel</code> to diplay the absence panel.
-     */
-    public void initialiseAbsencePanel ( final JPanel panel ) {
-        panel.setBackground(Color.WHITE);
-        panel.addMouseListener ( new NextScreenMouseListener(ScreenType.ABSENCE_SCREEN, userInterface, this, company, username) );
-    }
 
     /**
-     * Make the Add New User Icon and Text clickable and go to th AddUserScreen.
+     * Make the Add New User Icon and Text clickable and go to the AddUserScreen.
      * @return a <code>MouseListener</code> object which can be added to Swing Components.
      */
     public MouseListener addNewUserMouseListener() {
@@ -219,6 +204,40 @@ public class AdminScreen extends PersonalManBaseScreen {
             public void mouseClicked(MouseEvent e) {
                 dispose();
                 new AddUserScreen(userInterface, company, username);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+    /**
+     * Make the Remove User Icon and Text clickable and go to th AddUserScreen.
+     * @return a <code>MouseListener</code> object which can be added to Swing Components.
+     */
+    public MouseListener removeUserMouseListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new DeleteUserScreen(userInterface, company, username);
             }
 
             @Override

@@ -130,7 +130,7 @@ public class UserInterface {
     	String[] userNames = new String[userResponses.length];
     	int count = 0;
     	for ( UserResponse userResponse : userResponses ) {
-    		userNames[count] = userResponse.getUsername();
+    		userNames[count] = userResponse.getUsername() + " - " + userResponse.getFirstName() + " " + userResponse.getSurname();
     		count++;
     	}
     	return userNames;

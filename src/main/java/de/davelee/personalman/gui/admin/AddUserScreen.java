@@ -14,7 +14,7 @@ public class AddUserScreen extends PersonalManBaseScreen {
 
     /**
      * Create a new add user screen with the following information.
-     * @param ui a <code>UserInterface</code> object which contains the User Interfact information.
+     * @param ui a <code>UserInterface</code> object which contains the User Interface information.
      * @param company a <code>String</code> containing the name of the company that the admin belongs to.
      * @param adminUserName a <code>String</code> containing the user name of the administration.
      */
