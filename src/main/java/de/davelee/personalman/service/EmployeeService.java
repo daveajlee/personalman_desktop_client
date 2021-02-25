@@ -27,6 +27,9 @@ public class EmployeeService {
 
 	@Value("${server.login.url}")
 	private String loginUrl;
+
+	@Value("${server.reset.url}")
+	private String resetUrl;
 	
 	/**
 	 * Find a user according to their company and user name.
@@ -84,6 +87,20 @@ public class EmployeeService {
 			return LoginResponse.builder()
 					.errorMessage(exception.getMessage().split(":")[2].split(",")[0].replace("\"", ""))
 					.build();
+		}
+	}
+
+	/**
+	 * Attempt to reset the password of the supplied user at the supplied company.
+	 * @param resetUserRequest a <code>ResetUserRequest</code> object containing the company, username and new password.
+	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
+	 */
+	public boolean resetPassword ( final ResetUserRequest resetUserRequest ) {
+		try {
+			restTemplate.postForObject(resetUrl, resetUserRequest, Void.class);
+			return true;
+		} catch ( HttpClientErrorException exception ) {
+			return false;
 		}
 	}
 	

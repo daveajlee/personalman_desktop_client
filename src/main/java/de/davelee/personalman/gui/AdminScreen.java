@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import de.davelee.personalman.gui.admin.AddUserScreen;
 import de.davelee.personalman.gui.admin.DeleteUserScreen;
+import de.davelee.personalman.gui.admin.ResetUserScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,10 +110,12 @@ public class AdminScreen extends PersonalManBaseScreen {
         ImageDisplay resetUserPasswordIconDisplay = new ImageDisplay("images/iconfinder_POWER - RESTART_16946.png", 0, 0);
         resetUserPasswordIconDisplay.setSize(81,81);
         resetUserPasswordIconDisplay.setBackground(Color.WHITE);
+        resetUserPasswordIconPanel.addMouseListener(resetUserMouseListener());
         resetUserPasswordIconPanel.add(resetUserPasswordIconDisplay);
         resetUserPasswordPanel.add(resetUserPasswordIconPanel);
         JLabel resetUserPasswordLabel = new JLabel("Reset User", SwingConstants.CENTER);
         resetUserPasswordLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        resetUserPasswordLabel.addMouseListener(resetUserMouseListener());
         resetUserPasswordPanel.add(resetUserPasswordLabel);
         centrePanel.add(resetUserPasswordPanel);
 
@@ -132,32 +135,6 @@ public class AdminScreen extends PersonalManBaseScreen {
         absenceOverviewLabel.addMouseListener(absenceScreenMouseListener());
         absenceOverviewPanel.add(absenceOverviewLabel);
         centrePanel.add(absenceOverviewPanel);
-        
-        //Create employee panel with image and label first.
-        /*JPanel employeePanel = new JPanel();
-        initialiseEmployeePanel(employeePanel);
-        employeePanel.setLayout ( new BoxLayout ( employeePanel, BoxLayout.PAGE_AXIS ) );
-        JPanel employeePicPanel = new JPanel();
-        initialiseEmployeePanel(employeePicPanel);
-        ImageIcon employeeImage = new ImageIcon(SplashScreen.class.getResource(userInterface.getUserInterfaceMessages().getEmployeesImage()));
-        JLabel employeeLabel = new JLabel("", employeeImage, JLabel.CENTER);
-        employeePicPanel.add(employeeLabel);
-        employeePanel.add(employeePicPanel);
-        employeePanel.add(Box.createRigidArea(new Dimension(0,10))); //Spacer.
-        centrePanel.add(employeePanel);
-        
-        //Create absence panel with image and label first.
-        JPanel absencePanel = new JPanel(); 
-        initialiseAbsencePanel(absencePanel);
-        absencePanel.setLayout ( new BoxLayout ( absencePanel, BoxLayout.PAGE_AXIS ) );
-        JPanel absencePicPanel = new JPanel();
-        initialiseAbsencePanel(absencePicPanel);
-        ImageIcon absenceImage = new ImageIcon(SplashScreen.class.getResource(userInterface.getUserInterfaceMessages().getAbsencesImage()));
-        JLabel absenceLabel = new JLabel("", absenceImage, JLabel.CENTER);
-        absencePicPanel.add(absenceLabel);
-        absencePanel.add(absencePicPanel);
-        absencePanel.add(Box.createRigidArea(new Dimension(0,10))); //Spacer.
-        centrePanel.add(absencePanel);*/
 
         screenPanel.add(centrePanel, BorderLayout.CENTER);
 
@@ -229,7 +206,7 @@ public class AdminScreen extends PersonalManBaseScreen {
     }
 
     /**
-     * Make the Remove User Icon and Text clickable and go to th AddUserScreen.
+     * Make the Remove User Icon and Text clickable and go to the RemoveUserScreen.
      * @return a <code>MouseListener</code> object which can be added to Swing Components.
      */
     public MouseListener removeUserMouseListener() {
@@ -238,6 +215,40 @@ public class AdminScreen extends PersonalManBaseScreen {
             public void mouseClicked(MouseEvent e) {
                 dispose();
                 new DeleteUserScreen(userInterface, company, username);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        };
+    }
+
+    /**
+     * Make the Reset User Icon and Text clickable and go to the ResetUserScreen.
+     * @return a <code>MouseListener</code> object which can be added to Swing Components.
+     */
+    public MouseListener resetUserMouseListener() {
+        return new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                dispose();
+                new ResetUserScreen(userInterface, company, username);
             }
 
             @Override

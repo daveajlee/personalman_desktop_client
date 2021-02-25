@@ -117,6 +117,15 @@ public class UserInterface {
 	}
 
 	/**
+	 * Attempt to reset the password of the supplied user at the supplied company.
+	 * @param resetUserRequest a <code>ResetUserRequest</code> object containing the company, username and new password.
+	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
+	 */
+	public boolean resetUserPassword ( final ResetUserRequest resetUserRequest ) {
+		return  employeeService.resetPassword(resetUserRequest);
+	}
+
+	/**
 	 * Get all user names for a particular company as a String array.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @return a <code>String</code> array with all usernames for this company.

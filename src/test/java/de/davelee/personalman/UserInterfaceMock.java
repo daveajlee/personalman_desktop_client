@@ -45,7 +45,15 @@ public class UserInterfaceMock extends UserInterface {
 	 */
 	public UserResponse getEmployeeByUserName ( final String company, final String userName ) {
 		LocalDate startDate = LocalDate.of(2015, 3, 1);
-		return new UserResponse("Max", "Mustermann", "mmustermann", "MyCompany", 26, "Saturday, Sunday", "Tester", startDate.format(UserInterface.DATE_TIME_FORMATTER));
+		return UserResponse.builder()
+				.firstName("Max")
+				.surname("Mustermann")
+				.username("mmustermann")
+				.company("MyCompany")
+				.leaveEntitlementPerYear(26)
+				.workingDays("Saturday, Sunday")
+				.position("Tester")
+				.startDate(startDate.format(UserInterface.DATE_TIME_FORMATTER)).build();
 	}
 	
 }

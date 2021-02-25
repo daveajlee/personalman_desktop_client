@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
  */
 public class EmployeeServiceMock extends EmployeeService {
 	
-	private final UserResponse employee = new UserResponse("Max", "Mustermann", "mmustermann", "MyCompany", 4, "Monday,Tuesday,Wednesday,Thursday,Friday", "Tester", "28-02-2015");
+	private final UserResponse employee = UserResponse.builder()
+			.firstName("Max").surname("Mustermann").username("mmmustermann").company("MyCompany").leaveEntitlementPerYear(4)
+			.workingDays("Monday,Tuesday,Wednesday,Thursday,Friday").position("Tester").startDate("28-02-2015").build();
 
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceMock.class);
 
@@ -25,7 +27,16 @@ public class EmployeeServiceMock extends EmployeeService {
 		if ( "MyCompany".equalsIgnoreCase(company) ) {
 			UserResponse[] employees = new UserResponse[2];
 			employees[0] = employee;
-			employees[1] = new UserResponse("John", "Smith", "jsmith", "MyCompany", 30, "Monday, Tuesday", "Producer", "01-03-2015");
+			employees[1] = UserResponse.builder()
+					.firstName("John")
+					.surname("Smith")
+					.username("jsmith")
+					.company("MyCompany")
+					.leaveEntitlementPerYear(30)
+					.workingDays("Monday, Tuesday")
+					.position("Producer")
+					.startDate("01-03-2015")
+					.build();
 			return UsersResponse.builder()
 					.userResponses(employees)
 					.build();
