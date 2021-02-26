@@ -62,7 +62,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         monthJPanel.add(buttonPanel);
         screenPanel.add(monthJPanel);
 
-        JPanel bottomButtonPanel = new JPanel(new GridLayout(3,2,5,5));
+        JPanel bottomButtonPanel = new JPanel(new GridLayout(4,2,5,5));
         bottomButtonPanel.setBackground(Color.WHITE);
         JButton viewStatisticsButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesStatsButton());
         viewStatisticsButton.addActionListener( e -> processViewStatisticsButton());
@@ -77,9 +77,17 @@ public class AbsenceScreen extends PersonalManBaseScreen {
         JButton adminButton = new JButton("Admin Screen");
         adminButton.addActionListener( e -> {
             new AdminScreen(userInterface, company, username);
+            dispose();
         });
         adminButton.setVisible(userInterface.getEmployeeByUserName(company, username).getRole().contentEquals("Admin"));
         bottomButtonPanel.add(adminButton);
+        //Add button to change password.
+        JButton changePasswordButton = new JButton("Change Password");
+        changePasswordButton.addActionListener(e -> {
+            new ChangePasswordScreen(userInterface, company, username);
+            dispose();
+        });
+        bottomButtonPanel.add(changePasswordButton);
         screenPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
         
         container.add(screenPanel, BorderLayout.CENTER);

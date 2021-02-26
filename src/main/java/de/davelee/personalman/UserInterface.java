@@ -122,7 +122,16 @@ public class UserInterface {
 	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
 	 */
 	public boolean resetUserPassword ( final ResetUserRequest resetUserRequest ) {
-		return  employeeService.resetPassword(resetUserRequest);
+		return employeeService.resetPassword(resetUserRequest);
+	}
+
+	/**
+	 * Attempt to change the password of the supplied user at the supplied company.
+	 * @param changePasswordRequest a <code>ChangePasswordRequest</code> object containing the company, username, current password and new password.
+	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
+	 */
+	public boolean changePassword ( final ChangePasswordRequest changePasswordRequest ) {
+		return employeeService.changePassword(changePasswordRequest);
 	}
 
 	/**

@@ -5,7 +5,6 @@ import de.davelee.personalman.api.ResetUserRequest;
 import de.davelee.personalman.gui.AdminScreen;
 import de.davelee.personalman.gui.LoginScreen;
 import de.davelee.personalman.gui.PersonalManBaseScreen;
-import de.davelee.personalman.gui.RegisterScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,11 +47,11 @@ public class ResetUserScreen extends PersonalManBaseScreen {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout ( new BoxLayout ( buttonPanel, BoxLayout.LINE_AXIS ) );
         buttonPanel.setBackground(Color.WHITE);
-        JButton deleteButton = new JButton("Reset");
-        deleteButton.addActionListener(e -> {
+        JButton resetButton = new JButton("Reset");
+        resetButton.addActionListener(e -> {
             if ( !passwordField.getText().contentEquals(confirmPasswordField.getText())) {
                 JOptionPane.showMessageDialog(this, "The passwords entered do not match. Please verify and submit your request again.",
-                        "Passwords do not match.", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                        "Passwords do not match.", JOptionPane.ERROR_MESSAGE, new ImageIcon(ResetUserScreen.class.getResource("/images/personalmanlogo-icon.png")));
             } else {
                 ResetUserRequest resetUserRequest = ResetUserRequest.builder()
                         .company(company)
@@ -61,14 +60,14 @@ public class ResetUserScreen extends PersonalManBaseScreen {
                         .build();
                 if (userInterface.resetUserPassword(resetUserRequest)) {
                     JOptionPane.showMessageDialog(this, "The password for user " + resetUserRequest.getUsername() + " was changed successfully.",
-                            "Password changed successfully.", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                            "Password changed successfully.", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ResetUserScreen.class.getResource("/images/personalmanlogo-icon.png")));
                 } else {
                     JOptionPane.showMessageDialog(this, "The password for user " + resetUserRequest.getUsername() + " could not be changed.",
-                            "Password could not be changed.", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                            "Password could not be changed.", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(ResetUserScreen.class.getResource("/images/personalmanlogo-icon.png")));
                 }
             }
         });
-        buttonPanel.add(deleteButton);
+        buttonPanel.add(resetButton);
         JButton backToAdminScreenButton = new JButton("Back to admin screen");
         backToAdminScreenButton.addActionListener(e -> {
             dispose();
