@@ -49,15 +49,16 @@ public class UserInterfaceTest {
 			}
 		}
 		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
-		userInterface.addEmployee("Max", "Mustermann", "mmustermann", "MyCompany", 26, "Saturday, Sunday", "Tester", "28-02-2015");
-		AbsencesResponse absences = userInterface.getAbsenceService().findByNameAndYear("MyCompany", "mmustermann", 2015);
+		userInterface.addEmployee("Max", "Mustermann", EMPLOYEE_USERNAME, "MyCompany", 26, "Saturday, Sunday", "Tester", "28-02-2015");
+		AbsencesResponse absences = userInterface.getAbsenceService().findByNameAndYear("MyCompany", EMPLOYEE_USERNAME, 2015);
 		if ( !absences.getAbsenceResponseList().isEmpty() ) {
 			for ( AbsenceResponse absence: absences.getAbsenceResponseList() ) {
 				userInterface.getAbsenceService().delete(absence.getCompany(), absence.getUsername(), absence.getStartDate(), absence.getEndDate());
 			}
 		}
 		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
-		assertEquals(userInterface.getUserNames("MyCompany")[0], EMPLOYEE_USERNAME);
+		System.out.println("Username: " + userInterface.getUserNames("MyCompany")[0]);
+		assertEquals(userInterface.getUserNames("MyCompany")[0], EMPLOYEE_USERNAME + " - Max Mustermann");
 		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2015), "Illness: 0 days\nHoliday: 0 days (Remaining: 4 days)\nTrip: 0 days\nConference: 0 days\nDay in Lieu: 0 days (Remaining: 0 days)\nFederal Holiday: 4 days\n");
 		userInterface.determineLocale("English");
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "03-04-2016", "06-04-2016", "Federal Holiday");

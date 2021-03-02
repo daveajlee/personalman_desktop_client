@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -151,6 +152,7 @@ public class UserInterface {
     		userNames[count] = userResponse.getUsername() + " - " + userResponse.getFirstName() + " " + userResponse.getSurname();
     		count++;
     	}
+    	System.out.println(Arrays.toString(userNames));
     	return userNames;
     }
    
@@ -223,7 +225,13 @@ public class UserInterface {
      */
     private boolean saveAbsence ( final String company, final String userName,
 									  final String startDate, final String endDate, final String category) {
-		return absenceService.save(new AbsenceRequest(company, userName, startDate, endDate, category));
+		return absenceService.save(AbsenceRequest.builder()
+				.company(company)
+				.username(userName)
+				.startDate(startDate)
+				.endDate(endDate)
+				.category(category)
+				.build());
     }
     
     /**

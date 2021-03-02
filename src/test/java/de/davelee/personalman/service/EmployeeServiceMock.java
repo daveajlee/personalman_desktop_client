@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class EmployeeServiceMock extends EmployeeService {
 	
 	private final UserResponse employee = UserResponse.builder()
-			.firstName("Max").surname("Mustermann").username("mmmustermann").company("MyCompany").leaveEntitlementPerYear(4)
+			.firstName("Max").surname("Mustermann").username("mmustermann").company("MyCompany").leaveEntitlementPerYear(4)
 			.workingDays("Monday,Tuesday,Wednesday,Thursday,Friday").position("Tester").startDate("28-02-2015").build();
 
 	private static final Logger LOG = LoggerFactory.getLogger(EmployeeServiceMock.class);

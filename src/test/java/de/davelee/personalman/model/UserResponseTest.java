@@ -22,7 +22,17 @@ public class UserResponseTest {
 	 */
 	@Test
 	public void testConstructor() {
-		UserResponse userResponse = new UserResponse("Max", SURNAME, "mmustermann", "MyCompany", 26, WORKING_DAYS, POSITION, "27-02-2015");
+		UserResponse userResponse = UserResponse.builder()
+				.firstName("Max")
+				.surname(SURNAME)
+				.username("mmustermann")
+				.company("MyCompany")
+				.leaveEntitlementPerYear(26)
+				.workingDays(WORKING_DAYS)
+				.position(POSITION)
+				.startDate("27-02-2015")
+				.role("Admin")
+				.build();
 		assertEquals(userResponse.getFirstName(), "Max");
 		assertEquals(userResponse.getSurname(), SURNAME);
 		assertEquals(userResponse.getUsername(), "mmustermann");
@@ -30,7 +40,8 @@ public class UserResponseTest {
 		assertEquals(userResponse.getLeaveEntitlementPerYear(), 26);
 		assertEquals(userResponse.getPosition(), POSITION);
 		assertEquals(userResponse.getStartDate(), "27-02-2015");
-		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015)", userResponse.toString());
+		assertEquals(userResponse.getRole(), "Admin");
+		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015, role=Admin)", userResponse.toString());
 	}
 
 	/**
@@ -48,6 +59,7 @@ public class UserResponseTest {
 		userResponse.setPosition(POSITION);
 		userResponse.setStartDate("27-02-2015");
 		userResponse.setCompany("MyCompany");
+		userResponse.setRole("Employee");
 		assertEquals(userResponse.getFirstName(), "Max");
 		assertEquals(userResponse.getSurname(), SURNAME);
 		assertEquals(userResponse.getUsername(), "mmustermann");
@@ -56,7 +68,8 @@ public class UserResponseTest {
 		assertEquals(userResponse.getPosition(), POSITION);
 		assertEquals(userResponse.getStartDate(), "27-02-2015");
 		assertEquals(userResponse.getCompany(), "MyCompany");
-		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015)", userResponse.toString());
+		assertEquals(userResponse.getRole(), "Employee");
+		assertEquals("UserResponse(firstName=Max, surname=Mustermann, username=mmustermann, company=MyCompany, leaveEntitlementPerYear=26, workingDays=Saturday, Sunday, position=Tester, startDate=27-02-2015, role=Employee)", userResponse.toString());
 	}
 
 }
