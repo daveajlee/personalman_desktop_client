@@ -79,7 +79,7 @@ public class AbsenceScreen extends PersonalManBaseScreen {
             new AdminScreen(userInterface, company, username);
             dispose();
         });
-        adminButton.setVisible(userInterface.getEmployeeByUserName(company, username).getRole().contentEquals("Admin"));
+        adminButton.setVisible(userInterface.getEmployeeByUserName(company, username, userInterface.getToken()).getRole().contentEquals("Admin"));
         bottomButtonPanel.add(adminButton);
         //Add button to change password.
         JButton changePasswordButton = new JButton("Change Password");

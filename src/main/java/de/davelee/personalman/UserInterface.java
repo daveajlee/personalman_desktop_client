@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
 import java.time.format.DateTimeFormatter;
@@ -54,6 +55,14 @@ public class UserInterface {
     private Locale myLocale;
 
 	public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+	private String token;
+
+	/**
+	 * Default value for annual leave if user not logged in.
+	 */
+	@Value("${default.annualleave}")
+	private int annualLeave;
 
 	/**
 	 * Determine the Java Locale based on the localisation language.
@@ -104,7 +113,13 @@ public class UserInterface {
 	 * @param registerUserRequest a <code>RegisterUserRequest</code> object containing the data about this user.
 	 */
 	public void registerUser ( final RegisterUserRequest registerUserRequest ) {
-		int defaultAnnualLeave = companyService.getCompany(registerUserRequest.getCompany()).getDefaultAnnualLeaveInDays();
+		int defaultAnnualLeave;
+		try {
+			defaultAnnualLeave = companyService.getCompany(registerUserRequest.getCompany(), getToken()).getDefaultAnnualLeaveInDays();
+		} catch ( HttpClientErrorException errorException ) {
+			//If not logged in then add annual leave with 0.
+			defaultAnnualLeave = annualLeave;
+		}
 		employeeService.register(registerUserRequest, defaultAnnualLeave);
 	}
 
@@ -114,7 +129,20 @@ public class UserInterface {
 	 * @return a <code>LoginResponse</code> object containing the response to this login from the server.
 	 */
 	public LoginResponse login ( final LoginRequest loginRequest ) {
+		LoginResponse loginResponse = employeeService.login(loginRequest);
+		//Save a token if the user logged in successfully.
+		if ( loginResponse.getToken() != null ) {
+			token = loginResponse.getToken();
+		}
 		return employeeService.login(loginRequest);
+	}
+
+	/**
+	 * Return the current token that the user is using.
+	 * @return token a <code>String</code> with the current token of the user.
+	 */
+	public String getToken ( ) {
+		return token;
 	}
 
 	/**
@@ -123,6 +151,7 @@ public class UserInterface {
 	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
 	 */
 	public boolean resetUserPassword ( final ResetUserRequest resetUserRequest ) {
+		resetUserRequest.setToken(token);
 		return employeeService.resetPassword(resetUserRequest);
 	}
 
@@ -132,6 +161,7 @@ public class UserInterface {
 	 * @return a <code>boolean</code> which is true iff the reset of the password was successful.
 	 */
 	public boolean changePassword ( final ChangePasswordRequest changePasswordRequest ) {
+		changePasswordRequest.setToken(token);
 		return employeeService.changePassword(changePasswordRequest);
 	}
 
@@ -141,7 +171,7 @@ public class UserInterface {
 	 * @return a <code>String</code> array with all usernames for this company.
 	 */
 	public String[] getUserNames(final String company) {
-		UsersResponse usersResponse = employeeService.findByCompany(company);
+		UsersResponse usersResponse = employeeService.findByCompany(company, token);
 		if ( usersResponse == null ) {
 			return new String[0];
 		}
@@ -152,7 +182,6 @@ public class UserInterface {
     		userNames[count] = userResponse.getUsername() + " - " + userResponse.getFirstName() + " " + userResponse.getSurname();
     		count++;
     	}
-    	System.out.println(Arrays.toString(userNames));
     	return userNames;
     }
    
@@ -186,17 +215,18 @@ public class UserInterface {
      * @param userName a <code>String</code> object representing the username to be deleted from the server.
      */
     public void removeEmployee ( final String company, final String userName ) {
-    	employeeService.delete(company, userName);
+    	employeeService.delete(company, userName, token);
     }
     
     /**
      * Retrieve a user by their company and user name. Each user has a different user name.
 	 * @param company a <code>String</code> with the name of the company.
      * @param userName a <code>String</code> with the user name of the user to be retrieved.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
      * @return a <code>UserResponse</code> object representing the user matching the supplied user name or null if no user is found.
      */
-    public UserResponse getEmployeeByUserName ( final String company, final String userName ) {
-    	return employeeService.findByUserName(company, userName);
+    public UserResponse getEmployeeByUserName ( final String company, final String userName, final String token ) {
+    	return employeeService.findByUserName(company, userName, token);
     }
     
     /**
@@ -231,6 +261,7 @@ public class UserInterface {
 				.startDate(startDate)
 				.endDate(endDate)
 				.category(category)
+				.token(token)
 				.build());
     }
     
@@ -241,7 +272,7 @@ public class UserInterface {
      * @return a <code>List</code> of <code>AbsenceResponse</code> objects representing all absences being taken by all employees on the supplied date.
      */
     public List<AbsenceResponse> getAbsences ( final String company, final String date ) {
-    	return absenceService.findByDate(company, date);
+    	return absenceService.findByDate(company, date, token);
     }
     
     /**
@@ -252,7 +283,7 @@ public class UserInterface {
 	 * @param endDate a <code>String</code> with the end date to get absences for in format dd-MM-yyyy.
      */
     public void deleteAbsences ( final String company, final String username, final String startDate, final String endDate ) {
-    	absenceService.delete(company, username, startDate, endDate);
+    	absenceService.delete(company, username, startDate, endDate, token);
     }
     
     /**
@@ -264,14 +295,14 @@ public class UserInterface {
 	 * or a text if the server is not reachable.
      */
     public String getStatistics ( final String company, final String userName, final int year ) {
-    	AbsencesResponse absencesResponse = absenceService.findByNameAndYear(company, userName, year);
+    	AbsencesResponse absencesResponse = absenceService.findByNameAndYear(company, userName, year, token);
     	if ( absencesResponse == null ) {
     		return "Could not reach PersonalMan server so no statistics can be displayed!";
 		}
     	StringBuilder returnTextBuilder = new StringBuilder();
     	returnTextBuilder.append(getStatisticsForCategory("Illness", absencesResponse));
-    	UserResponse userResponse = employeeService.findByUserName(company, userName);
-    	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday");
+    	UserResponse userResponse = employeeService.findByUserName(company, userName, token);
+    	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday", token);
     	returnTextBuilder.append("Holiday: ");
     	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Holiday"));
     	returnTextBuilder.append(" ");
@@ -285,7 +316,7 @@ public class UserInterface {
     	returnTextBuilder.append(")\n");
     	returnTextBuilder.append(getStatisticsForCategory("Trip", absencesResponse));
     	returnTextBuilder.append(getStatisticsForCategory("Conference", absencesResponse));
-    	long numDaysInLieuRemaining = absenceService.countByNameAndYearAndReason(company, userName, year, "Day in Lieu Request") - absencesResponse.getStatisticsMap().get("Day in Lieu");
+    	long numDaysInLieuRemaining = absenceService.countByNameAndYearAndReason(company, userName, year, "Day in Lieu Request", token) - absencesResponse.getStatisticsMap().get("Day in Lieu");
     	returnTextBuilder.append("Day in Lieu: ");
     	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Day in Lieu"));
     	returnTextBuilder.append(" ");

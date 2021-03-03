@@ -21,9 +21,10 @@ public class EmployeeServiceMock extends EmployeeService {
 	/**
 	 * Find all users who are associated with a particular company (fixed output to avoid backend server).
 	 * @param company a <code>String</code> with the name of the company.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>UsersResponse</code> object representing all users associated with the particular company.
 	 */
-	public UsersResponse findByCompany ( final String company ) {
+	public UsersResponse findByCompany ( final String company, final String token ) {
 		if ( "MyCompany".equalsIgnoreCase(company) ) {
 			UserResponse[] employees = new UserResponse[2];
 			employees[0] = employee;
@@ -49,9 +50,10 @@ public class EmployeeServiceMock extends EmployeeService {
 	 * Find a user according to their company and user name (fixed output to avoid backend server).
 	 * @param company a <code>String</code> with the name of the company.
 	 * @param userName a <code>String</code> with the user name.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>UserResponse</code> representing the user which has this user name. Returns null if no matching user. User name is a unique field so no chance of more than one result!
 	 */
-	public UserResponse findByUserName( final String company, final String userName) {
+	public UserResponse findByUserName( final String company, final String userName, final String token) {
 		if ( "MyCompany".equalsIgnoreCase(company) && "mmustermann".equalsIgnoreCase(userName)) {
 			return employee;
 		} else if ( "MyCompany".equalsIgnoreCase(company) && "csmith".equalsIgnoreCase(userName)) {
@@ -93,8 +95,9 @@ public class EmployeeServiceMock extends EmployeeService {
 	 * Do not delete any data in the mock but display a log message.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @param userName a <code>String</code> object with the username to delete from the server.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 */
-	public void delete ( final String company, final String userName ) {
+	public void delete ( final String company, final String userName, final String token ) {
 		LOG.info("The Mock does not delete any data!");
 	}
 

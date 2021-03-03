@@ -43,12 +43,13 @@ public class AbsenceService {
 	 * Find absences taking place on the specified date.
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param date a <code>String</code> with the specified date in format dd-MM-yyyy.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>List</code> of <code>AbsenceResponse</code> objects containing all absences for the specified date which is null if server
 	 * is not reachable.
 	 */
-	public List<AbsenceResponse> findByDate ( final String company, final String date ) {
+	public List<AbsenceResponse> findByDate ( final String company, final String date, final String token ) {
 		try {
-			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date,
+			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date + "&token=" + token,
 					AbsencesResponse.class).getAbsenceResponseList();
 		} catch ( Exception exception ) {
 			return null;
@@ -60,11 +61,12 @@ public class AbsenceService {
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param userName a <code>String</code> with the name of the user to find absences for.
 	 * @param year a <code>int</code> with the desired year.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year which is null if server is not reachable.
 	 */
-	public AbsencesResponse findByNameAndYear ( final String company, final String userName, final int year ) {
+	public AbsencesResponse findByNameAndYear ( final String company, final String userName, final int year, final String token ) {
 		try {
-			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year,
+			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year + "&token=" + token,
 					AbsencesResponse.class);
 		} catch ( Exception exception ) {
 			return null;
@@ -77,11 +79,12 @@ public class AbsenceService {
 	 * @param userName a <code>String</code> with the name of the desired user.
 	 * @param year a <code>int</code> with the desired year.
 	 * @param category a <code>String</code> with the desired absence category e.g. Holiday.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>long</code> containing the number of absences for the specified user and year in this category.
 	 */
-	public long countByNameAndYearAndReason ( final String company, final String userName, final int year, final String category ) {
+	public long countByNameAndYearAndReason ( final String company, final String userName, final int year, final String category, final String token ) {
 		AbsencesResponse absencesResponse =  restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year
-				+ "&username=" + userName + "&category=" + category + "&onlyCount=true",
+				+ "&username=" + userName + "&category=" + category + "&onlyCount=true&token=" + token,
 				AbsencesResponse.class);
 		return absencesResponse.getCount();
 	}
@@ -102,13 +105,14 @@ public class AbsenceService {
 	 * @param username a <code>String</code> with the name of the user to find absences for.
 	 * @param startDate a <code>String</code> with the specified start date in format dd-MM-yyyy.
 	 * @param endDate a <code>String</code> with the specified end date in format dd-MM-yyyy.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 */
-	public void delete ( final String company, final String username, final String startDate, final String endDate ) {
+	public void delete ( final String company, final String username, final String startDate, final String endDate, final String token ) {
 		//Username is optional but do not add it as a parameter if it is empty or nothing will be deleted.
 		if ( username.contentEquals("")) {
-			restTemplate.delete(absenceServiceUrl + "?company=" + company + "&startDate=" + startDate + "&endDate=" + endDate);
+			restTemplate.delete(absenceServiceUrl + "?company=" + company + "&startDate=" + startDate + "&endDate=" + endDate + "&token=" + token);
 		} else {
-			restTemplate.delete(absenceServiceUrl + "?company=" + company + "&startDate=" + startDate + "&endDate=" + endDate + "&username=" + username);
+			restTemplate.delete(absenceServiceUrl + "?company=" + company + "&startDate=" + startDate + "&endDate=" + endDate + "&username=" + username + "&token=" + token);
 		}
 	}
 	

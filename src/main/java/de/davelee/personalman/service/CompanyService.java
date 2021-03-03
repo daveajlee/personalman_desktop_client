@@ -53,9 +53,10 @@ public class CompanyService {
     /**
      * Retrieve the company information from the server for a particular company based on its name.
      * @param name a <code>String</code> containing the name of the company.
+     * @param token a <code>String</code> containing the token that the current user has (which may be empty or null).
      */
-    public CompanyResponse getCompany (final String name ) {
-        return restTemplate.getForObject(companyServiceUrl + "?name=" + name, CompanyResponse.class );
+    public CompanyResponse getCompany (final String name, final String token ) {
+        return restTemplate.getForObject(companyServiceUrl + "?name=" + name + "&token= " + token, CompanyResponse.class );
     }
 
 }

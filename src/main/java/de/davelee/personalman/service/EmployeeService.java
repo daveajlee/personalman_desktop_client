@@ -38,20 +38,22 @@ public class EmployeeService {
 	 * Find a user according to their company and user name.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @param userName a <code>String</code> with the user name.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>UserResponse</code> representing the user which has this user name. Returns null if no matching user. User name is a unique field so no chance of more than one result!
 	 */
-	public UserResponse findByUserName ( final String company, final String userName ) {
-		return restTemplate.getForObject(userServiceUrl + "?company=" + company + "&username=" + userName, UserResponse.class);
+	public UserResponse findByUserName ( final String company, final String userName, final String token ) {
+		return restTemplate.getForObject(userServiceUrl + "?company=" + company + "&username=" + userName + "&token=" + token, UserResponse.class);
 	}
 
 	/**
 	 * Find all users who are associated with a particular company.
 	 * @param company a <code>String</code> with the name of the company.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>UsersResponse</code> object representing all users associated with the particular company.
 	 *
 	 */
-	public UsersResponse findByCompany ( final String company )  {
-		return restTemplate.getForObject(userServiceUrl + "s?company=" + company, UsersResponse.class);
+	public UsersResponse findByCompany ( final String company, final String token )  {
+		return restTemplate.getForObject(userServiceUrl + "s?company=" + company + "&token=" + token, UsersResponse.class);
 	}
 	
 	/**
@@ -59,7 +61,7 @@ public class EmployeeService {
 	 * @param userRequest a <code>UserRequest</code> object to be saved to the server.
 	 */
 	public void save ( final UserRequest userRequest ) {
-		restTemplate.postForObject(userServiceUrl, userRequest, UserRequest.class);
+		restTemplate.postForObject(userServiceUrl, userRequest, Void.class);
 	}
 
 	public void register (final RegisterUserRequest registerUserRequest, final int leaveEntitlementPerYear ) {
@@ -125,9 +127,10 @@ public class EmployeeService {
 	 * Delete the user corresponding to the company and username from the server.
 	 * @param company a <code>String</code> with the name of the company.
 	 * @param userName a <code>String</code> object with the username to delete from the server.
+	 * @param token a <code>Stirng</code> with the token of the currently logged in user.
 	 */
-	public void delete ( final String company, final String userName ) {
-		restTemplate.delete(userServiceUrl + "?company=" + company + "&username=" + userName);
+	public void delete ( final String company, final String userName, final String token ) {
+		restTemplate.delete(userServiceUrl + "?company=" + company + "&username=" + userName + "&token=" + token);
 	}
 	
 }

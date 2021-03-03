@@ -68,7 +68,7 @@ public class ClickDateMouseListenerTest {
 		userInterface.addAbsence("MyCompany", "mmustermann", "03-04-2015", "06-04-2015", "FEDERAL_HOLIDAY");
 		ClickDateMouseListener clickDateMouseListener = new ClickDateMouseListenerMock(userInterface, LocalDate.of(2015, 4, 3), "MyCompany", "testuser", new MonthPanel(Month.APRIL, 2015, "MyCompany", "testuser", userInterface));
 		clickDateMouseListener.mouseClicked(null);
-		UserResponse userResponse = userInterface.getEmployeeByUserName("MyCompany", "mmustermann");
+		UserResponse userResponse = userInterface.getEmployeeByUserName("MyCompany", "mmustermann", "token");
 		assertNotNull(userResponse);
 		userInterface.deleteAbsences("MyCompany", "mmustermann", "03-04-2015", "06-04-2015");
 		userInterface.removeEmployee(userResponse.getCompany(), userResponse.getUsername());

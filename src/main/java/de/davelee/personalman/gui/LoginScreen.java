@@ -106,7 +106,7 @@ public class LoginScreen extends PersonalManBaseScreen {
                         "Failure with Login", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             } else {
                 dispose();
-                UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText());
+                UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText(), userInterface.getToken());
                 if ( userResponse.getRole().contentEquals("Admin")) {
                     new AdminScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
                 } else {

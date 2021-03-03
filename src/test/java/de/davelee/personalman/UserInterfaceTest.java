@@ -42,22 +42,21 @@ public class UserInterfaceTest {
 		userInterface.setEmployeeService(employeeService);
 		AbsenceService absenceService = new AbsenceServiceMock();
 		userInterface.setAbsenceService(absenceService);
-		UsersResponse employees = employeeService.findByCompany("MyCompany");
+		UsersResponse employees = employeeService.findByCompany("MyCompany", "token");
 		if ( employees != null ) {
 			for (UserResponse employee : employees.getUserResponses()) {
-				employeeService.delete("MyCompany", employee.getUsername());
+				employeeService.delete("MyCompany", employee.getUsername(), "token");
 			}
 		}
 		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
 		userInterface.addEmployee("Max", "Mustermann", EMPLOYEE_USERNAME, "MyCompany", 26, "Saturday, Sunday", "Tester", "28-02-2015");
-		AbsencesResponse absences = userInterface.getAbsenceService().findByNameAndYear("MyCompany", EMPLOYEE_USERNAME, 2015);
+		AbsencesResponse absences = userInterface.getAbsenceService().findByNameAndYear("MyCompany", EMPLOYEE_USERNAME, 2015, "token");
 		if ( !absences.getAbsenceResponseList().isEmpty() ) {
 			for ( AbsenceResponse absence: absences.getAbsenceResponseList() ) {
-				userInterface.getAbsenceService().delete(absence.getCompany(), absence.getUsername(), absence.getStartDate(), absence.getEndDate());
+				userInterface.getAbsenceService().delete(absence.getCompany(), absence.getUsername(), absence.getStartDate(), absence.getEndDate(), "token");
 			}
 		}
 		assertEquals(userInterface.getUserNames("MyCompany").length, 2);
-		System.out.println("Username: " + userInterface.getUserNames("MyCompany")[0]);
 		assertEquals(userInterface.getUserNames("MyCompany")[0], EMPLOYEE_USERNAME + " - Max Mustermann");
 		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2015), "Illness: 0 days\nHoliday: 0 days (Remaining: 4 days)\nTrip: 0 days\nConference: 0 days\nDay in Lieu: 0 days (Remaining: 0 days)\nFederal Holiday: 4 days\n");
 		userInterface.determineLocale("English");

@@ -26,9 +26,10 @@ public class AbsenceServiceMock extends AbsenceService {
 	 * Return a fixed set of absences instead of asking backend server.
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param date a <code>String</code> with the specified date in format dd-MM-yyyy.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>List</code> of <code>AbsenceResponse</code> objects containing all absences for the specified date.
 	 */
-	public List<AbsenceResponse> findByDate(final String company, final String date) {
+	public List<AbsenceResponse> findByDate(final String company, final String date, final String token) {
 		List<AbsenceResponse> absences = new ArrayList<>();
 		if (LocalDate.parse(date, UserInterface.DATE_TIME_FORMATTER).isEqual(LocalDate.of(2015, 4, 3)) ||
 				LocalDate.parse(date, UserInterface.DATE_TIME_FORMATTER).isEqual(LocalDate.of(2015, 4, 6))) {
@@ -43,9 +44,10 @@ public class AbsenceServiceMock extends AbsenceService {
 	 * @param company a <code>String</code> with the company that the user is associated with.
 	 * @param name a <code>String</code> with the name of the user to find absences for.
 	 * @param year a <code>int</code> with the desired year.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year.
 	 */
-	public AbsencesResponse findByNameAndYear(final String company, final String name, final int year) {
+	public AbsencesResponse findByNameAndYear(final String company, final String name, final int year, final String token) {
 		List<AbsenceResponse> absences = new ArrayList<>();
 		if ( name.contentEquals(EMPLOYEE_NAME) && year == 2015) {
 			absences.add(new AbsenceResponse("MyCompany", EMPLOYEE_NAME, "03-04-2015", "06-04-2015", "Federal Holiday"));
@@ -103,9 +105,10 @@ public class AbsenceServiceMock extends AbsenceService {
 	 * @param employeeName a <code>String</code> with the employee name to find.
 	 * @param year a <code>int</code> with the desired year.
 	 * @param category a <code>String</code> with the desired absence category e.g. Holiday.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 * @return a <code>long</code> which returns the number of absences found.
 	 */
-	public long countByNameAndYearAndReason ( final String company, final String employeeName, final int year, final String category ) {
+	public long countByNameAndYearAndReason ( final String company, final String employeeName, final int year, final String category, final String token ) {
 		if ( company.contentEquals("MyCompany") && employeeName.contentEquals("csmith")) {
 			return 1;
 		} else if ( company.contentEquals("MyCompany") && employeeName.contentEquals("jmctavish") && category.contentEquals("Day in Lieu Request")) {
@@ -129,8 +132,9 @@ public class AbsenceServiceMock extends AbsenceService {
 	 * @param username a <code>String</code> with the name of the user to find absences for.
 	 * @param startDate a <code>String</code> with the specified start date in format dd-MM-yyyy.
 	 * @param endDate a <code>String</code> with the specified end date in format dd-MM-yyyy.
+	 * @param token a <code>String</code> with the token of the currently logged in user.
 	 */
-	public void delete ( String company, String username, String startDate, String endDate ) {
+	public void delete ( String company, String username, String startDate, String endDate, final String token ) {
 		LOG.info("The Mock does not delete any data!");
 	}
 
