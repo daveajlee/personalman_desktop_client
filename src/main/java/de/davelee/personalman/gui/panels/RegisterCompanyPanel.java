@@ -15,6 +15,7 @@ public class RegisterCompanyPanel extends JPanel {
 
     /**
      * Create a new panel and add all necessary components to this panel.
+     * @param registerScreen a <code>RegisterScreen</code> object which should display this panel.
      */
     public RegisterCompanyPanel ( final RegisterScreen registerScreen ) {
 
