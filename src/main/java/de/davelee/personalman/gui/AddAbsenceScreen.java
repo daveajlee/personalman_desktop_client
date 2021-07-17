@@ -82,11 +82,13 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
         buttonPanel.setBackground(Color.WHITE);
         JButton addAbsenceButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesAddButton());
         addAbsenceButton.addActionListener ( e -> {
-            LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate endDate = endDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            boolean result = userInterface.addAbsence(company, username, startDate.format(UserInterface.DATE_TIME_FORMATTER),
-					endDate.format(UserInterface.DATE_TIME_FORMATTER), reasonBox.getSelectedItem().toString());
-            displayErrorOrDispose(result);
+            if ( reasonBox.getSelectedItem() != null ) {
+                LocalDate startDate = startDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate endDate = endDateField.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                boolean result = userInterface.addAbsence(company, username, startDate.format(UserInterface.DATE_TIME_FORMATTER),
+                        endDate.format(UserInterface.DATE_TIME_FORMATTER), reasonBox.getSelectedItem().toString());
+                displayErrorOrDispose(result);
+            }
         });
         buttonPanel.add(addAbsenceButton);
         JButton closeButton = new JButton(userInterface.getUserInterfaceMessages().getAbsencesCloseButton());
@@ -134,7 +136,7 @@ public class AddAbsenceScreen extends PersonalManBaseScreen {
 		myStringReasons.add(userInterface.getReasonNames().getDayInLieu());
 		myStringReasons.add(userInterface.getReasonNames().getTrip());
 		myStringReasons.add(userInterface.getReasonNames().getPublicHoliday());
-		return myStringReasons.toArray(new String[myStringReasons.size()]);
+		return myStringReasons.toArray(new String[0]);
 	}
     
 }

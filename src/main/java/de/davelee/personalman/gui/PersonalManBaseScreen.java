@@ -10,10 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.davelee.personalman.UserInterface;
 
@@ -68,21 +66,5 @@ public class PersonalManBaseScreen extends JFrame {
         screenPanel.setLayout ( new BorderLayout() );
         screenPanel.setBackground(Color.WHITE);
 	}
-	
-	/**
-	 * Method to create a file chooser dialog based on the supplied title.
-	 * @param title a <code>String</code> with the desired dialog title.
-	 * @return a <code>JFileChooser</code> object to display to the user as a dialog.
-	 */
-	public JFileChooser showFileDialog ( final String title ) {
-    	//Create file dialog box.
-        JFileChooser fileDialog = new JFileChooser();
-        fileDialog.setDialogTitle(title);
-        //Only display files with xml extension.
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
-        fileDialog.setFileFilter(filter);
-        //Display file dialog.
-        return fileDialog;
-    }
 	
 }

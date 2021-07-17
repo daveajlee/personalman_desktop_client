@@ -99,13 +99,7 @@ public class MonthPanel extends JPanel {
 		int limit = 42;
 		
 		for ( int i = 0; i < 7; i++ ) {
-			JPanel dPanel = new JPanel(true);
-			dPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			JLabel dayLabel = new JLabel();
-			dayLabel.setText("");
-			dPanel.setBackground(Color.WHITE);
-			dPanel.add(dayLabel);
-			dayPanel.add(dPanel);
+			dayPanel.add(createDayPanel());
 		}
 		
 		while (calendar.getMonth()!=getNextMonth(month) ) {
@@ -133,17 +127,25 @@ public class MonthPanel extends JPanel {
 		}
 		
 		for ( int i = count; i < limit; i++ ) {
-			JPanel dPanel = new JPanel(true);
-			dPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			JLabel dayLabel = new JLabel();
-			dayLabel.setText("");
-			dPanel.setBackground(Color.WHITE);
-			dPanel.add(dayLabel);
-			dayPanel.add(dPanel);
+			dayPanel.add(createDayPanel());
 		}
 		
 		return dayPanel;
 		
+	}
+
+	/**
+	 * Private helper to return a panel per day.
+	 * @return a <code>JPanel</code> object.
+	 */
+	private JPanel createDayPanel ( ) {
+		JPanel dPanel = new JPanel(true);
+		dPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		JLabel dayLabel = new JLabel();
+		dayLabel.setText("");
+		dPanel.setBackground(Color.WHITE);
+		dPanel.add(dayLabel);
+		return dPanel;
 	}
 	
 	/**
@@ -157,14 +159,6 @@ public class MonthPanel extends JPanel {
 		} else {
 			return month.plus(1);
 		}
-	}
-	
-	/**
-	 * Return the month currently displayed to the user.
-	 * @return a <code>Month</code> object representing the current month.
-	 */
-	public Month getMonth() {
-		return month;
 	}
 	
 	/**

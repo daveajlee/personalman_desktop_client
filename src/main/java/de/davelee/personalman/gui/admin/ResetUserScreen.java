@@ -49,14 +49,14 @@ public class ResetUserScreen extends PersonalManBaseScreen {
         buttonPanel.setBackground(Color.WHITE);
         JButton resetButton = new JButton("Reset");
         resetButton.addActionListener(e -> {
-            if ( !passwordField.getText().contentEquals(confirmPasswordField.getText())) {
+            if ( !new String(passwordField.getPassword()).contentEquals(new String(confirmPasswordField.getPassword()))) {
                 JOptionPane.showMessageDialog(this, "The passwords entered do not match. Please verify and submit your request again.",
                         "Passwords do not match.", JOptionPane.ERROR_MESSAGE, new ImageIcon(ResetUserScreen.class.getResource("/images/personalmanlogo-icon.png")));
-            } else {
+            } else if ( usernameBox.getSelectedItem() != null) {
                 ResetUserRequest resetUserRequest = ResetUserRequest.builder()
                         .company(company)
                         .username(usernameBox.getSelectedItem().toString().split(" - ")[0])
-                        .password(passwordField.getText())
+                        .password(new String(passwordField.getPassword()))
                         .build();
                 if (userInterface.resetUserPassword(resetUserRequest)) {
                     JOptionPane.showMessageDialog(this, "The password for user " + resetUserRequest.getUsername() + " was changed successfully.",

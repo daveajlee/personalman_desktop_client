@@ -9,8 +9,6 @@ import javax.swing.*;
 import de.davelee.personalman.gui.admin.AddUserScreen;
 import de.davelee.personalman.gui.admin.DeleteUserScreen;
 import de.davelee.personalman.gui.admin.ResetUserScreen;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.davelee.personalman.UserInterface;
 /**
@@ -26,8 +24,6 @@ public class AdminScreen extends PersonalManBaseScreen {
 
     private final String company;
     private final String username;
-    
-    private static final Logger LOG = LoggerFactory.getLogger(AdminScreen.class);
     
     /**
      * Create a new admin screen.
@@ -149,9 +145,7 @@ public class AdminScreen extends PersonalManBaseScreen {
         bottomButtonPanel.add(logoutButton);
         //Add button to return to welcome / admin screen if user has admin role.
         JButton exitButton = new JButton("Exit PersonalMan");
-        exitButton.addActionListener( e -> {
-            userInterface.exit();
-        });
+        exitButton.addActionListener( e -> userInterface.exit());
         bottomButtonPanel.add(exitButton);
         screenPanel.add(bottomButtonPanel, BorderLayout.SOUTH);
         

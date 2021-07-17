@@ -31,19 +31,5 @@ public class AbsenceScreenMock extends AbsenceScreen {
 	public AbsenceScreenMock ( final UserInterface ui, final LocalDate date, final String company, final String username ) {
 		super(ui, date, company, username);
 	}
-
-	/**
-	 * Instead of showing the message dialog - show a log message instead.
-	 */
-	public void showMessageDialog ( ) {
-		LOG.info("Show dialog message");
-	}
-
-	/**
-	 * Instead of showing the statistics dialog - show a log message instead.
-	 */
-	public void showStatisticsDialog ( ) {
-		LOG.info("Show statistics message");
-	}
 	
 }

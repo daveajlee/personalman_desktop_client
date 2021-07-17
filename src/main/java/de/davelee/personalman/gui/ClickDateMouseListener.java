@@ -9,8 +9,6 @@ import java.util.List;
 import javax.swing.*;
 
 import de.davelee.personalman.api.AbsenceResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.davelee.personalman.UserInterface;
 
@@ -25,8 +23,6 @@ public class ClickDateMouseListener implements MouseListener {
 	private final String company;
 	private final String username;
 	private final MonthPanel monthPanel;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(ClickDateMouseListener.class);
 	
 	/**
 	 * Create a new ClickDateMouseListener object.
@@ -54,11 +50,14 @@ public class ClickDateMouseListener implements MouseListener {
 			JOptionPane.showMessageDialog(null, "Could not reach PersonalMan server so no data can be displayed for this date!",
 					"Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(UserInterface.class.getResource("/images/personalmanlogo-icon.png")));
 		} else {
-			String text = "";
+			StringBuilder textBuilder = new StringBuilder();
 			for (AbsenceResponse absenceResponse : absenceResponses) {
-				text += absenceResponse.getUsername() +
-						" " + absenceResponse.getCategory() + "\n";
+				textBuilder.append(absenceResponse.getUsername());
+				textBuilder.append(" ");
+				textBuilder.append(absenceResponse.getCategory());
+				textBuilder.append("\n");
 			}
+			String text = textBuilder.toString();
 			if (text.contentEquals("")) {
 				text = userInterface.getUserInterfaceMessages().getAbsencesNoneMessage();
 			}

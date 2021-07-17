@@ -57,7 +57,7 @@ public class LoginScreen extends PersonalManBaseScreen {
         companyPanel.setBackground(Color.WHITE);
         JLabel companyLabel = new JLabel("Company:", JLabel.CENTER);
         companyPanel.add(companyLabel);
-        JComboBox<String> companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[userInterface.getCompanies().size()]));
+        JComboBox<String> companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[0]));
         companyPanel.add(companyBox);
         centrePanel.add(companyPanel);
 
@@ -95,22 +95,24 @@ public class LoginScreen extends PersonalManBaseScreen {
             loginButton.setEnabled(false);
         }
         loginButton.addActionListener(e -> {
-            LoginRequest loginRequest = LoginRequest.builder()
-                    .company(companyBox.getSelectedItem().toString())
-                    .username(usernameField.getText())
-                    .password(passwordField.getText())
-                    .build();
-            LoginResponse loginResponse = userInterface.login(loginRequest);
-            if ( loginResponse.getErrorMessage() != null ) {
-                JOptionPane.showMessageDialog(this, loginResponse.getErrorMessage(),
-                        "Failure with Login", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
-            } else {
-                dispose();
-                UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText(), userInterface.getToken());
-                if ( userResponse.getRole().contentEquals("Admin")) {
-                    new AdminScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
+            if ( companyBox.getSelectedItem() != null ) {
+                LoginRequest loginRequest = LoginRequest.builder()
+                        .company(companyBox.getSelectedItem().toString())
+                        .username(usernameField.getText())
+                        .password(passwordField.getText())
+                        .build();
+                LoginResponse loginResponse = userInterface.login(loginRequest);
+                if (loginResponse.getErrorMessage() != null) {
+                    JOptionPane.showMessageDialog(this, loginResponse.getErrorMessage(),
+                            "Failure with Login", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
                 } else {
-                    new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
+                    dispose();
+                    UserResponse userResponse = userInterface.getEmployeeByUserName(companyBox.getSelectedItem().toString(), usernameField.getText(), userInterface.getToken());
+                    if (userResponse.getRole().contentEquals("Admin")) {
+                        new AdminScreen(userInterface, companyBox.getSelectedItem().toString(), usernameField.getText());
+                    } else {
+                        new AbsenceScreen(userInterface, LocalDate.now(), companyBox.getSelectedItem().toString(), usernameField.getText());
+                    }
                 }
             }
         });

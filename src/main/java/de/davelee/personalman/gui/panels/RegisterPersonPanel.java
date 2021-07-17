@@ -19,7 +19,7 @@ public class RegisterPersonPanel extends JPanel {
     private final JPasswordField passwordField = new JPasswordField();
     private final JPasswordField confirmPasswordField = new JPasswordField();
 
-    private JCheckBox[] daysOfWeekCheckBoxes;
+    private final JCheckBox[] daysOfWeekCheckBoxes;
 
     public RegisterPersonPanel (final UserInterface userInterface, final String company, final String adminUsername, final PersonalManBaseScreen personalManBaseScreen) {
 
@@ -46,7 +46,7 @@ public class RegisterPersonPanel extends JPanel {
         gridPanel.add(new JLabel("Company:", JLabel.CENTER));
         JComboBox<String> companyBox;
         if ( company == null ) {
-            companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[userInterface.getCompanies().size()]));
+            companyBox = new JComboBox<>(userInterface.getCompanies().toArray(new String[0]));
         } else {
             companyBox = new JComboBox<>(new String[] { company });
         }
@@ -104,27 +104,29 @@ public class RegisterPersonPanel extends JPanel {
                         "Passwords do not match", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             }
             else {
-                RegisterUserRequest registerUserRequest = RegisterUserRequest.builder()
-                        .company(companyBox.getSelectedItem().toString())
-                        .position(positionField.getText())
-                        .firstName(firstNameField.getText())
-                        .surname(surnameField.getText())
-                        .workingDays(getWorkingDays())
-                        .role(roleBox.getSelectedItem().toString())
-                        .username(usernameField.getText())
-                        //TODO: encrypt password
-                        .password(passwordField.getText())
-                        .build();
-                userInterface.registerUser(registerUserRequest);
-                personalManBaseScreen.dispose();
-                if ( company == null ) {
-                    JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
-                            "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
-                    new LoginScreen(userInterface);
-                } else {
-                    JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering " + registerUserRequest.getFirstName() + " " + registerUserRequest.getSurname() + " for PersonalMan. The account was created successfully.",
-                            "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
-                    new AdminScreen(userInterface, company, adminUsername);
+                if ( companyBox.getSelectedItem() != null && roleBox.getSelectedItem() != null ) {
+                    RegisterUserRequest registerUserRequest = RegisterUserRequest.builder()
+                            .company(companyBox.getSelectedItem().toString())
+                            .position(positionField.getText())
+                            .firstName(firstNameField.getText())
+                            .surname(surnameField.getText())
+                            .workingDays(getWorkingDays())
+                            .role(roleBox.getSelectedItem().toString())
+                            .username(usernameField.getText())
+                            //TODO: encrypt password
+                            .password(new String(passwordField.getPassword()))
+                            .build();
+                    userInterface.registerUser(registerUserRequest);
+                    personalManBaseScreen.dispose();
+                    if (company == null) {
+                        JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering for PersonalMan. Your account was created successfully. Please login with your new account on the next screen.",
+                                "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                        new LoginScreen(userInterface);
+                    } else {
+                        JOptionPane.showMessageDialog(personalManBaseScreen, "Thank you for registering " + registerUserRequest.getFirstName() + " " + registerUserRequest.getSurname() + " for PersonalMan. The account was created successfully.",
+                                "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
+                        new AdminScreen(userInterface, company, adminUsername);
+                    }
                 }
             }
         });
@@ -164,7 +166,7 @@ public class RegisterPersonPanel extends JPanel {
      * @return a <code>boolean</code> which is true iff the two passwords entered are identical.
      */
     public boolean passwordsSame ( ) {
-        return passwordField.getText().contentEquals(confirmPasswordField.getText());
+        return new String(passwordField.getPassword()).contentEquals(new String(confirmPasswordField.getPassword()));
     }
 
     public String getWorkingDays ( ) {

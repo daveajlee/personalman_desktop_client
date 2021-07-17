@@ -47,15 +47,15 @@ public class ChangePasswordScreen extends PersonalManBaseScreen {
         buttonPanel.setBackground(Color.WHITE);
         JButton changePasswordButton = new JButton("Change Password");
         changePasswordButton.addActionListener(e -> {
-            if ( !newPasswordField.getText().contentEquals(confirmPasswordField.getText())) {
+            if ( !new String(newPasswordField.getPassword()).contentEquals(new String(confirmPasswordField.getPassword()))) {
                 JOptionPane.showMessageDialog(this, "The passwords entered do not match. Please verify and submit your request again.",
                         "Passwords do not match.", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));
             } else {
                 ChangePasswordRequest changePasswordRequest = ChangePasswordRequest.builder()
                         .company(company)
                         .username(userName)
-                        .currentPassword(currentPasswordField.getText())
-                        .newPassword(newPasswordField.getText())
+                        .currentPassword(new String(currentPasswordField.getPassword()))
+                        .newPassword(new String(newPasswordField.getPassword()))
                         .build();
                 if (userInterface.changePassword(changePasswordRequest)) {
                     JOptionPane.showMessageDialog(this, "Your password was changed successfully.",

@@ -16,7 +16,6 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import javax.swing.*;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -303,34 +302,30 @@ public class UserInterface {
     	returnTextBuilder.append(getStatisticsForCategory("Illness", absencesResponse));
     	UserResponse userResponse = employeeService.findByUserName(company, userName, token);
     	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday", token);
-    	returnTextBuilder.append("Holiday: ");
-    	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Holiday"));
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
-    	returnTextBuilder.append(" (");
-    	returnTextBuilder.append(userInterfaceMessages.getToTakeMessage());
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(numAnnualLeaveRemaining);
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
-    	returnTextBuilder.append(")\n");
+    	returnTextBuilder.append(composeReturnText("Holiday: ", absencesResponse.getStatisticsMap().get("Holiday"), numAnnualLeaveRemaining));
     	returnTextBuilder.append(getStatisticsForCategory("Trip", absencesResponse));
     	returnTextBuilder.append(getStatisticsForCategory("Conference", absencesResponse));
     	long numDaysInLieuRemaining = absenceService.countByNameAndYearAndReason(company, userName, year, "Day in Lieu Request", token) - absencesResponse.getStatisticsMap().get("Day in Lieu");
-    	returnTextBuilder.append("Day in Lieu: ");
-    	returnTextBuilder.append(absencesResponse.getStatisticsMap().get("Day in Lieu"));
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
-    	returnTextBuilder.append(" (");
-    	returnTextBuilder.append(userInterfaceMessages.getToTakeMessage());
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(numDaysInLieuRemaining);
-    	returnTextBuilder.append(" ");
-    	returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
-    	returnTextBuilder.append(")\n");
+    	returnTextBuilder.append(composeReturnText("Day in Lieu: ", absencesResponse.getStatisticsMap().get("Day in Lieu"), numDaysInLieuRemaining ));
     	returnTextBuilder.append(getStatisticsForCategory("Federal Holiday", absencesResponse));
     	return returnTextBuilder.toString();
     }
+
+    private String composeReturnText ( final String category, final int daysTaken, final long daysRemaining ) {
+    	StringBuilder returnTextBuilder = new StringBuilder();
+		returnTextBuilder.append(category);
+		returnTextBuilder.append(daysTaken);
+		returnTextBuilder.append(" ");
+		returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+		returnTextBuilder.append(" (");
+		returnTextBuilder.append(userInterfaceMessages.getToTakeMessage());
+		returnTextBuilder.append(" ");
+		returnTextBuilder.append(daysRemaining);
+		returnTextBuilder.append(" ");
+		returnTextBuilder.append(userInterfaceMessages.getDaysMessage());
+		returnTextBuilder.append(")\n");
+		return returnTextBuilder.toString();
+	}
 
 	/**
 	 * Private Helper Method to display statistics for the supplied category based on the supplied AbsencesResponse object.

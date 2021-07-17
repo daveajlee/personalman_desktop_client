@@ -49,8 +49,12 @@ public class AbsenceService {
 	 */
 	public List<AbsenceResponse> findByDate ( final String company, final String date, final String token ) {
 		try {
-			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date + "&token=" + token,
-					AbsencesResponse.class).getAbsenceResponseList();
+			AbsencesResponse absencesResponse = restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date + "&token=" + token,
+					AbsencesResponse.class);
+			if ( absencesResponse != null ) {
+				return absencesResponse.getAbsenceResponseList();
+			}
+			return List.of();
 		} catch ( Exception exception ) {
 			return null;
 		}
@@ -86,7 +90,10 @@ public class AbsenceService {
 		AbsencesResponse absencesResponse =  restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year
 				+ "&username=" + userName + "&category=" + category + "&onlyCount=true&token=" + token,
 				AbsencesResponse.class);
-		return absencesResponse.getCount();
+		if ( absencesResponse != null ) {
+			return absencesResponse.getCount();
+		}
+		return -1; //Indicating server call was not correct.
 	}
 	
 	/**

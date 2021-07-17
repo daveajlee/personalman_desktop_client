@@ -52,10 +52,18 @@ public class RegisterCompanyPanel extends JPanel {
         buttonPanel.setBackground(Color.WHITE);
         JButton registerButton = new JButton("Register");
         registerButton.addActionListener(e -> {
+            int annualLeave = 25; //Default annual leave is 25 if none is supplied.
+            if ( annualLeaveSpinner.getValue() != null ) {
+                annualLeave = Integer.parseInt(annualLeaveSpinner.getValue().toString());
+            }
+            String baseCountry = "Germany"; //Default is Germany unless a country is specified.
+            if ( baseCountryBox.getSelectedItem() != null ) {
+                baseCountry = baseCountryBox.getSelectedItem().toString();
+            }
             if ( registerScreen.getUserInterface().registerCompany(RegisterCompanyRequest.builder()
                     .name(nameField.getText())
-                    .defaultAnnualLeaveInDays(Integer.parseInt(annualLeaveSpinner.getValue().toString()))
-                    .country(baseCountryBox.getSelectedItem().toString())
+                    .defaultAnnualLeaveInDays(annualLeave)
+                    .country(baseCountry)
                     .build()) ) {
                 JOptionPane.showMessageDialog(registerScreen, "Thank you for registering " + nameField.getText() + " for PersonalMan. Please start to register new users by clicking on the person tab.",
                         "Account Created", JOptionPane.ERROR_MESSAGE, new ImageIcon(RegisterScreen.class.getResource("/images/personalmanlogo-icon.png")));

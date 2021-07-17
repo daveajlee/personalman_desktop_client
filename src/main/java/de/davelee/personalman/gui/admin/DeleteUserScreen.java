@@ -40,17 +40,19 @@ public class DeleteUserScreen extends PersonalManBaseScreen {
         buttonPanel.setBackground(Color.WHITE);
         JButton deleteButton = new JButton("Delete");
         deleteButton.addActionListener(e -> {
-            String usernameToDelete = usernameBox.getSelectedItem().toString().split(" - ")[0];
-            userInterface.removeEmployee(company, usernameToDelete);
-            //If user wants to delete themselves, then return to login screen.
-            if ( usernameToDelete.contentEquals(adminUserName) ) {
-                new LoginScreen(ui);
-                dispose();
-            }
-            //Otherwise return to admin screen.
-            else {
-                new AdminScreen(ui, company, adminUserName);
-                dispose();
+            if ( usernameBox.getSelectedItem() != null ) {
+                String usernameToDelete = usernameBox.getSelectedItem().toString().split(" - ")[0];
+                userInterface.removeEmployee(company, usernameToDelete);
+                //If user wants to delete themselves, then return to login screen.
+                if (usernameToDelete.contentEquals(adminUserName)) {
+                    new LoginScreen(ui);
+                    dispose();
+                }
+                //Otherwise return to admin screen.
+                else {
+                    new AdminScreen(ui, company, adminUserName);
+                    dispose();
+                }
             }
         });
         buttonPanel.add(deleteButton);
