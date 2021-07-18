@@ -301,16 +301,26 @@ public class UserInterface {
     	StringBuilder returnTextBuilder = new StringBuilder();
     	returnTextBuilder.append(getStatisticsForCategory("Illness", absencesResponse));
     	UserResponse userResponse = employeeService.findByUserName(company, userName, token);
-    	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday", token);
+    	long numAnnualLeaveRemaining = userResponse.getLeaveEntitlementPerYear() - absencesResponse.getStatisticsMap().get("Holiday") /*absenceService.countByNameAndYearAndReason(company, userName, year, "Holiday", token)*/;
     	returnTextBuilder.append(composeReturnText("Holiday: ", absencesResponse.getStatisticsMap().get("Holiday"), numAnnualLeaveRemaining));
     	returnTextBuilder.append(getStatisticsForCategory("Trip", absencesResponse));
     	returnTextBuilder.append(getStatisticsForCategory("Conference", absencesResponse));
-    	long numDaysInLieuRemaining = absenceService.countByNameAndYearAndReason(company, userName, year, "Day in Lieu Request", token) - absencesResponse.getStatisticsMap().get("Day in Lieu");
+    	long numDaysInLieuRemaining = 0; // 0 if no days in lieu requests exist.
+    	if ( absencesResponse.getStatisticsMap().get("Day in Lieu Request") != null ) {
+			numDaysInLieuRemaining = absencesResponse.getStatisticsMap().get("Day in Lieu Request") - absencesResponse.getStatisticsMap().get("Day in Lieu");
+		}
     	returnTextBuilder.append(composeReturnText("Day in Lieu: ", absencesResponse.getStatisticsMap().get("Day in Lieu"), numDaysInLieuRemaining ));
     	returnTextBuilder.append(getStatisticsForCategory("Federal Holiday", absencesResponse));
     	return returnTextBuilder.toString();
     }
 
+	/**
+	 * Private helper method to compose the return message for the absence response per category.
+	 * @param category a <code>String</code> with the name of the category.
+	 * @param daysTaken a <code>int</code> with the number of days already taken this year for that category.
+	 * @param daysRemaining a <code>int</code> with the number of days still to take this year for that category.
+	 * @return a <code>String</code> with the text to display to the user.
+	 */
     private String composeReturnText ( final String category, final int daysTaken, final long daysRemaining ) {
     	StringBuilder returnTextBuilder = new StringBuilder();
 		returnTextBuilder.append(category);

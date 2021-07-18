@@ -49,6 +49,7 @@ public class AbsenceService {
 	 */
 	public List<AbsenceResponse> findByDate ( final String company, final String date, final String token ) {
 		try {
+			System.out.println("Calling findByDate for " + company + " on date " + date );
 			AbsencesResponse absencesResponse = restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=" + date + "&endDate=" + date + "&token=" + token,
 					AbsencesResponse.class);
 			if ( absencesResponse != null ) {
@@ -69,8 +70,9 @@ public class AbsenceService {
 	 * @return a <code>AbsencesResponse</code> object containing all absences for the specified user and year which is null if server is not reachable.
 	 */
 	public AbsencesResponse findByNameAndYear ( final String company, final String userName, final int year, final String token ) {
+		System.out.println("Getting statistics for user " + userName + " " + year);
 		try {
-			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&startDate=01-01-" + year + "&endDate=31-12-" + year + "&token=" + token,
+			return restTemplate.getForObject(absenceServiceUrl + "?company=" + company + "&username=" + userName + "&startDate=01-01-" + year + "&endDate=31-12-" + year + "&token=" + token,
 					AbsencesResponse.class);
 		} catch ( Exception exception ) {
 			return null;

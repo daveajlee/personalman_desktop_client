@@ -67,7 +67,7 @@ public class UserInterfaceTest {
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "03-05-2016", "06-05-2016", "Trip");
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "11-05-2016", "11-05-2016", REASON_HOLIDAY);
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "14-05-2016", "14-05-2016", "Illness");
-		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2016), "Illness: 1 days\nHoliday: 1 days (Remaining: 4 days)\nTrip: 4 days\nConference: 2 days\nDay in Lieu: 1 days (Remaining: -1 days)\nFederal Holiday: 4 days\n");
+		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2016), "Illness: 1 days\nHoliday: 1 days (Remaining: 3 days)\nTrip: 4 days\nConference: 2 days\nDay in Lieu: 1 days (Remaining: 0 days)\nFederal Holiday: 4 days\n");
 		//Test generateDaysInLieu.
 		userInterface.addAbsence("MyCompany", EMPLOYEE_USERNAME, "05-06-2017", "08-06-2017", "Conference");
 		assertEquals(userInterface.getStatistics("MyCompany", EMPLOYEE_USERNAME, 2017), "Illness: 0 days\nHoliday: 0 days (Remaining: 4 days)\nTrip: 0 days\nConference: 4 days\nDay in Lieu: 0 days (Remaining: 0 days)\nFederal Holiday: 0 days\n");
